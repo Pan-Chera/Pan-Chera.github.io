@@ -594,6 +594,35 @@
         </ul>
     </section>
 
+    <!-- ==================== X. 额外内容：对抗鲁棒性初探 ==================== -->
+    <section class="section danger">
+        <h2>⚡ 额外发现：对抗攻击下的脆弱性</h2>
+        <p>
+            在完成性能验证后，顺手对训练好的 PPO 策略网络进行了一轮简单的对抗攻击测试，
+            结果有些意外：
+        </p>
+        <ul>
+            <li><strong>攻击方式：</strong>在模型输入（观测状态）上叠加极小幅度的高斯噪声扰动，信噪比保持 ≥ 30 dB</li>
+            <li><strong>攻击效果：</strong>即便在人眼看来几乎毫无差别的微小扰动下，模型的控制输出即出现大幅偏离，
+                悬吊张力跟随误差急剧恶化，从正常工况的 ±15% 迅速飙升至不可接受的范围</li>
+            <li><strong>对比：</strong>同等强度噪声注入传统 PID 控制器，表现劣化程度远低于 RL 策略</li>
+        </ul>
+        <p>
+            这一发现与深度学习模型普遍存在的对抗脆弱性一致——RL 策略网络本质上是深度神经网络，
+            在高维输入空间中存在大量"盲点"，特定方向的微小扰动即可诱导策略崩溃。
+        </p>
+        <p>
+            这对<strong>安全攸关的航天应用</strong>尤为关键：月面真实环境中充满未知传感器噪声、
+            电磁干扰与未建模动力学，RL 策略是否能在长期运行中保持鲁棒，值得深入探索。
+        </p>
+        <h4>可能的延伸方向</h4>
+        <ul>
+            <li>对抗训练（Adversarial Training）：在训练过程中主动注入扰动，提高策略的局部平滑性</li>
+            <li>策略平滑正则化：对策略网络施加 Lipschitz 约束，降低输入敏感性</li>
+            <li>冗余感知架构：多传感器融合 + 投票机制，降低单一扰动源的影响</li>
+        </ul>
+    </section>
+
     <footer style="text-align: center; margin-top: 40px; padding: 24px 0; color: var(--muted); font-size: 0.9em; border-top: 1px solid var(--border);">
         <a href="../projects.html" style="color: var(--primary); text-decoration: none; font-weight: 600;">← 返回项目目录</a>
         &nbsp;·&nbsp; PUMA &nbsp;·&nbsp; 移动悬吊 RL 前瞻补偿

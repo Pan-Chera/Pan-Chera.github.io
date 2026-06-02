@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>拆药板视觉引导抓取系统 — PUMA</title>
+    <style>
+        :root {
+            --primary: #4F46E5;
+            --primary-light: #EEF2FF;
+            --accent: #10B981;
+            --accent-light: #ECFDF5;
+            --warning: #F59E0B;
+            --warning-light: #FFFBEB;
+            --danger: #EF4444;
+            --danger-light: #FEF2F2;
+            --bg: #F3F4F6;
+            --card: #FFFFFF;
+            --text: #1F2937;
+            --muted: #6B7280;
+            --border: #E5E7EB;
+        }
+
+        * { box-sizing: border-box; }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Noto Sans SC", sans-serif;
+            background: var(--bg);
+            background-image: linear-gradient(135deg, #fdfbfb 0%, #ebedee 100%);
+            color: var(--text);
+            margin: 0; padding: 0;
+            line-height: 1.75;
+        }
+
+        .container { max-width: 900px; margin: 0 auto; padding: 20px; }
+
+        .back-link {
+            display: inline-flex; align-items: center; gap: 6px;
+            color: var(--primary); text-decoration: none;
+            font-weight: 600; font-size: 0.95em;
+            margin-bottom: 24px;
+            transition: transform 0.2s;
+        }
+        .back-link:hover { transform: translateX(-4px); }
+
+        .hero {
+            background: var(--card);
+            border-radius: 20px;
+            padding: 48px 40px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            margin-bottom: 30px;
+            animation: fadeUp 0.8s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        .hero::before {
+            content: '';
+            position: absolute; top: 0; left: 0; right: 0;
+            height: 5px;
+            background: linear-gradient(90deg, var(--primary), var(--accent), var(--warning));
+        }
+        .hero .badge {
+            display: inline-block;
+            background: var(--primary-light);
+            color: var(--primary);
+            padding: 4px 16px;
+            border-radius: 20px;
+            font-size: 0.85em; font-weight: 600;
+            margin-bottom: 16px;
+        }
+        .hero h1 {
+            font-size: 2em; margin: 0 0 10px 0;
+            background: linear-gradient(135deg, var(--primary), #7C3AED);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .hero .meta {
+            color: var(--muted); font-size: 0.95em;
+            display: flex; justify-content: center;
+            gap: 24px; flex-wrap: wrap;
+        }
+        .hero .meta span { display: inline-flex; align-items: center; gap: 4px; }
+
+        .section {
+            background: var(--card);
+            border-radius: 16px;
+            padding: 36px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.04);
+            margin-bottom: 24px;
+            animation: fadeUp 0.6s ease;
+        }
+        .section h2 { margin: 0 0 20px 0; font-size: 1.4em; display: flex; align-items: center; gap: 10px; }
+        .section h3 { margin: 24px 0 12px 0; font-size: 1.15em; color: var(--text); }
+        .section h4 { margin: 16px 0 8px 0; }
+        .section p { margin: 0 0 12px 0; color: var(--text); }
+        .section ul, .section ol { margin: 8px 0; padding-left: 20px; }
+        .section li { margin-bottom: 6px; }
+
+        .section.accent  { border-left: 4px solid var(--accent); }
+        .section.warning { border-left: 4px solid var(--warning); }
+        .section.danger  { border-left: 4px solid var(--danger); }
+
+        .tag {
+            display: inline-block;
+            padding: 3px 12px; border-radius: 12px;
+            font-size: 0.82em; font-weight: 600;
+            margin: 2px 4px 2px 0;
+        }
+        .tag.blue   { background: var(--primary-light); color: var(--primary); }
+        .tag.green  { background: var(--accent-light);  color: #059669; }
+        .tag.amber  { background: var(--warning-light); color: #D97706; }
+        .tag.red    { background: var(--danger-light);  color: #DC2626; }
+
+        .obs-table {
+            width: 100%; border-collapse: collapse;
+            margin: 16px 0; font-size: 0.88em;
+        }
+        .obs-table th {
+            background: #F9FAFB; padding: 10px 14px;
+            text-align: left; font-weight: 700;
+            border-bottom: 2px solid var(--border);
+        }
+        .obs-table td {
+            padding: 8px 14px; border-bottom: 1px solid var(--border);
+            vertical-align: top;
+        }
+        .obs-table .dim { font-weight: 700; color: var(--primary); }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 16px;
+        }
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 16px;
+        }
+
+        .mini-card {
+            background: #F9FAFB; border-radius: 10px; padding: 18px;
+            border: 1px solid var(--border);
+        }
+        .mini-card.highlight {
+            border-left: 4px solid var(--primary);
+            background: var(--primary-light);
+        }
+        .mini-card h4 { margin: 0 0 8px 0; }
+
+        blockquote {
+            border-left: 4px solid var(--primary);
+            background: var(--primary-light);
+            margin: 16px 0; padding: 14px 20px;
+            border-radius: 0 10px 10px 0;
+            color: #4338CA;
+            font-style: italic;
+        }
+
+        .step-flow {
+            display: flex; align-items: center; justify-content: center;
+            gap: 8px; flex-wrap: wrap;
+            margin: 16px 0; font-size: 0.85em;
+        }
+        .step-badge {
+            background: var(--primary-light); color: var(--primary);
+            padding: 6px 14px; border-radius: 8px;
+            font-weight: 700; white-space: nowrap;
+        }
+        .step-arrow { color: var(--muted); font-size: 1.2em; }
+
+        .code-block {
+            background: #1F2937;
+            color: #E5E7EB;
+            border-radius: 10px;
+            padding: 20px 24px;
+            margin: 16px 0;
+            font-family: "JetBrains Mono", "Fira Code", monospace;
+            font-size: 0.83em;
+            line-height: 1.7;
+            overflow-x: auto;
+        }
+
+        @media (max-width: 600px) {
+            .hero { padding: 32px 20px; }
+            .hero h1 { font-size: 1.3em; }
+            .section { padding: 24px 18px; }
+        }
+
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(16px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+
+    <a href="../research.html" class="back-link">← 返回科研摸索</a>
+
+    <!-- ==================== Hero ==================== -->
+    <header class="hero">
+        <div class="badge">ROS2 · 计算机视觉 · 手眼标定 · 机械臂</div>
+        <h1>拆药板视觉引导抓取系统</h1>
+        <p style="font-size:1.05em; color: var(--text); max-width: 640px; margin: 12px auto;">
+            药房自动化项目：使用 Kinova 机械臂 + Intel D455 深度相机，
+            实现药板的视觉识别、三维定位与自动拾放。
+        </p>
+        <div class="meta">
+            <span>👤 PUMA 等</span>
+            <span>📅 2025.09–2025.12</span>
+        </div>
+        <div style="margin-top: 16px;">
+            <span class="tag blue">Python</span>
+            <span class="tag blue">ROS2</span>
+            <span class="tag blue">OpenCV</span>
+            <span class="tag green">YOLOv8</span>
+            <span class="tag green">Intel D455</span>
+            <span class="tag amber">Kinova Gen3</span>
+            <span class="tag amber">MoveIt 2</span>
+        </div>
+    </header>
+
+    <!-- ==================== 1. 项目总览 ==================== -->
+    <section class="section">
+        <h2>📋 项目背景与目标</h2>
+        <p>
+            在医院药房与零售药店，药品拆零作业仍高度依赖人工操作。
+            药师需根据处方将大包装药品拆分为"片"或"粒"分发给患者，
+            流程繁琐耗时、人力资源浪费严重。
+            药品包装规格多样、药片易碎等特点使传统工业机器人难以直接适用。
+        </p>
+        <p><strong>本学期目标：</strong>将药板从一个位置拾起，放置到指定黑框中。</p>
+        <div class="step-flow">
+            <span class="step-badge">🔍 视觉识别<br>药板+黑框</span>
+            <span class="step-arrow">→</span>
+            <span class="step-badge">🖐️ 末端工具<br>粘取拾放</span>
+            <span class="step-arrow">→</span>
+            <span class="step-badge">🤖 轨迹规划<br>运动执行</span>
+            <span class="step-arrow">→</span>
+            <span class="step-badge">🔗 系统整合<br>四部分联调</span>
+        </div>
+    </section>
+
+    <!-- ==================== 2. 团队分工 ==================== -->
+    <section class="section">
+        <h2>👥 团队分工</h2>
+        <div class="grid-2">
+            <div class="mini-card">
+                <h4>🔧 组员A</h4>
+                <p style="margin:0; font-size:0.9em;">
+                    粘取工具特殊化设计与 3D 打印、编写舵机控制代码（PCA9685 驱动 MG995/SG90）、
+                    网络连接与 ROS2 功能包构建。
+                </p>
+            </div>
+            <div class="mini-card highlight">
+                <h4>🎯 PUMA（本人）</h4>
+                <p style="margin:0; font-size:0.9em;">
+                    <strong>放置框识别</strong>、<strong>深度相机三维定位</strong>、<strong>手眼标定</strong>与实机验证。
+                </p>
+            </div>
+            <div class="mini-card">
+                <h4>🤖 组员B</h4>
+                <p style="margin:0; font-size:0.9em;">
+                    设计操作流程、编写 Kinova Gen3 机械臂运动规划与执行代码，
+                    实现行为树驱动的原子动作序列。
+                </p>
+            </div>
+            <div class="mini-card">
+                <h4>🧠 组员C</h4>
+                <p style="margin:0; font-size:0.9em;">
+                    训练 YOLOv8 模型识别药板（数据采集→增强→GPU训练→实机部署），
+                    完成四部分的整合与精度微调。
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== 3. 技术路线总览 ==================== -->
+    <section class="section">
+        <h2>🏗️ 系统架构总览</h2>
+        <p>
+            系统采用<strong>ROS2 + MoveIt 2</strong> 框架，由四个核心节点构成
+            "状态 → 决策 → 执行"递进式控制流水线：
+        </p>
+        <table class="obs-table">
+            <thead>
+                <tr><th>层级</th><th>节点</th><th>职责</th></tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="dim" rowspan="2">感知层</td>
+                    <td>视觉通信节点</td>
+                    <td>异步接收 A/B 点数据，以 PoseStamped 格式转发至全局话题，保证最低延迟</td>
+                </tr>
+                <tr>
+                    <td>识别节点（本人）</td>
+                    <td>深度相机 + OpenCV 识别放置框，输出目标三维位姿</td>
+                </tr>
+                <tr>
+                    <td class="dim">决策层</td>
+                    <td>任务调度节点</td>
+                    <td>服务化管理各节点启动，A/B 点数据齐备且空闲时触发任务规划</td>
+                </tr>
+                <tr>
+                    <td class="dim">执行层</td>
+                    <td>运动控制节点</td>
+                    <td>行为树驱动：安全抬升 → 抓取 → 转运 → 空中调姿 → 放置 → 复位，异常自动回退</td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="step-flow" style="margin-top: 16px;">
+            <span class="step-badge">📡 视觉感知</span>
+            <span class="step-arrow">→</span>
+            <span class="step-badge">📨 通信转发</span>
+            <span class="step-arrow">→</span>
+            <span class="step-badge">🧠 任务决策</span>
+            <span class="step-arrow">→</span>
+            <span class="step-badge">🤖 运动执行</span>
+        </div>
+    </section>
+
+    <!-- ==================== 4. 放置框识别（本人核心工作1） ==================== -->
+    <section class="section accent">
+        <h2>🔍 放置框视觉识别算法设计</h2>
+        <p style="margin-bottom: 20px;"><strong>这是我负责的核心模块之一。</strong>目标是从深度相机画面中稳定、准确地识别出黑色放置框的位置和姿态。</p>
+
+        <h3>图像预处理流水线</h3>
+        <div class="step-flow">
+            <span class="step-badge">📸 获取图像</span>
+            <span class="step-arrow">→</span>
+            <span class="step-badge">⬜ 灰度化</span>
+            <span class="step-arrow">→</span>
+            <span class="step-badge">🌫️ 高斯模糊<br><small>抑制噪声</small></span>
+            <span class="step-arrow">→</span>
+            <span class="step-badge">📐 Canny 边缘检测</span>
+            <span class="step-arrow">→</span>
+            <span class="step-badge">🔗 形态学闭运算<br><small>强化边缘连续性</small></span>
+        </div>
+
+        <h3>识别与判定流程</h3>
+        <ol>
+            <li><strong>边缘清晰度评分：</strong>基于图像边缘的平均强度计算每个候选矩形框的清晰度分数</li>
+            <li><strong>多特征综合筛选：</strong>同时识别到多个矩形框时，比较每个候选框的边缘清晰度、面积、长宽比，选择最优者输出</li>
+            <li><strong>物体区分：</strong>通过尺寸和形状特征区分放置框与药板，防止将药板误识别为放置框</li>
+        </ol>
+
+        <h3>动态稳定机制</h3>
+        <p>
+            考虑到机械臂运动过程中可能遮挡摄像头或环境光照变化导致偶发性误识别，
+            引入了<strong>帧间一致性滤波</strong>：
+        </p>
+        <ul>
+            <li><strong>初始帧：</strong>提高首次识别阈值，建立可信参考结果</li>
+            <li><strong>后续帧：</strong>持续识别并比较相邻帧结果——差距较小时输出当前识别结果，
+                差距较大时保持上一帧结果，避免输出跳变</li>
+        </ul>
+        <p>该机制有效抑制了遮挡和光照波动对机械臂运动规划的干扰。</p>
+    </section>
+
+    <!-- ==================== 5. 演示视频 ==================== -->
+    <section class="section accent">
+        <h2>🎬 放置框识别演示</h2>
+        <div style="text-align: center;">
+            <video controls preload="metadata" style="max-width:100%; max-height:500px; border-radius: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.06);">
+                <source src="medicine-unpacking-robot/放置框识别.MP4" type="video/mp4">
+            </video>
+        </div>
+        <p style="text-align: center; color: var(--muted); font-size: 0.85em; margin-top: 8px;">
+            放置框识别实机演示：稳定检测 + 帧间一致性滤波
+        </p>
+    </section>
+
+    <!-- ==================== 6. 深度相机三维定位（本人核心工作2） ==================== -->
+    <section class="section accent">
+        <h2>📷 深度相机三维坐标获取</h2>
+        <p><strong>这是我负责的核心模块之二。</strong>将二维识别结果映射到三维空间，为机械臂提供精确的抓取/放置坐标。</p>
+
+        <h3>硬件与驱动</h3>
+        <div class="grid-2">
+            <div class="mini-card">
+                <h4>🔌 Intel RealSense D455</h4>
+                <p style="margin:0; font-size:0.9em;">
+                    安装 librealsense2 SDK，调用相机 API 获取 RGB 与深度数据流。
+                    安装 realsense-ros 驱动，将相机数据以 ROS2 话题形式发布。
+                </p>
+            </div>
+            <div class="mini-card">
+                <h4>📡 ROS2 话题对接</h4>
+                <p style="margin:0; font-size:0.9em;">
+                    接收 <code>/camera/color/image_raw</code>（RGB）、
+                    <code>/camera/depth/image_rect_raw</code>（深度）、
+                    <code>/camera/color/camera_info</code>（内参），
+                    通过深度图查询识别框中心点的三维坐标。
+                </p>
+            </div>
+        </div>
+
+        <h3>深度相机的使用</h3>
+        <div class="grid-2" style="margin-top: 12px;">
+            <div style="text-align: center;">
+                <img src="medicine-unpacking-robot/深度相机1.png"  style="max-width:100%; border-radius:10px; box-shadow:0 2px 8px rgba(0,0,0,0.06);">
+                <p style="color: var(--muted); font-size:0.8em; margin-top:4px;"></p>
+            </div>
+            <div style="text-align: center;">
+                <img src="medicine-unpacking-robot/深度相机2.png"  style="max-width:100%; border-radius:10px; box-shadow:0 2px 8px rgba(0,0,0,0.06);">
+                <p style="color: var(--muted); font-size:0.8em; margin-top:4px;"></p>
+            </div>
+        </div>
+
+        <h3>三维坐标提取流程</h3>
+        <ol>
+            <li>生成点云图，运用 <strong>RANSAC</strong> 算法识别桌面平面</li>
+            <li>运用 <strong>PCA</strong> 算法判定识别框的主方向</li>
+            <li>运用 <strong>最小二乘法</strong> 求得精确的框体几何参数</li>
+            <li>结合识别框中心像素坐标 + 深度图 + 相机内参，计算相对于相机的三维坐标</li>
+        </ol>
+    </section>
+
+    <!-- ==================== 7. 手眼标定（本人核心工作3） ==================== -->
+    <section class="section accent">
+        <h2>📐 手眼标定实现与优化</h2>
+        <p><strong>这是我负责的核心模块之三。</strong>将相机坐标系下的物体位姿转换到机器人基坐标系，是实现视觉引导抓取的关键桥梁。</p>
+
+        <h3>标定步骤</h3>
+        <div class="step-flow">
+            <span class="step-badge">1️⃣ 制作标定板<br><small>25mm×25mm · 5×8 方格</small></span>
+            <span class="step-arrow">→</span>
+            <span class="step-badge">2️⃣ 数据采集<br><small>多次调整位姿识别</small></span>
+            <span class="step-arrow">→</span>
+            <span class="step-badge">3️⃣ 矩阵求解<br><small>多组数据联合解算</small></span>
+        </div>
+
+        <h3>四项核心优化</h3>
+        <table class="obs-table">
+            <thead>
+                <tr><th>优化项</th><th>方法</th><th>效果</th></tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="dim">亚像素角点优化</td>
+                    <td>对标定板角点进行亚像素级精炼 (cornerSubPix)</td>
+                    <td>识别精度从像素级提升至亚像素级</td>
+                </tr>
+                <tr>
+                    <td class="dim">有效性审查</td>
+                    <td>对每次识别的数据检查重投影误差，偏差过大则舍去</td>
+                    <td>过滤因运动模糊等因素导致的劣质采样</td>
+                </tr>
+                <tr>
+                    <td class="dim">重复性审查</td>
+                    <td>与已录入数据比较相似度，高度重合的数据去重</td>
+                    <td>保证标定数据的多样性与独立性</td>
+                </tr>
+                <tr>
+                    <td class="dim">双姿态表示</td>
+                    <td>同时输出欧拉角与四元数两种姿态表示</td>
+                    <td>兼容机械臂控制程序的不同接口需求</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h3>实机标定与验证</h3>
+        <div class="grid-2">
+            <div style="text-align: center;">
+                <img src="medicine-unpacking-robot/手眼标定.jpg" alt="手眼标定实机" style="max-width:100%; border-radius:10px; box-shadow:0 2px 8px rgba(0,0,0,0.06);">
+                <p style="color: var(--muted); font-size:0.8em; margin-top:4px;">手眼标定实机操作过程</p>
+            </div>
+            <div style="text-align: center;">
+                <img src="medicine-unpacking-robot/机器人展示.jpg" alt="机器人系统展示" style="max-width:100%; border-radius:10px; box-shadow:0 2px 8px rgba(0,0,0,0.06);">
+                <p style="color: var(--muted); font-size:0.8em; margin-top:4px;">Kinova Gen3 机械臂 + 粘取工具 + D455 深度相机</p>
+            </div>
+        </div>
+
+        <h3>标定矩阵变换关系</h3>
+        <p style="text-align: center; font-weight: 600;">
+            目标物在机器人基坐标系下的位姿 = <sup>base</sup>T<sub>cam</sub> × 目标物在相机坐标系下的位姿
+        </p>
+        <p>
+            其中 <sup>base</sup>T<sub>cam</sub>（手眼矩阵）通过 Tsai / Park 方法求解，
+            建立起<strong>相机 → 机械臂基座</strong>的坐标映射关系。
+            标定完成后，识别节点输出直接以 PoseStamped 发送至运动规划节点，无需任何中间转换。
+        </p>
+    </section>
+
+    <!-- ==================== 8. 实机联调 ==================== -->
+    <section class="section">
+        <h2>🔗 实机系统联调与验证</h2>
+        <p>完成从视觉识别到机械臂运动的完整闭环：</p>
+
+        <table class="obs-table">
+            <thead>
+                <tr><th>阶段</th><th>工作内容</th></tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="dim">硬件准备</td>
+                    <td>制作 25mm×25mm、5×8 棋盘格标定板并安装至机械臂末端</td>
+                </tr>
+                <tr>
+                    <td class="dim">软件编写</td>
+                    <td>连接主机 → 启动 D455 相机 → 编写并运行机械臂位姿读取与发布程序</td>
+                </tr>
+                <tr>
+                    <td class="dim">数据对齐</td>
+                    <td>根据运动规划节点的话题名称、消息格式、单位和接收频率，
+                        调整识别节点的输出，保证数据格式一致</td>
+                </tr>
+                <tr>
+                    <td class="dim">高度补偿</td>
+                    <td>根据粘取工具的实际安装高度，对 Z 轴坐标进行精细补偿，
+                        精度精确到小数点后三位</td>
+                </tr>
+                <tr>
+                    <td class="dim">坐标变换</td>
+                    <td>通过手眼标定矩阵，将药板和黑框相对于相机的位姿
+                        转化为机器人基坐标系下的位姿</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <blockquote>
+            最终实现了从"视觉识别 → 三维定位 → 手眼标定变换 → 机械臂运动执行"的完整闭环。
+        </blockquote>
+    </section>
+
+    <footer style="text-align: center; margin-top: 40px; padding: 24px 0; color: var(--muted); font-size: 0.9em; border-top: 1px solid var(--border);">
+        <a href="../research.html" style="color: var(--primary); text-decoration: none; font-weight: 600;">← 返回科研摸索</a>
+        &nbsp;·&nbsp; PUMA &nbsp;·&nbsp; 拆药板视觉引导抓取系统
+    </footer>
+
+</div>
+
+</body>
+</html>

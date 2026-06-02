@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>技术与生活</title>
+    <style>
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; background: #F3F4F6; color: #1F2937; margin: 0; padding: 40px 20px; line-height: 1.6; }
+        .container { max-width: 800px; margin: 0 auto; background: white; padding: 40px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); }
+        .back-btn { display: inline-block; margin-bottom: 20px; color: #4F46E5; text-decoration: none; font-weight: bold; }
+        .back-btn:hover { text-decoration: underline; }
+        h1 { color: #4F46E5; border-bottom: 2px solid #EEF2FF; padding-bottom: 10px; }
+        p.lead { color: #6B7280; }
+
+        .sub-card {
+            display: block; margin-top: 20px; padding: 20px;
+            background: #F9FAFB; border-radius: 10px;
+            border-left: 4px solid #EC4899;
+            text-decoration: none; color: inherit;
+            transition: all 0.2s;
+        }
+        .sub-card:hover { background: #FDF2F8; transform: translateX(5px); }
+        .sub-card h3 { margin: 0 0 5px 0; color: #DB2777; }
+        .sub-card p { margin: 0; color: #6B7280; font-size: 0.9em; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="index.html" class="back-btn">← 返回主页</a>
+        <h1>🤖 技术与生活</h1>
+        <p class="lead">将技术应用于真实场景，探索工程与生活的交汇点。</p>
+
+        <a href="life/personalized-llm-chatbot.html" class="sub-card">
+            <h3>💬 个性化 LLM 对话智能体</h3>
+            <p>2025 | ESP32 边缘部署 · 云端 API 集成 · System Prompt 人设 · 记忆系统 · TTS 语音合成</p>
+        </a>
+
+        <a href="life/qq-chatbot-qwen.html" class="sub-card">
+            <h3>🐧 NapCat + Qwen 7B 本地群聊机器人</h3>
+            <p>2025 | GitHub 开源 NapCat 接入 QQ 协议 · Ollama 本地推理 · 四层工程架构 · 异步并发 · 记忆流水线</p>
+        </a>
+    </div>
+</body>
+</html>

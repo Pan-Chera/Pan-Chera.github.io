@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>个人主页 — PUMA</title>
+    <style>
+        :root {
+            --primary-color: #4F46E5;
+            --bg-color: #F3F4F6;
+            --text-main: #1F2937;
+            --text-muted: #6B7280;
+            --card-bg: #FFFFFF;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-color);
+            background-image: linear-gradient(135deg, #fdfbfb 0%, #ebedee 100%);
+            color: var(--text-main);
+            margin: 0; padding: 0;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 0 20px;
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        .hero-card {
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 40px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            margin-bottom: 30px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        .hero-card::before {
+            content: '';
+            position: absolute; top: 0; left: 0; right: 0;
+            height: 5px;
+            background: linear-gradient(90deg, #4F46E5, #10B981, #F59E0B);
+        }
+        .hero-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 { margin: 0 0 10px 0; color: var(--text-main); font-size: 1.8em; }
+        .subtitle { color: var(--text-muted); font-size: 1.1em; margin-bottom: 16px; }
+        .bio { color: var(--text-main); font-size: 0.95em; max-width: 500px; margin: 0 auto; }
+
+        .skills {
+            display: flex; justify-content: center; flex-wrap: wrap;
+            gap: 8px; margin-top: 20px;
+        }
+        .skill-tag {
+            background: #EEF2FF; color: var(--primary-color);
+            padding: 4px 14px; border-radius: 20px;
+            font-size: 0.85em; font-weight: 500;
+        }
+
+        .section-title {
+            font-size: 1.4em; margin: 40px 0 20px 0;
+            color: var(--text-main);
+            border-left: 4px solid var(--primary-color);
+            padding-left: 10px;
+        }
+
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .project-card {
+            background: var(--card-bg);
+            border-radius: 15px; padding: 25px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+            text-decoration: none; color: inherit; display: block;
+        }
+        .project-card:hover {
+            transform: translateY(-5px) scale(1.02);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.08);
+        }
+        .project-card h3 { margin: 0 0 8px 0; color: var(--primary-color); font-size: 1.1em; }
+        .project-card p { margin: 0; color: var(--text-muted); font-size: 0.9em; }
+
+        /* 小游戏样式 */
+        .game-card {
+            background: var(--card-bg);
+            border-radius: 20px; padding: 30px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            margin-bottom: 30px;
+        }
+        .game-header {
+            display: flex; justify-content: space-between; align-items: center;
+            margin-bottom: 15px;
+        }
+        .game-header h2 { margin: 0; color: var(--primary-color); font-size: 1.2em; }
+        .reset-btn {
+            background: #EEF2FF; color: var(--primary-color);
+            border: none; padding: 6px 14px; border-radius: 10px;
+            cursor: pointer; font-weight: bold; font-size: 0.85em;
+            transition: 0.2s;
+        }
+        .reset-btn:hover { background: var(--primary-color); color: white; }
+        .game-board {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 8px; max-width: 320px; margin: 0 auto;
+        }
+        .card {
+            aspect-ratio: 1;
+            background: #EEF2FF; border-radius: 12px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1.8em; cursor: pointer;
+            color: transparent;
+            transition: transform 0.3s, background 0.3s;
+            user-select: none;
+        }
+        .card.flipped {
+            background: white; color: initial;
+            transform: scale(1.05);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+        .card.matched {
+            background: #D1FAE5; color: initial; cursor: default;
+        }
+
+        .footer-links {
+            text-align: center; margin-top: 50px; padding-top: 20px;
+            border-top: 1px solid #E5E7EB;
+        }
+        .footer-links a {
+            display: inline-block; margin: 0 10px;
+            color: var(--text-muted); text-decoration: none;
+            transition: color 0.2s;
+        }
+        .footer-links a:hover { color: var(--primary-color); }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+
+        <div class="game-card">
+            <div class="game-header">
+                <h2>🎮 摸鱼挑战：记忆翻牌</h2>
+                <button class="reset-btn" onclick="initGame()">重新开始</button>
+            </div>
+            <p style="color: #6B7280; font-size: 0.9em; margin-top: 0;">点击卡片寻找相同的图案，看你需要多少次才能通关！</p>
+            <div class="game-board" id="gameBoard"></div>
+            <p id="movesCount" style="margin-top: 15px; font-weight: bold; color: var(--primary-color); display: none;">步数: 0</p>
+        </div>
+
+        <header class="hero-card">
+            <h1>你好，我是 PUMA </h1>
+            <div class="subtitle">北京航空航天大学 · 具身智能-人工智能专业</div>
+            <p class="bio">对具身智能和深度强化学习充满好奇，喜欢把算法从论文里搬出来，在真实的机械臂、灵巧手和嵌入式设备上跑起来。欢迎来到我的主页。</p>
+
+            <div class="skills">
+                <span class="skill-tag">Python</span>
+                <span class="skill-tag">C++</span>
+                <span class="skill-tag">ROS2</span>
+                <span class="skill-tag">PyTorch</span>
+                <span class="skill-tag">Reinforcement Learning</span>
+                <span class="skill-tag">Computer Vision</span>
+                <span class="skill-tag">OpenCV</span>
+                <span class="skill-tag">LLM / Prompt Engineering</span>
+                <span class="skill-tag">Embedded Systems</span>
+            </div>
+        </header>
+
+        <main>
+            <h2 class="section-title">💻项目与成果</h2>
+            <p style="color: var(--text-muted); font-size: 0.85em; margin: -10px 0 20px 14px;">点击下方卡片，了解更多细节 →</p>
+            <div class="projects-grid">
+                <a href="projects.html" class="project-card">
+                    <h3>📂 项目经历</h3>
+                    <p>我主导或参与过的工程项目，涵盖算法设计、系统搭建与实机部署的全流程。</p>
+                </a>
+
+                <a href="research.html" class="project-card">
+                    <h3>📊 科研探索</h3>
+                    <p>文献阅读、技术调研与实验记录，探索感兴趣的方向，把思考过程沉淀下来。</p>
+                </a>
+
+                <a href="life.html" class="project-card">
+                    <h3>🎨 技术与生活</h3>
+                    <p>课业之外捣鼓的小东西。从硬件到软件，从想法到跑通，享受动手的乐趣。</p>
+                </a>
+
+                <a href="awards.html" class="project-card">
+                    <h3>🚀 核心荣誉</h3>
+                    <p>学术论文、竞赛获奖与其他认可。</p>
+                </a>
+            </div>
+
+            <h2 class="section-title">🚧 正在进行</h2>
+            <div class="projects-grid">
+                <div class="project-card" style="cursor: default; border-left: 4px solid #F59E0B;">
+                    <h3>🔬 移动悬吊 RL 系统实物验证</h3>
+                    <p>搭建微缩台架，完成从数字孪生到物理实机的 Sim-to-Real 跨域迁移。</p>
+                    <span style="display: inline-block; margin-top: 10px; background: #FFFBEB; color: #D97706; padding: 2px 10px; border-radius: 10px; font-size: 0.78em; font-weight: 600;">📌 大创项目</span>
+                </div>
+                <div class="project-card" style="cursor: default; border-left: 4px solid #F59E0B;">
+                    <h3>🤖 灵巧手 VLA 顶层视觉集成</h3>
+                    <p>将 VLM/VLA 作为宏观决策层，与底层 RL 力控小网络协同，实现有视觉的柔性抓取。</p>
+                    <span style="display: inline-block; margin-top: 10px; background: #FFFBEB; color: #D97706; padding: 2px 10px; border-radius: 10px; font-size: 0.78em; font-weight: 600;">📌 个人研究</span>
+                </div>
+                <div class="project-card" style="cursor: default; border-left: 4px solid #F59E0B;">
+                    <h3>🌕 月球基地多机器人协同智能操作</h3>
+                    <p>面向月面设施建设的异构多机协同方案：覆盖协同勘察、大尺寸搬运、桁架组装与精细插接四项递进式任务。</p>
+                    <span style="display: inline-block; margin-top: 10px; background: #FFFBEB; color: #D97706; padding: 2px 10px; border-radius: 10px; font-size: 0.78em; font-weight: 600;">📌 挑战杯·揭榜挂帅</span>
+                </div>
+            </div>
+        </main>
+
+    </div>
+
+    <script>
+        const emojis = ['🚀', '🤖', '💡', '🌍', '🎯', '🎨', '🔥', '💻'];
+        let cards = [...emojis, ...emojis];
+        let hasFlippedCard = false;
+        let lockBoard = false;
+        let firstCard, secondCard;
+        let moves = 0;
+        let matches = 0;
+
+        const board = document.getElementById('gameBoard');
+        const movesDisplay = document.getElementById('movesCount');
+
+        function shuffle(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+        }
+
+        function initGame() {
+            board.innerHTML = '';
+            moves = 0;
+            matches = 0;
+            hasFlippedCard = false;
+            lockBoard = false;
+            movesDisplay.style.display = 'block';
+            movesDisplay.innerText = `步数: ${moves}`;
+            shuffle(cards);
+            cards.forEach(emoji => {
+                const cardElement = document.createElement('div');
+                cardElement.classList.add('card');
+                cardElement.dataset.emoji = emoji;
+                cardElement.innerText = emoji;
+                cardElement.addEventListener('click', flipCard);
+                board.appendChild(cardElement);
+            });
+        }
+
+        function flipCard() {
+            if (lockBoard) return;
+            if (this === firstCard) return;
+            this.classList.add('flipped');
+            if (!hasFlippedCard) {
+                hasFlippedCard = true;
+                firstCard = this;
+                return;
+            }
+            secondCard = this;
+            moves++;
+            movesDisplay.innerText = `步数: ${moves}`;
+            checkForMatch();
+        }
+
+        function checkForMatch() {
+            let isMatch = firstCard.dataset.emoji === secondCard.dataset.emoji;
+            isMatch ? disableCards() : unflipCards();
+        }
+
+        function disableCards() {
+            firstCard.removeEventListener('click', flipCard);
+            secondCard.removeEventListener('click', flipCard);
+            firstCard.classList.add('matched');
+            secondCard.classList.add('matched');
+            matches++;
+            resetBoard();
+            if (matches === emojis.length) {
+                setTimeout(() => alert(`🎉 恭喜通关！你总共用了 ${moves} 步。`), 500);
+            }
+        }
+
+        function unflipCards() {
+            lockBoard = true;
+            setTimeout(() => {
+                firstCard.classList.remove('flipped');
+                secondCard.classList.remove('flipped');
+                resetBoard();
+            }, 1000);
+        }
+
+        function resetBoard() {
+            [hasFlippedCard, lockBoard] = [false, false];
+            [firstCard, secondCard] = [null, null];
+        }
+
+        initGame();
+    </script>
+
+</body>
+</html>

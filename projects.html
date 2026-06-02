@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>项目经历目录</title>
+    <style>
+        /* 基础样式与之前保持一致 */
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; background: #F3F4F6; color: #1F2937; margin: 0; padding: 40px 20px; line-height: 1.6; }
+        .container { max-width: 800px; margin: 0 auto; background: white; padding: 40px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); }
+        .back-btn { display: inline-block; margin-bottom: 20px; color: #4F46E5; text-decoration: none; font-weight: bold; }
+        h1 { color: #4F46E5; border-bottom: 2px solid #EEF2FF; padding-bottom: 10px; }
+        
+        /* 子页面导航卡片样式 */
+        .sub-page-card {
+            display: block;
+            margin-top: 20px;
+            padding: 20px;
+            background: #F9FAFB;
+            border-radius: 10px;
+            border-left: 4px solid #10B981; /* 项目板块主题色 */
+            text-decoration: none;
+            color: inherit;
+            transition: all 0.2s;
+        }
+        .sub-page-card:hover { background: #EEF2FF; transform: translateX(5px); }
+        .sub-page-card h3 { margin: 0 0 5px 0; color: #10B981; }
+        .sub-page-card p { margin: 0; color: #6B7280; font-size: 0.9em; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="index.html" class="back-btn">← 返回主页</a>
+        <h1>📂 项目经历</h1>
+        <p>点击下方卡片查看具体项目详情：</p>
+        
+        <a href="projects/linkerhand-flexible-grasping.html" class="sub-page-card">
+            <h3>🖐️ 基于小型网络RL的灵巧手柔性力控系统</h3>
+            <p>2026 | LinkerHand L6 · SAC + VecEnv · 分层阻抗控制 · 多指自适应抓取</p>
+        </a>
+
+        <a href="projects/mobile-suspension-rl-compensation.html" class="sub-page-card">
+            <h3>🚀 基于强化学习的移动悬吊大时滞前瞻补偿方法</h3>
+            <p>2024-2026 | PPO深度强化学习 · 微重力模拟 · 北航学报 · 冯如杯</p>
+        </a>
+    </div>
+</body>
+</html>

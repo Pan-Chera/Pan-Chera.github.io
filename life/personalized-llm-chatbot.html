@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>个性化 LLM 对话智能体 — PUMA</title>
+    <style>
+        :root {
+            --primary: #4F46E5; --primary-light: #EEF2FF;
+            --accent: #EC4899; --accent-light: #FDF2F8;
+            --warning: #F59E0B; --warning-light: #FFFBEB;
+            --danger: #EF4444; --danger-light: #FEF2F2;
+            --bg: #F3F4F6; --card: #FFFFFF;
+            --text: #1F2937; --muted: #6B7280; --border: #E5E7EB;
+        }
+        * { box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Noto Sans SC", sans-serif;
+            background: var(--bg); color: var(--text);
+            margin: 0; padding: 0; line-height: 1.75;
+            background-image: linear-gradient(135deg, #fdfbfb 0%, #ebedee 100%);
+        }
+        .container { max-width: 900px; margin: 0 auto; padding: 20px; }
+        .back-link {
+            display: inline-flex; align-items: center; gap: 6px;
+            color: var(--primary); text-decoration: none;
+            font-weight: 600; font-size: 0.95em; margin-bottom: 24px;
+            transition: transform 0.2s;
+        }
+        .back-link:hover { transform: translateX(-4px); }
+        .hero {
+            background: var(--card); border-radius: 20px; padding: 48px 40px;
+            text-align: center; box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            margin-bottom: 30px; animation: fadeUp 0.8s ease;
+            position: relative; overflow: hidden;
+        }
+        .hero::before {
+            content: ''; position: absolute; top: 0; left: 0; right: 0; height: 5px;
+            background: linear-gradient(90deg, var(--accent), var(--primary), var(--warning));
+        }
+        .hero .badge {
+            display: inline-block; background: var(--accent-light); color: var(--accent);
+            padding: 4px 16px; border-radius: 20px; font-size: 0.85em; font-weight: 600;
+            margin-bottom: 16px;
+        }
+        .hero h1 {
+            font-size: 2em; margin: 0 0 10px 0;
+            background: linear-gradient(135deg, var(--accent), var(--primary));
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .hero .meta {
+            color: var(--muted); font-size: 0.95em;
+            display: flex; justify-content: center; gap: 24px; flex-wrap: wrap;
+        }
+        .hero .meta span { display: inline-flex; align-items: center; gap: 4px; }
+        .section {
+            background: var(--card); border-radius: 16px; padding: 36px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.04); margin-bottom: 24px;
+            animation: fadeUp 0.6s ease;
+        }
+        .section h2 { margin: 0 0 20px 0; font-size: 1.4em; display: flex; align-items: center; gap: 10px; }
+        .section h3 { margin: 24px 0 12px 0; font-size: 1.15em; color: var(--text); }
+        .section h4 { margin: 16px 0 8px 0; }
+        .section p { margin: 0 0 12px 0; }
+        .section ul, .section ol { margin: 8px 0; padding-left: 20px; }
+        .section li { margin-bottom: 6px; }
+        .section.accent  { border-left: 4px solid var(--accent); }
+        .section.warning { border-left: 4px solid var(--warning); }
+        .section.danger  { border-left: 4px solid var(--danger); }
+        .tag {
+            display: inline-block; padding: 3px 12px; border-radius: 12px;
+            font-size: 0.82em; font-weight: 600; margin: 2px 4px 2px 0;
+        }
+        .tag.blue   { background: var(--primary-light); color: var(--primary); }
+        .tag.green  { background: #ECFDF5; color: #059669; }
+        .tag.amber  { background: var(--warning-light); color: #D97706; }
+        .tag.pink   { background: var(--accent-light); color: var(--accent); }
+        .obs-table {
+            width: 100%; border-collapse: collapse; margin: 16px 0; font-size: 0.88em;
+        }
+        .obs-table th {
+            background: #F9FAFB; padding: 10px 14px; text-align: left;
+            font-weight: 700; border-bottom: 2px solid var(--border);
+        }
+        .obs-table td {
+            padding: 8px 14px; border-bottom: 1px solid var(--border); vertical-align: top;
+        }
+        .obs-table .dim { font-weight: 700; color: var(--accent); }
+        .grid-2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; }
+        .grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px; }
+        .mini-card {
+            background: #F9FAFB; border-radius: 10px; padding: 18px;
+            border: 1px solid var(--border);
+        }
+        .mini-card.highlight {
+            border-left: 4px solid var(--accent); background: var(--accent-light);
+        }
+        .mini-card h4 { margin: 0 0 8px 0; }
+        .step-flow {
+            display: flex; align-items: center; justify-content: center;
+            gap: 6px; flex-wrap: wrap; margin: 16px 0; font-size: 0.82em;
+        }
+        .step-badge {
+            background: var(--accent-light); color: var(--accent);
+            padding: 5px 12px; border-radius: 8px; font-weight: 700; white-space: nowrap;
+        }
+        .step-arrow { color: var(--muted); font-size: 1.1em; }
+        blockquote {
+            border-left: 4px solid var(--accent); background: var(--accent-light);
+            margin: 16px 0; padding: 14px 20px; border-radius: 0 10px 10px 0;
+            color: #9D174D; font-style: italic;
+        }
+        @media (max-width: 600px) {
+            .hero { padding: 32px 20px; } .hero h1 { font-size: 1.3em; }
+            .section { padding: 24px 18px; }
+        }
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(16px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+
+    <a href="../life.html" class="back-link">← 返回技术与生活</a>
+
+    <!-- ==================== Hero ==================== -->
+    <header class="hero">
+        <div class="badge">ESP32 · LLM · 边缘部署 · 个性化交互</div>
+        <h1>个性化 LLM 对话智能体</h1>
+        <p style="font-size:1.05em; color: var(--text); max-width: 640px; margin: 12px auto;">
+            基于 ESP32 边缘设备，集成云端大语言模型与角色化人机交互能力，
+            实现语音对话、表情反馈与个性化记忆的全栈部署。
+        </p>
+        <div class="meta">
+            <span>🔧 xiaozhi-esp32-main 固件</span>
+            <span>☁️ 阿里云服务器</span>
+            <span>📅 2025</span>
+        </div>
+        <div style="margin-top: 16px;">
+            <span class="tag pink">ESP32</span>
+            <span class="tag blue">LLM API</span>
+            <span class="tag green">TTS 语音合成</span>
+            <span class="tag amber">Prompt Engineering</span>
+            <span class="tag pink">记忆系统</span>
+        </div>
+    </header>
+
+    <!-- ==================== 1. 系统架构 ==================== -->
+    <section class="section">
+        <h2>🏗️ 系统架构</h2>
+        <p>设备端（ESP32 + 固件）与云端（阿里云服务器）协同工作：</p>
+
+        <div class="step-flow">
+            <span class="step-badge">🎤 语音输入<br><small>ESP32 拾音</small></span>
+            <span class="step-arrow">→</span>
+            <span class="step-badge">☁️ 云端 API<br><small>阿里云服务器</small></span>
+            <span class="step-arrow">→</span>
+            <span class="step-badge">🧠 LLM 推理<br><small>角色人设 + 记忆</small></span>
+            <span class="step-arrow">→</span>
+            <span class="step-badge">🔊 TTS 合成<br><small>角色原声克隆</small></span>
+            <span class="step-arrow">→</span>
+            <span class="step-badge">😊 表情反馈<br><small>LCD 显示</small></span>
+        </div>
+        <p style="text-align: center; color: var(--muted); font-size: 0.85em;">
+            全链路延迟 &lt; 2s，支持多轮对话上下文记忆
+        </p>
+
+        <h3>技术栈分层</h3>
+        <table class="obs-table">
+            <thead>
+                <tr><th>层级</th><th>技术选型</th><th>职责</th></tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="dim">设备层</td>
+                    <td>ESP32 + xiaozhi-esp32-main</td>
+                    <td>语音采集/播放、LCD 表情渲染、Wi-Fi 通信</td>
+                </tr>
+                <tr>
+                    <td class="dim">云端接口</td>
+                    <td>阿里云 ECS + 自建 API 网关</td>
+                    <td>消息路由、请求转发、负载缓冲</td>
+                </tr>
+                <tr>
+                    <td class="dim">AI 引擎</td>
+                    <td>LLM API（大语言模型）</td>
+                    <td>角色化对话生成、上下文理解</td>
+                </tr>
+                <tr>
+                    <td class="dim">人设系统</td>
+                    <td>System Prompt 工程</td>
+                    <td>角色性格锚定、语言风格约束、行为边界控制</td>
+                </tr>
+                <tr>
+                    <td class="dim">记忆系统</td>
+                    <td>云端会话状态管理</td>
+                    <td>短期对话上下文 + 长期用户画像持久化</td>
+                </tr>
+                <tr>
+                    <td class="dim">语音合成</td>
+                    <td>TTS + 角色语音样本</td>
+                    <td>克隆角色原声，输出自然语音</td>
+                </tr>
+                <tr>
+                    <td class="dim">表情系统</td>
+                    <td>固件格式转换 + 烧录</td>
+                    <td>角色表情包适配 LCD 屏幕并替换默认素材</td>
+                </tr>
+            </tbody>
+        </table>
+    </section>
+
+    <!-- ==================== 2. 核心技术模块 ==================== -->
+    <section class="section accent">
+        <h2>🔧 核心技术实现</h2>
+
+        <h3>1. 固件适配与烧录</h3>
+        <p>
+            基于开源 <strong>xiaozhi-esp32-main</strong> 固件进行二次开发。
+            ESP32 作为边缘计算节点，承担语音 I/O、Wi-Fi 通信与 LCD 驱动，
+            通过 HTTP/WebSocket 与云端 API 交互。固件经裁剪后烧录至开发板，
+            实现上电即用的独立对话终端。
+        </p>
+
+        <h3>2. 云端接口与 AI 引擎</h3>
+        <p>
+            在阿里云 ECS 上部署自建 API 网关，接收设备端语音数据后转发至
+            LLM API。服务端维护角色化的 <strong>System Prompt</strong>，包括：
+        </p>
+        <ul>
+            <li><strong>角色身份：</strong>姓名、背景、性格特质、说话方式</li>
+            <li><strong>语言约束：</strong>长度控制、语气风格、禁用话题</li>
+            <li><strong>关系定位：</strong>与用户的互动模式与情感基调</li>
+        </ul>
+
+        <h3>3. 记忆系统设计</h3>
+        <div class="grid-2">
+            <div class="mini-card highlight">
+                <h4>📝 短期记忆</h4>
+                <p style="margin:0; font-size:0.85em;">滑动窗口式上下文管理，保留最近 N 轮对话历史，
+                确保角色在多轮交互中的连贯性与一致性。</p>
+            </div>
+            <div class="mini-card highlight">
+                <h4>💾 长期记忆</h4>
+                <p style="margin:0; font-size:0.85em;">关键信息持久化（用户偏好、历史事件），
+                在对话生成时将相关内容注入 Prompt，实现跨会话的个性化交互。</p>
+            </div>
+        </div>
+
+        <h3>4. 角色语音合成</h3>
+        <p>
+            采集角色原始配音素材作为 TTS 模型的参考音色，将 LLM 生成的文本
+            合成为接近角色原声的自然语音。语音输出通过 ESP32 扬声器实时播放。
+        </p>
+
+        <h3>5. 表情包适配</h3>
+        <p>
+            将角色表情图片转换为固件兼容的颜色格式与分辨率限制，
+            替换固件内置的默认表情素材，使设备 LCD 在对话中展示角色专属表情。
+        </p>
+    </section>
+
+    <!-- ==================== 3. 演示视频 ==================== -->
+    <section class="section accent">
+        <h2>🎬 效果演示</h2>
+        <p style="text-align: center; margin-bottom: 16px;">云端 AI 生成角色生日祝福语音，通过 ESP32 设备端实时播放：</p>
+        <div style="text-align: center;">
+            <video controls preload="metadata" style="max-width:100%; max-height:480px; border-radius: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.06);">
+                <source src="personalized-llm-chatbot/演示视频：生日祝福.mp4" type="video/mp4">
+            </video>
+        </div>
+    </section>
+
+    <!-- ==================== 4. 技术总结 ==================== -->
+    <section class="section">
+        <h2>📊 技术价值与能力栈</h2>
+        <div class="grid-3">
+            <div class="mini-card">
+                <h4>☁️ 云端部署</h4>
+                <p style="margin:0; font-size:0.85em;">独立完成阿里云 ECS 环境搭建、API 网关设计与多服务编排</p>
+            </div>
+            <div class="mini-card">
+                <h4>🔌 边缘-云端协同</h4>
+                <p style="margin:0; font-size:0.85em;">ESP32 固件烧录与 Wi-Fi 通信，实现低延迟端云数据交换</p>
+            </div>
+            <div class="mini-card">
+                <h4>🧠 LLM 应用工程</h4>
+                <p style="margin:0; font-size:0.85em;">Prompt 工程、记忆系统设计、多模态输出（文本+语音+表情）</p>
+            </div>
+            <div class="mini-card">
+                <h4>🎙️ 语音技术</h4>
+                <p style="margin:0; font-size:0.85em;">TTS 音色克隆、语音合成集成</p>
+            </div>
+            <div class="mini-card">
+                <h4>🖼️ 嵌入式适配</h4>
+                <p style="margin:0; font-size:0.85em;">表情素材格式转换、资源裁剪与固件级替换</p>
+            </div>
+            <div class="mini-card">
+                <h4>🔗 全栈整合</h4>
+                <p style="margin:0; font-size:0.85em;">硬件→固件→网络→云端→AI→反馈，完整闭环部署</p>
+            </div>
+        </div>
+    </section>
+
+    <footer style="text-align: center; margin-top: 40px; padding: 24px 0; color: var(--muted); font-size: 0.9em; border-top: 1px solid var(--border);">
+        <a href="../life.html" style="color: var(--primary); text-decoration: none; font-weight: 600;">← 返回技术与生活</a>
+        &nbsp;·&nbsp; PUMA &nbsp;·&nbsp; 个性化 LLM 对话智能体
+    </footer>
+
+</div>
+
+</body>
+</html>

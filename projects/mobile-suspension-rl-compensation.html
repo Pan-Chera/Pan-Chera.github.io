@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>移动悬吊大时滞前瞻补偿 — PUMA</title>
+    <style>
+        :root {
+            --primary: #4F46E5;
+            --primary-light: #EEF2FF;
+            --accent: #10B981;
+            --accent-light: #ECFDF5;
+            --warning: #F59E0B;
+            --warning-light: #FFFBEB;
+            --danger: #EF4444;
+            --danger-light: #FEF2F2;
+            --bg: #F3F4F6;
+            --card: #FFFFFF;
+            --text: #1F2937;
+            --muted: #6B7280;
+            --border: #E5E7EB;
+        }
+
+        * { box-sizing: border-box; }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Noto Sans SC", sans-serif;
+            background: var(--bg);
+            background-image: linear-gradient(135deg, #fdfbfb 0%, #ebedee 100%);
+            color: var(--text);
+            margin: 0; padding: 0;
+            line-height: 1.75;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .back-link {
+            display: inline-flex; align-items: center; gap: 6px;
+            color: var(--primary); text-decoration: none;
+            font-weight: 600; font-size: 0.95em;
+            margin-bottom: 24px;
+            transition: transform 0.2s;
+        }
+        .back-link:hover { transform: translateX(-4px); }
+
+        /* Hero */
+        .hero {
+            background: var(--card);
+            border-radius: 20px;
+            padding: 48px 40px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            margin-bottom: 30px;
+            animation: fadeUp 0.8s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        .hero::before {
+            content: '';
+            position: absolute; top: 0; left: 0; right: 0;
+            height: 5px;
+            background: linear-gradient(90deg, var(--primary), var(--accent), var(--warning));
+        }
+        .hero .badge {
+            display: inline-block;
+            background: var(--primary-light);
+            color: var(--primary);
+            padding: 4px 16px;
+            border-radius: 20px;
+            font-size: 0.85em; font-weight: 600;
+            margin-bottom: 16px;
+        }
+        .hero h1 {
+            font-size: 2em; margin: 0 0 10px 0;
+            background: linear-gradient(135deg, var(--primary), #7C3AED);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .hero .meta {
+            color: var(--muted); font-size: 0.95em;
+            display: flex; justify-content: center;
+            gap: 24px; flex-wrap: wrap;
+        }
+        .hero .meta span { display: inline-flex; align-items: center; gap: 4px; }
+
+        /* Section */
+        .section {
+            background: var(--card);
+            border-radius: 16px;
+            padding: 36px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.04);
+            margin-bottom: 24px;
+            animation: fadeUp 0.6s ease;
+        }
+        .section h2 { margin: 0 0 20px 0; font-size: 1.4em; display: flex; align-items: center; gap: 10px; }
+        .section h3 { margin: 24px 0 12px 0; font-size: 1.1em; color: var(--text); }
+        .section h4 { margin: 16px 0 8px 0; }
+        .section p { margin: 0 0 12px 0; color: var(--text); }
+        .section ul { margin: 8px 0; padding-left: 20px; }
+        .section ul li { margin-bottom: 6px; }
+
+        .section.accent  { border-left: 4px solid var(--accent); }
+        .section.warning { border-left: 4px solid var(--warning); }
+        .section.danger  { border-left: 4px solid var(--danger); }
+
+        .tag {
+            display: inline-block;
+            padding: 3px 12px; border-radius: 12px;
+            font-size: 0.82em; font-weight: 600; margin: 2px 4px 2px 0;
+        }
+        .tag.blue   { background: var(--primary-light); color: var(--primary); }
+        .tag.green  { background: var(--accent-light);  color: #059669; }
+        .tag.amber  { background: var(--warning-light); color: #D97706; }
+        .tag.red    { background: var(--danger-light);  color: #DC2626; }
+
+        .obs-table {
+            width: 100%; border-collapse: collapse;
+            margin: 16px 0; font-size: 0.88em;
+        }
+        .obs-table th {
+            background: #F9FAFB; padding: 10px 14px;
+            text-align: left; font-weight: 700;
+            border-bottom: 2px solid var(--border);
+        }
+        .obs-table td {
+            padding: 8px 14px; border-bottom: 1px solid var(--border); vertical-align: top;
+        }
+        .obs-table .dim { font-weight: 700; color: var(--primary); }
+
+        .compare-table {
+            width: 100%; border-collapse: collapse;
+            margin: 16px 0; font-size: 0.9em;
+        }
+        .compare-table th {
+            background: #F9FAFB; padding: 12px 16px;
+            text-align: left; font-weight: 700;
+            border-bottom: 2px solid var(--border);
+        }
+        .compare-table td {
+            padding: 10px 16px; border-bottom: 1px solid var(--border); vertical-align: top;
+        }
+        .compare-table tr:hover td { background: #FAFAFA; }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 16px;
+        }
+
+        .mini-card {
+            background: #F9FAFB; border-radius: 10px; padding: 18px;
+            border: 1px solid var(--border);
+        }
+        .mini-card h4 { margin: 0 0 8px 0; }
+
+        .timeline { position: relative; padding-left: 28px; margin: 16px 0; }
+        .timeline::before {
+            content: '';
+            position: absolute; left: 8px; top: 0; bottom: 0;
+            width: 2px; background: var(--border);
+        }
+        .timeline-item {
+            position: relative; margin-bottom: 24px;
+        }
+        .timeline-item::before {
+            content: '';
+            position: absolute; left: -24px; top: 6px;
+            width: 12px; height: 12px;
+            border-radius: 50%;
+            background: var(--accent);
+            border: 2px solid white;
+            box-shadow: 0 0 0 2px var(--accent);
+        }
+        .timeline-item h4 { margin: 0 0 4px 0; font-size: 1em; }
+        .timeline-item .step-num {
+            font-size: 0.78em; font-weight: 700;
+            padding: 2px 8px; border-radius: 10px;
+            background: var(--accent-light); color: #059669;
+        }
+
+        blockquote {
+            border-left: 4px solid var(--primary);
+            background: var(--primary-light);
+            margin: 16px 0; padding: 14px 20px;
+            border-radius: 0 10px 10px 0;
+            color: #4338CA;
+            font-style: italic;
+        }
+
+        .highlight-box {
+            background: var(--warning-light);
+            border: 1px solid var(--warning);
+            border-radius: 10px;
+            padding: 12px 18px;
+            margin: 16px 0;
+            font-size: 0.9em;
+            color: #92400E;
+            text-align: center;
+        }
+
+        @media (max-width: 600px) {
+            .hero { padding: 32px 20px; }
+            .hero h1 { font-size: 1.4em; }
+            .section { padding: 24px 18px; }
+        }
+
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(16px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+
+    <a href="../projects.html" class="back-link">← 返回项目目录</a>
+
+    <!-- ==================== Hero ==================== -->
+    <header class="hero">
+        <div class="badge">深度强化学习 · 微重力模拟 · 主动悬吊控制</div>
+        <h1>基于强化学习的移动悬吊大时滞前瞻补偿方法</h1>
+        <p style="font-size:1.05em; color: var(--text); max-width: 640px; margin: 12px auto;">
+            针对月球车微重力测试设施的空间受限难题，提出移动跟随式主动悬吊方案，
+            以 PPO 深度强化学习攻克柔性索单向受力、多体耦合及物理大时滞导致的控制失效。
+        </p>
+        <div class="meta">
+            <span>👤 PUMA(第一作者) 等</span>
+            <span>🏫 北京航空航天大学</span>
+            <span>📰 北航学报</span>
+            <span>🏆 冯如杯</span>
+            <span>📅 2024.10-2026.4</span>
+        </div>
+        <div style="margin-top: 16px;">
+            <span class="tag blue">PyTorch</span>
+            <span class="tag blue">PPO</span>
+            <span class="tag blue">Deep RL</span>
+            <span class="tag green">ROS2</span>
+            <span class="tag green">Sim-to-Real</span>
+            <span class="tag amber">Digital Twin</span>
+            <span class="tag amber">MATLAB/Simulink</span>
+        </div>
+    </header>
+
+    <!-- ==================== Disclaimer ==================== -->
+    <div class="highlight-box">
+        <strong>⚠️ Note:</strong> All quantitative data presented below have been abstracted or normalized to comply with the <strong>double-blind peer-review policy</strong> and <strong>non-disclosure requirements</strong> of upcoming national competitions.
+    </div>
+
+    <!-- ==================== 1. 研究背景 ==================== -->
+    <section class="section danger">
+        <h2>🔴 研究背景与现有局限</h2>
+        <p>
+            月球 1/6g 低重力环境与松软崎岖月壤深刻改变巡视器轮地力学特性，
+            地面高保真微重力等效实验环境至关重要。然而，现有方案存在双重瓶颈：
+        </p>
+
+        <div class="grid-2">
+            <div class="mini-card" style="border-left: 4px solid var(--danger);">
+                <h4>🔒 物理架构局限</h4>
+                <p style="margin:0; font-size:0.9em;">
+                    传统固定龙门式多索悬吊、气浮混合平台受限于静态物理边界，
+                    无法满足巡视器大范围、全地形的长距离机动测试需求。泛用性低、成本高。
+                </p>
+            </div>
+            <div class="mini-card" style="border-left: 4px solid var(--danger);">
+                <h4>💻 软件算力瓶颈</h4>
+                <p style="margin:0; font-size:0.9em;">
+                    PID 缺乏前瞻补偿，地形突变时易因滞后响应引发破坏性冲击载荷；
+                    MPC 在线求解耗时高昂，受限于车载底层算力。现有弥补方案反而加剧系统耦合风险。
+                </p>
+            </div>
+        </div>
+
+        <blockquote>
+            需要一种融合地形前瞻感知与深度强化学习的控制架构，在大跨度移动跟随式主动悬吊系统中
+            实现毫秒级在线推理与时滞前瞻补偿。
+        </blockquote>
+    </section>
+
+    <!-- ==================== 2. 系统架构 ==================== -->
+    <section class="section">
+        <h2>🏗️ 系统架构与控制挑战</h2>
+
+        <h3>移动跟随式悬吊物理架构</h3>
+        <p style="text-align: center; margin: 16px 0;">
+            <img src="mobile-suspension-rl-compensation/物理架构示意图.svg" alt="移动悬吊物理架构示意图" style="max-width:100%; border-radius: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.06);">
+        </p>
+        <p style="text-align: center; color: var(--muted); font-size: 0.85em;">
+            大车跟随小车实现移动跟随式悬吊 · 激光测距获取前方路面信息实现前瞻
+        </p>
+
+        <h3>系统物理特性与核心挑战</h3>
+        <div class="grid-2">
+            <div class="mini-card">
+                <h4>📐 物理属性</h4>
+                <ul style="margin:0; font-size:0.9em;">
+                    <li>大劲度系数悬吊索</li>
+                    <li>控制回路存在物理延迟</li>
+                    <li>大惯量负载平台</li>
+                    <li>复杂且随机的路面激励</li>
+                </ul>
+            </div>
+            <div class="mini-card">
+                <h4>🔗 结构属性</h4>
+                <ul style="margin:0; font-size:0.9em;">
+                    <li>系统刚性耦合</li>
+                    <li>输出仅 3 个控制维度</li>
+                </ul>
+            </div>
+        </div>
+        <p style="margin-top: 12px; text-align: center; font-weight: 700; color: var(--danger);">
+            高刚度 · 大时滞 · 非线性耦合 · 欠驱动 → 传统控制面临多维物理硬约束
+        </p>
+    </section>
+
+    <!-- ==================== 3. 控制框架 ==================== -->
+    <section class="section accent">
+        <h2>🧠 控制框图与训练策略</h2>
+
+        <h3>系统控制框图</h3>
+        <p style="text-align: center; margin: 16px 0;">
+            <img src="mobile-suspension-rl-compensation/系统控制框图.png" alt="系统控制框图" style="max-width:100%; border-radius: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.06);">
+        </p>
+        <p style="text-align: center; color: var(--muted); font-size: 0.85em;">
+            反馈通路保障底层闭环稳定性 · 前馈通路赋予智能体环境预判能力以实现主动补偿
+        </p>
+
+        <h3>PPO 训练策略</h3>
+        <div class="grid-2">
+            <div class="mini-card" style="border-left: 4px solid var(--accent);">
+                <h4>🎯 奖励函数设计</h4>
+                <p style="margin:0; font-size:0.9em;">
+                    采用物理优先级软门控奖励函数：张力误差（首要）→ 姿态稳定（次要）→ 动作平滑（辅助）。
+                    多目标加权引导智能体在高刚度大时滞约束下自主学习最优补偿策略。
+                </p>
+            </div>
+            <div class="mini-card" style="border-left: 4px solid var(--accent);">
+                <h4>📚 课程学习策略</h4>
+                <p style="margin:0; font-size:0.9em;">
+                    "时滞-地形"二维课程学习。从低时滞平坦地形逐步过渡至高时滞崎岖地形，
+                    使模型分阶段习得从基础力控到高阶前瞻补偿的完整能力栈。
+                </p>
+            </div>
+        </div>
+        <div class="grid-2" style="margin-top: 12px;">
+            <div class="mini-card" style="border-left: 4px solid var(--accent);">
+                <h4>📊 历史状态堆叠</h4>
+                <p style="margin:0; font-size:0.9em;">
+                    向策略网络输入多帧历史状态，使 PPO 在可观测量中隐式重建系统动力学，
+                    从而在通讯延迟条件下保持稳定的前瞻预测能力。
+                </p>
+            </div>
+            <div class="mini-card" style="border-left: 4px solid var(--accent);">
+                <h4>🏗️ 模型递增训练</h4>
+                <p style="margin:0; font-size:0.9em;">
+                    基准模型（无抗时滞）→ 最终模型（综合鲁棒）。逐步引入时滞扰动和地形复杂度，
+                    使策略网络逐层构建抗干扰与前瞻补偿能力。
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== 4. 性能验证 ==================== -->
+    <section class="section accent">
+        <h2>📊 基础性能验证</h2>
+
+        <h3>评价指标体系</h3>
+        <table class="obs-table">
+            <thead>
+                <tr><th>维度</th><th>指标</th><th>含义</th></tr>
+            </thead>
+            <tbody>
+                <tr><td class="dim">可行性</td><td>成功率</td><td>任务是否完成（无崩溃/失稳），最终模型达 96%–100%</td></tr>
+                <tr><td class="dim">准确性</td><td>均方根误差 (RMSE)</td><td>动态张力跟随精度，大幅优于 PID/MPC 基线</td></tr>
+                <tr><td class="dim">安全性</td><td>截断方差</td><td>排除极端工况后的稳态控制质量</td></tr>
+                <tr><td class="dim">稳定性</td><td>方差</td><td>全工况下的输出一致性</td></tr>
+            </tbody>
+        </table>
+
+        <h3>时滞工况对比</h3>
+        <table class="compare-table">
+            <thead>
+                <tr><th>对比维度</th><th>PID</th><th>基准模型 (无前瞻)</th><th>最终模型 (本架构)</th></tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>控制范式</strong></td>
+                    <td>反馈式</td>
+                    <td>反馈式</td>
+                    <td style="color: var(--accent); font-weight: 600;">前瞻反馈式 + 主动补偿</td>
+                </tr>
+                <tr>
+                    <td><strong>时滞适应性</strong></td>
+                    <td>大时滞下失稳</td>
+                    <td>趋势与 PID 相似</td>
+                    <td style="color: var(--accent); font-weight: 600;">大时滞下稳定跟随</td>
+                </tr>
+                <tr>
+                    <td><strong>单步推理耗时</strong></td>
+                    <td>—</td>
+                    <td>—</td>
+                    <td style="color: var(--accent); font-weight: 600;">&lt; 1 ms（PPO 绝对算力优势）</td>
+                </tr>
+                <tr>
+                    <td><strong>动态张力跟随误差</strong></td>
+                    <td>大时滞下严重超标</td>
+                    <td>大时滞下较大</td>
+                    <td style="color: var(--accent); font-weight: 600;">严格约束在 ±15% 以内</td>
+                </tr>
+                <tr>
+                    <td><strong>任务存活率</strong></td>
+                    <td>低</td>
+                    <td>中</td>
+                    <td style="color: var(--accent); font-weight: 600;">100%</td>
+                </tr>
+            </tbody>
+        </table>
+    </section>
+
+        <h3>数字孪生仿真演示</h3>
+        <div style="text-align: center;">
+            <video controls preload="metadata" style="max-width:100%; max-height:480px; border-radius: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.06);">
+                <source src="mobile-suspension-rl-compensation/仿真演示视频.mp4" type="video/mp4">
+            </video>
+        </div>
+        <p style="text-align: center; color: var(--muted); font-size: 0.85em; margin-top: 8px;">
+            PPO 智能体在崎岖地形中实时跟随月球车，动态维持悬吊张力稳定
+        </p>
+    </section>
+
+    <!-- ==================== 5. 鲁棒性与泛化 ==================== -->
+    <section class="section warning">
+        <h2>🛡️ 鲁棒性测试与泛化能力</h2>
+
+        <h3>鲁棒性测试</h3>
+        <div class="grid-2">
+            <div class="mini-card" style="border-left: 4px solid var(--warning);">
+                <h4>⚡ 速度突变（脉冲响应）</h4>
+                <p style="margin:0; font-size:0.9em;">
+                    光滑平地匀速行驶中突遇速度阶跃变化，前瞻短时失效。
+                    最终模型快速恢复稳定张力跟随，未出现破坏性冲击。
+                </p>
+            </div>
+            <div class="mini-card" style="border-left: 4px solid var(--warning);">
+                <h4>📡 感知失效</h4>
+                <p style="margin:0; font-size:0.9em;">
+                    崎岖地形中激光前瞻测距短暂失效。模型凭借历史状态堆叠的隐式动力学记忆
+                    维持控制连续性，在感知恢复后无缝重接。
+                </p>
+            </div>
+        </div>
+
+        <h3>泛化能力：零样本跨域迁移</h3>
+        <div class="grid-2">
+            <div class="mini-card" style="border-left: 4px solid var(--accent);">
+                <h4>🏎️ 速度域泛化</h4>
+                <p style="margin:0; font-size:0.9em;">
+                    仅在单一基准速度训练，却能无缝迁移至更低和更高的速度范围。
+                    包括正弦变速工况，展示出对动态速度剖面的鲁棒跟随能力。
+                </p>
+            </div>
+            <div class="mini-card" style="border-left: 4px solid var(--accent);">
+                <h4>⛰️ 地形域泛化</h4>
+                <p style="margin:0; font-size:0.9em;">
+                    仅在有限坡度范围内训练，却能泛化至未经训练的坡度域。
+                    输出拉力稳定在 ±15% 动态精度边界内。
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== 6. 泛化机理 ==================== -->
+    <section class="section">
+        <h2>🔬 泛化机理深度揭示</h2>
+
+        <h3>阻尼非对称泛化</h3>
+        <p>
+            研究发现 RL 智能体在变阻尼物理场中呈现<strong>非对称泛化</strong>特性：
+            速度域与阻尼域的泛化行为截然不同，揭示了深度 RL 在物理系统中的独特迁移规律。
+        </p>
+
+        <table class="compare-table">
+            <thead>
+                <tr><th>现象</th><th>速度域泛化</th><th>阻尼域泛化</th></tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>误差趋势</strong></td>
+                    <td>低速工况误差急剧增大，高速工况增长缓慢</td>
+                    <td>误差随阻尼降低单调增大（训练于中高阻尼域）</td>
+                </tr>
+                <tr>
+                    <td><strong>根本原因</strong></td>
+                    <td>低速下模型将高频噪声误判为状态偏移，输出过度补偿动作（抖振）</td>
+                    <td>低阻尼下系统呈现欠阻尼振荡，动力学特征更丰富，策略需更强鲁棒性</td>
+                </tr>
+                <tr>
+                    <td><strong>工程意义</strong></td>
+                    <td colspan="2" style="text-align: center; color: var(--accent); font-weight: 600;">
+                        ✅ 中高阻尼域训练 → 低阻尼域无损泛化：无需全参数空间均匀采样，大幅降低训练成本
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h3>工程建议：分层控制策略</h3>
+        <p>
+            基于泛化机理发现，提出分层控制架构：
+        </p>
+        <ul>
+            <li><strong>低速工况：</strong>切断策略网络输出，强制降维为高阻尼 PID 控制，避免抖振现象</li>
+            <li><strong>中高速工况：</strong>控制权平滑过渡至 PPO 智能体，发挥前瞻补偿与极速推理优势</li>
+            <li><strong>训练策略：</strong>仅需在"中高阻尼"区进行重点训练，即可实现对低阻尼物理域的无损泛化</li>
+        </ul>
+    </section>
+
+    <!-- ==================== 7. 实物验证 ==================== -->
+    <section class="section accent">
+        <h2>🔧 微缩台架与 Sim-to-Real 探索</h2>
+        <p>为验证从数字孪生到物理实机的跨域迁移，构建了微缩在环验证平台：</p>
+
+        <div class="grid-2">
+            <div class="mini-card" style="border-left: 4px solid var(--primary);">
+                <h4>🧠 模块1：边缘计算与策略部署</h4>
+                <p style="margin:0; font-size:0.9em;">
+                    核心边缘算力与通信中枢，用于 RL 策略实时推理。
+                    验证低功耗边缘设备上毫秒级高频推理的可行性。
+                </p>
+            </div>
+            <div class="mini-card" style="border-left: 4px solid var(--primary);">
+                <h4>🏗️ 模块2：动态悬吊机构</h4>
+                <p style="margin:0; font-size:0.9em;">
+                    移动悬吊母车，支持 ROS2 通信。搭载具备高频力矩控制的电机，
+                    用于等效真实卷扬机系统。
+                </p>
+            </div>
+            <div class="mini-card" style="border-left: 4px solid var(--primary);">
+                <h4>⚙️ 模块3：高频动力学执行</h4>
+                <p style="margin:0; font-size:0.9em;">
+                    高精度力控电机，模拟柔性索系的高频时变动力学特征。
+                    暴露真实物理系统中的非线性静摩擦与电机死区。
+                </p>
+            </div>
+            <div class="mini-card" style="border-left: 4px solid var(--primary);">
+                <h4>🚗 模块4：动态载体平台</h4>
+                <p style="margin:0; font-size:0.9em;">
+                    微型 ROS2 小车作为可控运动环境，模拟巡视器在崎岖地形上的动态行为。
+                    提供真实传感器噪声与通信抖动环境。
+                </p>
+            </div>
+        </div>
+
+        <blockquote>
+            Sim-to-Real 核心挑战：虚拟仿真无噪声、无非线性机电特征、无未建模扰动 →
+            真实装备面临低功耗边缘算力约束 + 伺服非线性 + 传感噪声 + 通信抖动的多重考验。
+        </blockquote>
+    </section>
+
+    <!-- ==================== 9. 未来工作 ==================== -->
+    <section class="section accent">
+        <h2>🚀 未来工作</h2>
+        <div class="timeline">
+            <div class="timeline-item">
+                <span class="step-num">在研</span>
+                <h4>微缩台架 Sim-to-Real 验证</h4>
+                <p>在 23 kg 母车 + 2 kg ROS2 小车的微缩平台上完成从数字孪生到物理实机的跨域迁移验证。</p>
+            </div>
+            <div class="timeline-item">
+                <span class="step-num">规划</span>
+                <h4>12t 级轮式起重机原型部署</h4>
+                <p>基于微缩台架验证结论，将策略网络零样本部署至真实航天装备，验证极限功率与工程可行性。</p>
+            </div>
+            <div class="timeline-item">
+                <span class="step-num">远期</span>
+                <h4>大型航天器微重力模拟系统</h4>
+                <p>为载人登月与月球科研站的地面全物理仿真提供理论依据与工程参考。</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== 10. 参考资料 ==================== -->
+    <section class="section">
+        <h2>📚 相关成果</h2>
+        <ul>
+            <li>本工作发表于 <strong>北京航空航天大学学报</strong> (外审中)</li>
+            <li>获第三十六届冯如杯创意赛道特等奖</li>
+            <li>相关实机部署工作已在大创立项</li>
+        </ul>
+    </section>
+
+    <footer style="text-align: center; margin-top: 40px; padding: 24px 0; color: var(--muted); font-size: 0.9em; border-top: 1px solid var(--border);">
+        <a href="../projects.html" style="color: var(--primary); text-decoration: none; font-weight: 600;">← 返回项目目录</a>
+        &nbsp;·&nbsp; PUMA &nbsp;·&nbsp; 移动悬吊 RL 前瞻补偿
+    </footer>
+
+</div>
+
+</body>
+</html>

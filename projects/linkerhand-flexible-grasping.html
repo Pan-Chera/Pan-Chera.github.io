@@ -1,0 +1,864 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LinkerHand 灵巧手柔性力控系统 — PUMA</title>
+    <style>
+        :root {
+            --primary: #4F46E5;
+            --primary-light: #EEF2FF;
+            --accent: #10B981;
+            --accent-light: #ECFDF5;
+            --warning: #F59E0B;
+            --warning-light: #FFFBEB;
+            --danger: #EF4444;
+            --danger-light: #FEF2F2;
+            --bg: #F3F4F6;
+            --card: #FFFFFF;
+            --text: #1F2937;
+            --muted: #6B7280;
+            --border: #E5E7EB;
+        }
+
+        * { box-sizing: border-box; }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Noto Sans SC", sans-serif;
+            background: var(--bg);
+            background-image: linear-gradient(135deg, #fdfbfb 0%, #ebedee 100%);
+            color: var(--text);
+            margin: 0; padding: 0;
+            line-height: 1.75;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* ===== 返回按钮 ===== */
+        .back-link {
+            display: inline-flex; align-items: center; gap: 6px;
+            color: var(--primary); text-decoration: none;
+            font-weight: 600; font-size: 0.95em;
+            margin-bottom: 24px;
+            transition: transform 0.2s;
+        }
+        .back-link:hover { transform: translateX(-4px); }
+
+        /* ===== Hero 卡片 ===== */
+        .hero {
+            background: var(--card);
+            border-radius: 20px;
+            padding: 48px 40px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            margin-bottom: 30px;
+            animation: fadeUp 0.8s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        .hero::before {
+            content: '';
+            position: absolute; top: 0; left: 0; right: 0;
+            height: 5px;
+            background: linear-gradient(90deg, var(--primary), var(--accent), var(--warning));
+        }
+        .hero .badge {
+            display: inline-block;
+            background: var(--primary-light);
+            color: var(--primary);
+            padding: 4px 16px;
+            border-radius: 20px;
+            font-size: 0.85em; font-weight: 600;
+            margin-bottom: 16px;
+        }
+        .hero h1 {
+            font-size: 2em; margin: 0 0 10px 0;
+            background: linear-gradient(135deg, var(--primary), #7C3AED);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .hero .meta {
+            color: var(--muted); font-size: 0.95em;
+            display: flex; justify-content: center;
+            gap: 24px; flex-wrap: wrap;
+        }
+        .hero .meta span { display: inline-flex; align-items: center; gap: 4px; }
+
+        /* ===== 通用区块卡片 ===== */
+        .section {
+            background: var(--card);
+            border-radius: 16px;
+            padding: 36px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.04);
+            margin-bottom: 24px;
+            animation: fadeUp 0.6s ease;
+        }
+        .section h2 {
+            margin: 0 0 20px 0;
+            font-size: 1.4em;
+            display: flex; align-items: center; gap: 10px;
+        }
+        .section h3 {
+            margin: 24px 0 12px 0;
+            font-size: 1.1em;
+            color: var(--text);
+        }
+        .section p { margin: 0 0 12px 0; color: var(--text); }
+        .section ul { margin: 8px 0; padding-left: 20px; }
+        .section ul li { margin-bottom: 6px; }
+
+        /* 区块颜色标记 */
+        .section.accent  { border-left: 4px solid var(--accent); }
+        .section.warning { border-left: 4px solid var(--warning); }
+        .section.danger  { border-left: 4px solid var(--danger); }
+
+        /* 标签徽章 */
+        .tag {
+            display: inline-block;
+            padding: 3px 12px;
+            border-radius: 12px;
+            font-size: 0.82em; font-weight: 600;
+            margin: 2px 4px 2px 0;
+        }
+        .tag.blue   { background: var(--primary-light); color: var(--primary); }
+        .tag.green  { background: var(--accent-light);  color: #059669; }
+        .tag.amber  { background: var(--warning-light); color: #D97706; }
+        .tag.red    { background: var(--danger-light);  color: #DC2626; }
+
+        /* ===== 对比表格 ===== */
+        .compare-table {
+            width: 100%; border-collapse: collapse;
+            margin: 16px 0; font-size: 0.9em;
+        }
+        .compare-table th {
+            background: #F9FAFB; padding: 12px 16px;
+            text-align: left; font-weight: 700;
+            border-bottom: 2px solid var(--border);
+        }
+        .compare-table td {
+            padding: 10px 16px;
+            border-bottom: 1px solid var(--border);
+            vertical-align: top;
+        }
+        .compare-table tr:hover td { background: #FAFAFA; }
+        .compare-table .v1 { color: var(--muted); }
+        .compare-table .v2 { color: var(--accent); font-weight: 600; }
+
+        /* ===== 架构流程图（CSS 模拟） ===== */
+        .arch-flow {
+            display: flex; flex-direction: column; align-items: center;
+            gap: 8px; margin: 20px 0;
+            font-size: 0.85em;
+        }
+        .arch-row {
+            display: flex; gap: 12px; align-items: center;
+            flex-wrap: wrap; justify-content: center;
+        }
+        .arch-box {
+            background: var(--card);
+            border: 2px solid var(--border);
+            border-radius: 10px;
+            padding: 10px 16px;
+            text-align: center;
+            font-weight: 600;
+            min-width: 120px;
+        }
+        .arch-box.highlight { border-color: var(--primary); background: var(--primary-light); }
+        .arch-box.accent   { border-color: var(--accent); background: var(--accent-light); }
+        .arch-arrow {
+            font-size: 1.2em; color: var(--muted);
+            text-align: center;
+        }
+        .arch-label {
+            font-size: 0.75em; color: var(--muted);
+            text-align: center; margin-top: 2px;
+        }
+
+        /* ===== 视频画廊 ===== */
+        .video-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 16px;
+            margin: 16px 0;
+        }
+        .video-card {
+            background: #F9FAFB;
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid var(--border);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .video-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+        }
+        .video-card video {
+            width: 100%; display: block;
+            max-height: 240px; object-fit: cover;
+            background: #000;
+        }
+        .video-card .caption {
+            padding: 10px 14px;
+            font-size: 0.88em; font-weight: 600;
+            color: var(--text);
+        }
+        .video-card .caption small {
+            display: block; color: var(--muted);
+            font-weight: 400; margin-top: 2px;
+        }
+
+        /* ===== 奖励函数公式块 ===== */
+        .formula-block {
+            background: #1F2937;
+            color: #E5E7EB;
+            border-radius: 10px;
+            padding: 20px 24px;
+            margin: 16px 0;
+            font-family: "JetBrains Mono", "Fira Code", "Cascadia Code", monospace;
+            font-size: 0.85em;
+            line-height: 1.8;
+            overflow-x: auto;
+        }
+        .formula-block .fn    { color: #C084FC; font-weight: bold; }
+        .formula-block .num   { color: #FBBF24; }
+        .formula-block .cmt   { color: #9CA3AF; }
+
+        /* ===== 模型演进时间线 ===== */
+        .timeline { position: relative; padding-left: 28px; margin: 16px 0; }
+        .timeline::before {
+            content: '';
+            position: absolute; left: 8px; top: 0; bottom: 0;
+            width: 2px; background: var(--border);
+        }
+        .timeline-item {
+            position: relative; margin-bottom: 24px;
+        }
+        .timeline-item::before {
+            content: '';
+            position: absolute; left: -24px; top: 6px;
+            width: 12px; height: 12px;
+            border-radius: 50%;
+            background: var(--primary);
+            border: 2px solid white;
+            box-shadow: 0 0 0 2px var(--primary);
+        }
+        .timeline-item.fail::before {
+            background: var(--danger);
+            box-shadow: 0 0 0 2px var(--danger);
+        }
+        .timeline-item.success::before {
+            background: var(--accent);
+            box-shadow: 0 0 0 2px var(--accent);
+        }
+        .timeline-item h4 { margin: 0 0 4px 0; font-size: 1em; }
+        .timeline-item .step-num {
+            font-size: 0.78em; font-weight: 700;
+            padding: 2px 8px; border-radius: 10px;
+        }
+        .timeline-item .step-num.fail    { background: var(--danger-light); color: var(--danger); }
+        .timeline-item .step-num.success { background: var(--accent-light); color: #059669; }
+
+        /* ===== 观测空间表格 ===== */
+        .obs-table {
+            width: 100%; border-collapse: collapse;
+            margin: 16px 0; font-size: 0.88em;
+        }
+        .obs-table th {
+            background: #F9FAFB; padding: 10px 14px;
+            text-align: left; font-weight: 700;
+            border-bottom: 2px solid var(--border);
+        }
+        .obs-table td {
+            padding: 8px 14px;
+            border-bottom: 1px solid var(--border);
+        }
+        .obs-table .dim { font-weight: 700; color: var(--primary); }
+
+        /* ===== 引用块 ===== */
+        blockquote {
+            border-left: 4px solid var(--primary);
+            background: var(--primary-light);
+            margin: 16px 0; padding: 14px 20px;
+            border-radius: 0 10px 10px 0;
+            color: #4338CA;
+            font-style: italic;
+        }
+
+        /* 响应式 */
+        @media (max-width: 600px) {
+            .hero { padding: 32px 20px; }
+            .hero h1 { font-size: 1.4em; }
+            .section { padding: 24px 18px; }
+            .compare-table { font-size: 0.78em; }
+            .compare-table th, .compare-table td { padding: 8px; }
+        }
+
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(16px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+
+    <!-- ==================== 返回 ==================== -->
+    <a href="../projects.html" class="back-link">← 返回项目目录</a>
+
+    <!-- ==================== Hero ==================== -->
+    <header class="hero">
+        <div class="badge">具身智能 · 强化学习 · 灵巧操作</div>
+        <h1>基于小型网络RL的灵巧手柔性力控系统</h1>
+        <p style="font-size:1.05em; color: var(--text); max-width: 640px; margin: 12px auto;">
+            在低成本、大噪声的欠驱动硬件上，构建分层阻抗控制架构，
+            以虚拟弹簧力替代真实力传感器，实现软硬物体的自适应柔性抓取。
+        </p>
+        <div class="meta">
+            <span>👤 PUMA</span>
+            <span>🖐️ LinkerHand L6</span>
+            <span>🤖 SAC + VecEnv</span>
+            <span>📅 2026.5-</span>
+        </div>
+        <div style="margin-top: 16px;">
+            <span class="tag blue">Python</span>
+            <span class="tag blue">C++</span>
+            <span class="tag blue">ROS2 Humble</span>
+            <span class="tag green">Stable-Baselines3</span>
+            <span class="tag green">Gymnasium</span>
+            <span class="tag amber">CAN bus</span>
+            <span class="tag amber">SocketCAN</span>
+        </div>
+    </header>
+
+    <!-- ==================== 免责声明 ==================== -->
+    <section style="background: var(--warning-light); border: 1px solid var(--warning); border-radius: 10px; padding: 14px 20px; margin-bottom: 24px; font-size: 0.85em; color: #92400E;">
+        <strong>⚠️ Note:</strong> All figures, curves, and quantitative data presented below have been abstracted or normalized to comply with the <strong>double-blind peer-review policy</strong> and <strong>non-disclosure requirements</strong> of upcoming national competitions. Qualitative descriptions are retained to convey the system's capabilities without revealing exact experimental values.
+    </section>
+
+    <!-- ==================== 1. 背景与硬件痛点 ==================== -->
+    <section class="section danger">
+        <h2>🔴 问题背景与硬件痛点</h2>
+        <p>
+            在具身智能灵巧操作的研究中，<strong>柔性抓取高度依赖高精度六维力/力矩传感器与昂贵的直驱电机</strong>。
+            然而，在推动技术平民化落地的过程中，必须面对大噪声、欠驱动硬件带来的挑战。
+        </p>
+
+        <h3>LinkerHand L6 四大核心痛点</h3>
+        <table class="obs-table">
+            <thead>
+                <tr><th>#</th><th>痛点</th><th>表现</th></tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="dim">1</td>
+                    <td><strong>极低传感器信噪比</strong></td>
+                    <td>电流反馈与位置反馈波动极大，频繁出现大幅跳变或示数归零，无法提供平滑力觉参考</td>
+                </tr>
+                <tr>
+                    <td class="dim">2</td>
+                    <td><strong>非线性机械阻力</strong></td>
+                    <td>夹爪闭合至极小开口时，内部机械摩擦力呈非线性急剧上升，严重干扰力/电流反馈</td>
+                </tr>
+                <tr>
+                    <td class="dim">3</td>
+                    <td><strong>指尖传感器灵敏度低</strong></td>
+                    <td>面对软体物体，在很大抓取区间内示数恒为 0；触觉阵列响应阈值过高，小形变无法触发</td>
+                </tr>
+                <tr>
+                    <td class="dim">4</td>
+                    <td><strong>欠驱动特性</strong></td>
+                    <td>单指仅 1 自由度（拇指 2），无法通过多关节协同实现高精度自适应抓取</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <blockquote>
+            试图用单一端到端强化学习网络去拟合所有物理噪声，是低效且危险的。
+        </blockquote>
+    </section>
+
+    <!-- ==================== 2. 系统架构 ==================== -->
+    <section class="section">
+        <h2>🏗️ 分层控制架构</h2>
+        <p>
+            采用<strong>「宏观空间控制 + 微观物理反射」</strong>的分层设计，
+            将规划与力控解耦，每层只处理自己擅长的问题。
+        </p>
+
+        <!-- V1 架构 -->
+        <h3>V1.0 架构：双指分层控制</h3>
+        <p style="text-align: center; margin: 16px 0;">
+            <img src="linkerhand-flexible-grasping/V1架构图.svg" alt="V1.0 系统架构图" style="max-width:100%; border-radius: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.06);">
+        </p>
+        <p style="text-align: center; color: var(--muted); font-size: 0.85em;">
+            VLA/VLM 顶层预测物体大小与硬度 → Phase 1 程序合拢靠近 → 接触检测触发 → Phase 2 SAC 小网络残差微调 → UDP/ROS2/CAN 驱动拇指+食指
+        </p>
+
+        <!-- V2 架构 -->
+        <h3>V2.0 架构：多指 VecEnv 并行训练</h3>
+        <p style="text-align: center; margin: 16px 0;">
+            <img src="linkerhand-flexible-grasping/V2架构图.svg" alt="V2.0 系统架构图" style="max-width:100%; border-radius: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.06);">
+        </p>
+        <p style="text-align: center; color: var(--muted); font-size: 0.85em;">
+            VLA/VLM 输入动作指令与参数 → Phase 1 伪宏观轨迹动态合拢 → 接触检测触发 → Phase 2 VecEnv N指独立SAC推理 → 合并GRASP指令驱动2-5指
+        </p>
+    </section>
+
+    <!-- ==================== 3. V1 vs V2 对比 ==================== -->
+    <section class="section accent">
+        <h2>📊 V1.0 → V2.0 核心演进</h2>
+        <table class="compare-table">
+            <thead>
+                <tr><th>维度</th><th>V1.0</th><th>V2.0</th></tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>架构</strong></td>
+                    <td class="v1">单环境 gym.Env</td>
+                    <td class="v2">VecEnv 伪并行 3–5 环境</td>
+                </tr>
+                <tr>
+                    <td><strong>手指数</strong></td>
+                    <td class="v1">拇指 + 食指 (2指)</td>
+                    <td class="v2">2–5 指可配置</td>
+                </tr>
+                <tr>
+                    <td><strong>观测空间</strong></td>
+                    <td class="v1">5维 × 5帧堆叠<br>位置、滤波电流、Gap、K</td>
+                    <td class="v2">2维 × 5帧堆叠（每指）<br>位置、K (极简)</td>
+                </tr>
+                <tr>
+                    <td><strong>动作空间</strong></td>
+                    <td class="v1">3维：双指位置残差 + K值残差</td>
+                    <td class="v2">2维/指：位置残差 (非对称，仅退不进) + K值残差</td>
+                </tr>
+                <tr>
+                    <td><strong>接触检测</strong></td>
+                    <td class="v1">EMA滤波 + 固定基线<br>电流上升值 > 阈值</td>
+                    <td class="v2">简单阈值判定<br>跳过启动噪声 · 拇指间接推断</td>
+                </tr>
+                <tr>
+                    <td><strong>奖励函数</strong></td>
+                    <td class="v1">高斯奖励(追踪目标虚拟力) + 形变税(惩罚过度挤压) + 摸鱼惩罚</td>
+                    <td class="v2">高斯奖励(追踪目标虚拟力) + 形变税(惩罚过度挤压) + 悬空归零 · 动作平滑</td>
+                </tr>
+                <tr>
+                    <td><strong>传感器使用</strong></td>
+                    <td class="v1">EMA电流 + 位置 + K</td>
+                    <td class="v2">仅位置 + K（彻底舍弃电流/触觉）</td>
+                </tr>
+                <tr>
+                    <td><strong>数据效率</strong></td>
+                    <td class="v1">1×</td>
+                    <td class="v2"><strong>N指倍</strong>（3指 ≈ 3倍）</td>
+                </tr>
+            </tbody>
+        </table>
+    </section>
+
+    <!-- ==================== 4. 核心创新 ==================== -->
+    <section class="section">
+        <h2>💡 核心创新：物理降维与虚拟力</h2>
+
+        <h3>1. 虚拟弹簧力 — 不用力传感器的力控</h3>
+        <p>
+            彻底放弃高噪声的电流/力传感器，改用<strong>虚拟力</strong>作为奖励信号。
+            虚拟力定义为阻抗系数 K 与手指间距偏差的乘积（F = K·ΔX），
+            通过电机编码器的<strong>高精度位置误差</strong>间接实现力觉闭环。
+            网络无需猜测物体软硬，只追踪恒定的虚拟弹簧力。
+        </p>
+
+        <h3>2. 形变税 — 最小化挤压的天然倾向</h3>
+        <p>
+            奖励函数由四部分构成：
+        </p>
+        <ul>
+            <li><strong>高斯奖励：</strong>引导模型维持目标虚拟力，力误差越小奖励越高</li>
+            <li><strong>形变税：</strong>惩罚过度挤压，让模型天然倾向最小化形变深度</li>
+            <li><strong>动作惩罚：</strong>抑制网络输出剧烈振荡，悬空状态下不触发</li>
+            <li><strong>稳定加分：</strong>力误差较小且动作平滑时给予正向激励</li>
+        </ul>
+        <p>
+            面对柔软物体：模型<strong>主动降低对力的要求</strong>以保证形变量最小 —
+            无需预设物体类别，一个奖励函数自适应所有材质。
+        </p>
+
+        <h3>3. 时序特征堆叠</h3>
+        <p>
+            输入 <strong>5 帧历史物理状态</strong>，让 SAC 网络隐式学习形变的时间导数，
+            在无标签情况下获得材质辨识能力。（海绵 vs 硬块 vs 杯套 vs 西瓜果肉）
+        </p>
+
+        <h3>4. VecEnv 共享模型 (V2.0)</h3>
+        <p>
+            所有手指共享同一 SAC 网络，状态空间仅 2 维（位置 + K），
+            使模型天然具备<strong>跨手指泛化能力</strong> — 三指训练后可直接迁移至二指、五指抓取。
+        </p>
+
+        <h3>5. 非对称动作空间 (V2.0)</h3>
+        <p>
+            位置残差范围 <strong>[-1.0, 0.1]</strong>：赋予模型极大的退让权限以保护硬件，
+            同时严格限制主动挤压 — 网络学会在动态合拢基线上精准输出刹车残差。
+        </p>
+    </section>
+
+    <!-- ==================== 5. 模型演进 ==================== -->
+    <section class="section warning">
+        <h2>📈 模型迭代历程</h2>
+        <div class="timeline">
+            <div class="timeline-item fail">
+                <span class="step-num fail">V1 · 失败</span>
+                <h4>纯RL端到端控制 (500,000 steps)</h4>
+                <p>
+                    直接让 SAC 从零学习全套抓取策略。观测 Dict (触觉40维+运动学20维)，
+                    动作含目标位置和 K 值。<br>
+                    <strong>失败原因：</strong>奖励信号完全依赖电流传感器，噪声巨大，
+                    RL 无法建立稳定状态-奖励映射。纯探索式学习在真实硬件上效率极低。
+                </p>
+            </div>
+            <div class="timeline-item fail">
+                <span class="step-num fail">V2 · 部分失败</span>
+                <h4>分层控制 + 刚度估计 (110,000 steps)</h4>
+                <p>
+                    引入 Phase 1/2 分层架构，尝试实时估计物体刚度 (env_stiffness = Δeffort / Δsqueeze)
+                    以动态调整安全挤压上限。<br>
+                    <strong>失败原因：</strong>传感器精度过低，无法区分海绵和硬方块，
+                    EMA 滤波后的刚度值几乎无法收敛。动态上限频繁误判，奖励信号混乱。
+                </p>
+            </div>
+            <div class="timeline-item success">
+                <span class="step-num success">V3 · 成功</span>
+                <h4>虚拟力 + 形变税 (60,000 steps)</h4>
+                <p>
+                    彻底放弃刚度估计，改用虚拟力替代真实力传感器。观测 5 维 × 5 帧堆叠 = 25 维。
+                    脏数据多层过滤（位置归零、电流归零、Gap异常、电流尖峰）。<br>
+                    <strong>结果：</strong>60,000 步即可收敛。虚拟力不依赖传感器精度，
+                    形变税让模型天然倾向最小化挤压。
+                </p>
+            </div>
+            <div class="timeline-item success">
+                <span class="step-num success">2.0 · 多指泛化</span>
+                <h4>VecEnv 多指并行训练</h4>
+                <p>
+                    从双指扩展至全手。共享模型 + 极简观测 (2维/指) + 非对称动作空间。
+                    三指训练，数据效率 3 倍提升。动态伪宏观轨迹注入使模型学会在合拢中刹车。
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== 6. 演示视频 ==================== -->
+    <section class="section accent">
+        <h2>🎬 V1.0 演示视频</h2>
+        <p style="color: var(--muted); margin-bottom: 16px;">双指（拇指+食指）分层力控 · 材质自适应</p>
+
+        <h3>训练集内 — 材质辨识</h3>
+        <div class="video-grid">
+            <div class="video-card">
+                <video controls preload="metadata">
+                    <source src="linkerhand-flexible-grasping/硬海绵抓取.mp4" type="video/mp4">
+                </video>
+                <div class="caption">🟫 硬海绵抓取<small>无标签输入，仅凭5帧历史辨识材质</small></div>
+            </div>
+            <div class="video-card">
+                <video controls preload="metadata">
+                    <source src="linkerhand-flexible-grasping/软海绵抓取.mp4" type="video/mp4">
+                </video>
+                <div class="caption">🟨 软海绵抓取<small>同一模型对软硬物体输出不同响应策略</small></div>
+            </div>
+        </div>
+
+        <h3>训练外泛化 — 未曾见过的物体</h3>
+        <div class="video-grid">
+            <div class="video-card">
+                <video controls preload="metadata">
+                    <source src="linkerhand-flexible-grasping/杯套抓取.mp4" type="video/mp4">
+                </video>
+                <div class="caption">🥤 纸质杯套<small>极低强度 · 传感器难以捕捉形变 · 模型回弹适应</small></div>
+            </div>
+            <div class="video-card">
+                <video controls preload="metadata">
+                    <source src="linkerhand-flexible-grasping/西瓜抓取.mp4" type="video/mp4">
+                </video>
+                <div class="caption">🍉 西瓜果肉<small>塑性/脆性体 · 低摩擦 · 极窄平衡区间</small></div>
+            </div>
+        </div>
+
+        <h3>自纠错能力：K 值动态调节</h3>
+        <p>
+            针对不同的预设 <strong>K</strong> 值，模型能够主动通过残差输出
+            让真实 K 值稳定在期望的目标值附近。不同 K 值条件下曲线均收敛于稳定的 Gap 值，K 值越小收敛越慢。
+        </p>
+        <p style="text-align: center; margin: 16px 0;">
+            <img src="linkerhand-flexible-grasping/V1效果展示曲线.png" alt="V1.0 K值自纠错曲线" style="max-width:100%; max-height:400px; border-radius: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.06);">
+        </p>
+        <p style="text-align: center; color: var(--muted); font-size: 0.85em;">
+            不同预设 K 值下的 Gap / 滤波后电流 / 实际 K 值收敛曲线
+        </p>
+    </section>
+
+    <section class="section accent">
+        <h2>🎬 V2.0 演示视频</h2>
+        <p style="color: var(--muted); margin-bottom: 16px;">多指 VecEnv · 共享模型 · 跨手指迁移</p>
+
+        <h3>训练配置：三指抓取</h3>
+        <div class="video-grid">
+            <div class="video-card">
+                <video controls preload="metadata">
+                    <source src="linkerhand-flexible-grasping/三指抓取海绵.mp4" type="video/mp4">
+                </video>
+                <div class="caption">🧽 三指抓取软海绵<small>训练配置 — 拇指+食指+中指</small></div>
+            </div>
+        </div>
+
+        <h3>模型迁移：二指抓取（未训练指组合）</h3>
+        <div class="video-grid">
+            <div class="video-card">
+                <video controls preload="metadata">
+                    <source src="linkerhand-flexible-grasping/二指抓取海绵.mp4" type="video/mp4">
+                </video>
+                <div class="caption">🧽 二指抓取软海绵<small>从三指模型直接迁移</small></div>
+            </div>
+            <div class="video-card">
+                <video controls preload="metadata">
+                    <source src="linkerhand-flexible-grasping/二指抓取杯子.mp4" type="video/mp4">
+                </video>
+                <div class="caption">🥤 二指抓取塑料杯<small>从三指模型直接迁移</small></div>
+            </div>
+        </div>
+
+        <h3>模型迁移：五指抓取（全手）</h3>
+        <div class="video-grid">
+            <div class="video-card">
+                <video controls preload="metadata">
+                    <source src="linkerhand-flexible-grasping/五指抓取海绵.mp4" type="video/mp4">
+                </video>
+                <div class="caption">🧽 五指抓取软海绵<small>全手部署</small></div>
+            </div>
+            <div class="video-card">
+                <video controls preload="metadata">
+                    <source src="linkerhand-flexible-grasping/五指抓取硬海绵.mp4" type="video/mp4">
+                </video>
+                <div class="caption">🟫 五指抓取硬海绵<small>全手部署</small></div>
+            </div>
+            <div class="video-card">
+                <video controls preload="metadata">
+                    <source src="linkerhand-flexible-grasping/五指抓取杯子.mp4" type="video/mp4">
+                </video>
+                <div class="caption">☕ 五指抓取塑料杯<small>全手部署</small></div>
+            </div>
+            <div class="video-card">
+                <video controls preload="metadata">
+                    <source src="linkerhand-flexible-grasping/五指抓取杯托.mp4" type="video/mp4">
+                </video>
+                <div class="caption">🧋 五指抓取杯托<small>全手部署</small></div>
+            </div>
+        </div>
+
+        <h3>自纠错能力：多指 K 值收敛</h3>
+        <p>
+            针对不同的预设 K 值，模型具有动态调节能力，在短暂振荡后收敛至稳定值。
+            与 V1 相比，更紧凑的观测空间（仅位置+K）使收敛路径更加平滑。
+        </p>
+        <p style="text-align: center; margin: 16px 0;">
+            <img src="linkerhand-flexible-grasping/V2效果展示曲线.png" alt="V2.0 K值收敛曲线" style="max-width:100%; max-height:400px; border-radius: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.06);">
+        </p>
+        <p style="text-align: center; color: var(--muted); font-size: 0.85em;">
+            不同预设 K 值下的 K 值与 Gap 收敛曲线
+        </p>
+    </section>
+
+    <!-- ==================== 7. 传感器测试 ==================== -->
+    <section class="section warning">
+        <h2>🔬 V2.0 传感器深度测试</h2>
+        <p>对 LinkerHand L6 各传感器进行了系统标定，为模型设计提供数据支撑：</p>
+
+        <table class="obs-table">
+            <thead>
+                <tr><th>传感器</th><th>结论</th><th>模型中的使用</th></tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="dim">手指位置</td>
+                    <td>✅ 最稳定准确，噪声小</td>
+                    <td><strong>唯一训练数据源</strong></td>
+                </tr>
+                <tr>
+                    <td class="dim">电机电流</td>
+                    <td>
+                        ⚠️ 食指/中指较稳定 · 拇指噪声极大<br>
+                        拇指空载噪声方差约为食指的十余倍，数据质量差异显著
+                    </td>
+                    <td>仅用于接触检测 · 不参与状态空间</td>
+                </tr>
+                <tr>
+                    <td class="dim">触觉传感器</td>
+                    <td>❌ 灵敏度阈值过高，软物体形变区间内示数恒为0</td>
+                    <td><strong>彻底舍弃</strong></td>
+                </tr>
+                <tr>
+                    <td class="dim">触觉阵列</td>
+                    <td>❌ 硬物体无形变无法利用 · 力传感器多数角度不触发</td>
+                    <td><strong>彻底舍弃</strong></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h3>电流传感器实测数据</h3>
+        <p>以下为拇指、食指、中指在空载、抓取硬物、抓取软物时的电流变化曲线：</p>
+
+        <h4>🔴 抓取硬物体 — 电流示数</h4>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 12px; margin: 12px 0;">
+            <div style="text-align: center;">
+                <img src="linkerhand-flexible-grasping/抓取硬物电流示数1.png" alt="抓取硬物电流示数1" style="max-width:100%; border-radius: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.06);">
+            </div>
+            <div style="text-align: center;">
+                <img src="linkerhand-flexible-grasping/抓取硬物电流示数2.png" alt="抓取硬物电流示数2" style="max-width:100%; border-radius: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.06);">
+            </div>
+        </div>
+        <p style="color: var(--muted); font-size: 0.85em; text-align: center;">
+            拇指噪声极大，食指/中指在接触后电流变化较直观且稳定。
+        </p>
+
+        <h4>🟡 抓取软物体 — 电流示数</h4>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 12px; margin: 12px 0;">
+            <div style="text-align: center;">
+                <img src="linkerhand-flexible-grasping/抓取软物电流示数1.png" alt="抓取软物电流示数1" style="max-width:100%; border-radius: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.06);">
+            </div>
+            <div style="text-align: center;">
+                <img src="linkerhand-flexible-grasping/抓取软物电流示数2.png" alt="抓取软物电流示数2" style="max-width:100%; border-radius: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.06);">
+            </div>
+        </div>
+        <p style="color: var(--muted); font-size: 0.85em; text-align: center;">
+            软物体形变范围内电流变化幅度更小，进一步验证仅依赖电流进行精细力控不可行 — 应降级为接触检测。
+        </p>
+    </section>
+
+    <!-- ==================== 8. 数据过滤 ==================== -->
+    <section class="section">
+        <h2>🛡️ 数据质量保障</h2>
+        <p>多层脏数据过滤，确保训练信号的可靠性：</p>
+        <table class="obs-table">
+            <thead>
+                <tr><th>过滤条件</th><th>含义</th><th>版本</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>位置值为零</td><td>UDP 丢包</td><td>V1</td></tr>
+                <tr><td>电流值为零</td><td>传感器故障</td><td>V1</td></tr>
+                <tr><td>Gap 值异常偏低</td><td>物理不可能值 (UDP 混串)</td><td>V1</td></tr>
+                <tr><td>原始电流与滤波值偏差过大</td><td>电流尖峰</td><td>V1</td></tr>
+                <tr><td>位置值异常偏低</td><td>传感器读取异常</td><td>V2</td></tr>
+                <tr><td>原始电流尖峰</td><td>中值滤波去噪</td><td>V2</td></tr>
+            </tbody>
+        </table>
+    </section>
+
+    <!-- ==================== 9. 系统局限 ==================== -->
+    <section class="section warning">
+        <h2>⚠️ 现有局限</h2>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px;">
+            <div style="background: var(--warning-light); border-radius: 10px; padding: 18px;">
+                <h4 style="margin:0 0 8px 0;">🔒 纯法向力控，无滑动检测</h4>
+                <p style="margin:0; font-size:0.9em;">
+                    拇指侧向自由度完全锁死，阻抗残差全集中在法向挤压。
+                    极重/极滑物体发生相对滑动时，当前补偿机制无法做出正确反馈。
+                </p>
+            </div>
+            <div style="background: var(--warning-light); border-radius: 10px; padding: 18px;">
+                <h4 style="margin:0 0 8px 0;">🦯 "盲人摸象"式局部最优</h4>
+                <p style="margin:0; font-size:0.9em;">
+                    剥离触觉阵列后，无法感知接触面实际受力分布。
+                    尖锐物体可能局部压强过大，存在破坏局部材质风险。
+                </p>
+            </div>
+            <div style="background: var(--warning-light); border-radius: 10px; padding: 18px;">
+                <h4 style="margin:0 0 8px 0;">🔧 功能单一</h4>
+                <p style="margin:0; font-size:0.9em;">
+                    仅支持柔性抓取模式。对于紧握/部分紧握部分柔性等混合控制场景，
+                    需顶层 VLA/VLM 进一步协调。
+                </p>
+            </div>
+            <div style="background: var(--warning-light); border-radius: 10px; padding: 18px;">
+                <h4 style="margin:0 0 8px 0;">⚙️ 机械死区</h4>
+                <p style="margin:0; font-size:0.9em;">
+                    极小开口处传动死区导致电流信噪比灾难性下降。V1 通过最小合拢阈值规避，
+                    牺牲了极小物体的抓取能力。
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== 10. 未来规划 ==================== -->
+    <section class="section accent">
+        <h2>🚀 未来研究方向</h2>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px;">
+            <div style="background: var(--accent-light); border-radius: 10px; padding: 18px;">
+                <h4 style="margin:0 0 8px 0;">🤖 手-臂联调</h4>
+                <p style="margin:0; font-size:0.9em;">
+                    将力控模型真实部署至 CL 模型控制的灵巧手，观察实机效果。
+                    根据具体任务特点定制不同模型变体。
+                </p>
+            </div>
+            <div style="background: var(--accent-light); border-radius: 10px; padding: 18px;">
+                <h4 style="margin:0 0 8px 0;">🧠 VLM/VLA 顶层结合</h4>
+                <p style="margin:0; font-size:0.9em;">
+                    训练 VLM/VLA 理解物体软硬，指导接触识别阈值设定。
+                    大模型宏观决策 + 小网络微观执行：弥补大模型物理交互的缺失。
+                </p>
+            </div>
+            <div style="background: var(--accent-light); border-radius: 10px; padding: 18px;">
+                <h4 style="margin:0 0 8px 0;">🔬 科研闭环</h4>
+                <p style="margin:0; font-size:0.9em;">
+                    补充消融实验与对比实验，处理分析数据，
+                    争取冲刺相关国际会议或期刊。
+                </p>
+            </div>
+            <div style="background: var(--accent-light); border-radius: 10px; padding: 18px;">
+                <h4 style="margin:0 0 8px 0;">🦾 机械臂柔性控制</h4>
+                <p style="margin:0; font-size:0.9em;">
+                    将相同方法推广至机械臂，使整条运动链具备柔性控制能力，
+                    支撑更复杂、更精确的操作任务。
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== 11. 参考资料 ==================== -->
+    <section class="section">
+        <h2>📚 参考资料</h2>
+        <ul>
+            <li>
+                <strong>SafeHumanoid</strong> —
+                Y. Mahmoud et al., "SafeHumanoid: VLM-RAG-driven Control of Upper Body Impedance for Humanoid Robot,"
+                arXiv preprint arXiv:2511.23300, Nov. 2025.
+            </li>
+            <li>
+                <strong>LinkerHand L6</strong> — 灵心巧手 6 自由度欠驱动灵巧手，CAN bus (1Mbps) 通信。
+            </li>
+            <li>
+                <strong>SAC (Soft Actor-Critic)</strong> — Haarnoja et al., "Soft Actor-Critic: Off-Policy Maximum Entropy Deep RL,"
+                ICML 2018.
+            </li>
+            <li>
+                <strong>Stable-Baselines3</strong> — Raffin et al., "Stable-Baselines3: Reliable RL Implementations,"
+                JMLR 2021.
+            </li>
+        </ul>
+    </section>
+
+    <!-- ==================== 底部 ==================== -->
+    <footer style="text-align: center; margin-top: 40px; padding: 24px 0; color: var(--muted); font-size: 0.9em; border-top: 1px solid var(--border);">
+        <a href="../projects.html" style="color: var(--primary); text-decoration: none; font-weight: 600;">← 返回项目目录</a>
+        &nbsp;·&nbsp; PUMA &nbsp;·&nbsp; LinkerHand 柔性力控系统
+    </footer>
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NapCat + Qwen 7B 本地群聊机器人 — PUMA</title>
+    <style>
+        :root {
+            --primary: #4F46E5; --primary-light: #EEF2FF;
+            --accent: #8B5CF6; --accent-light: #F5F3FF;
+            --warning: #F59E0B; --warning-light: #FFFBEB;
+            --danger: #EF4444; --danger-light: #FEF2F2;
+            --bg: #F3F4F6; --card: #FFFFFF;
+            --text: #1F2937; --muted: #6B7280; --border: #E5E7EB;
+        }
+        * { box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Noto Sans SC", sans-serif;
+            background: var(--bg); color: var(--text);
+            margin: 0; padding: 0; line-height: 1.75;
+            background-image: linear-gradient(135deg, #fdfbfb 0%, #ebedee 100%);
+        }
+        .container { max-width: 900px; margin: 0 auto; padding: 20px; }
+        .back-link {
+            display: inline-flex; align-items: center; gap: 6px;
+            color: var(--primary); text-decoration: none;
+            font-weight: 600; font-size: 0.95em; margin-bottom: 24px;
+            transition: transform 0.2s;
+        }
+        .back-link:hover { transform: translateX(-4px); }
+        .hero {
+            background: var(--card); border-radius: 20px; padding: 48px 40px;
+            text-align: center; box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            margin-bottom: 30px; animation: fadeUp 0.8s ease;
+            position: relative; overflow: hidden;
+        }
+        .hero::before {
+            content: ''; position: absolute; top: 0; left: 0; right: 0; height: 5px;
+            background: linear-gradient(90deg, var(--accent), var(--primary), var(--warning));
+        }
+        .hero .badge {
+            display: inline-block; background: var(--accent-light); color: var(--accent);
+            padding: 4px 16px; border-radius: 20px; font-size: 0.85em; font-weight: 600;
+            margin-bottom: 16px;
+        }
+        .hero h1 {
+            font-size: 2em; margin: 0 0 10px 0;
+            background: linear-gradient(135deg, var(--accent), var(--primary));
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .hero .meta {
+            color: var(--muted); font-size: 0.95em;
+            display: flex; justify-content: center; gap: 24px; flex-wrap: wrap;
+        }
+        .hero .meta span { display: inline-flex; align-items: center; gap: 4px; }
+        .section {
+            background: var(--card); border-radius: 16px; padding: 36px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.04); margin-bottom: 24px;
+            animation: fadeUp 0.6s ease;
+        }
+        .section h2 { margin: 0 0 20px 0; font-size: 1.4em; display: flex; align-items: center; gap: 10px; }
+        .section h3 { margin: 24px 0 12px 0; font-size: 1.15em; color: var(--text); }
+        .section h4 { margin: 16px 0 8px 0; color: var(--accent); }
+        .section p { margin: 0 0 12px 0; }
+        .section ul, .section ol { margin: 8px 0; padding-left: 20px; }
+        .section li { margin-bottom: 6px; }
+        .section.accent  { border-left: 4px solid var(--accent); }
+        .section.warning { border-left: 4px solid var(--warning); }
+        .section.danger  { border-left: 4px solid var(--danger); }
+        .tag {
+            display: inline-block; padding: 3px 12px; border-radius: 12px;
+            font-size: 0.82em; font-weight: 600; margin: 2px 4px 2px 0;
+        }
+        .tag.blue   { background: var(--primary-light); color: var(--primary); }
+        .tag.green  { background: #ECFDF5; color: #059669; }
+        .tag.amber  { background: var(--warning-light); color: #D97706; }
+        .tag.purple { background: var(--accent-light); color: var(--accent); }
+        .obs-table {
+            width: 100%; border-collapse: collapse; margin: 16px 0; font-size: 0.86em;
+        }
+        .obs-table th {
+            background: #F9FAFB; padding: 10px 14px; text-align: left;
+            font-weight: 700; border-bottom: 2px solid var(--border);
+        }
+        .obs-table td {
+            padding: 8px 14px; border-bottom: 1px solid var(--border); vertical-align: top;
+        }
+        .obs-table .dim { font-weight: 700; color: var(--accent); }
+        .grid-2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; }
+        .grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px; }
+        .mini-card {
+            background: #F9FAFB; border-radius: 10px; padding: 18px;
+            border: 1px solid var(--border);
+        }
+        .mini-card.highlight {
+            border-left: 4px solid var(--accent); background: var(--accent-light);
+        }
+        .mini-card h4 { margin: 0 0 8px 0; }
+        .code-box {
+            background: #1F2937; color: #E5E7EB; border-radius: 10px;
+            padding: 16px 20px; margin: 12px 0; font-family: "JetBrains Mono", "Fira Code", monospace;
+            font-size: 0.8em; line-height: 1.6; overflow-x: auto;
+        }
+        .code-box .k { color: #C084FC; }
+        .code-box .v { color: #FBBF24; }
+        .code-box .c { color: #9CA3AF; }
+        blockquote {
+            border-left: 4px solid var(--accent); background: var(--accent-light);
+            margin: 16px 0; padding: 14px 20px; border-radius: 0 10px 10px 0;
+            color: #6D28D9;
+        }
+        .step-flow {
+            display: flex; align-items: center; justify-content: center;
+            gap: 6px; flex-wrap: wrap; margin: 16px 0; font-size: 0.82em;
+        }
+        .step-badge {
+            background: var(--accent-light); color: var(--accent);
+            padding: 5px 12px; border-radius: 8px; font-weight: 700; white-space: nowrap;
+        }
+        .step-arrow { color: var(--muted); font-size: 1.1em; }
+        @media (max-width: 600px) {
+            .hero { padding: 32px 20px; } .hero h1 { font-size: 1.3em; }
+            .section { padding: 24px 18px; }
+        }
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(16px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+
+    <a href="../life.html" class="back-link">← 返回技术与生活</a>
+
+    <!-- ==================== Hero ==================== -->
+    <header class="hero">
+        <div class="badge">NapCat · Qwen 7B · QQ 机器人 · 角色化对话</div>
+        <h1>基于 NapCat + Qwen 7B 的本地群聊机器人</h1>
+        <p style="font-size:1.05em; color: var(--text); max-width: 640px; margin: 12px auto;">
+            通过 GitHub 开源项目 <strong>NapCat</strong> 接入 QQ 协议，在裸 Qwen 7B 之上构建四层工程栈——身份注入、双轨记忆、质量守门、异步 API 化，
+            实现一个有个性、有记忆、输出可控的 QQ 群聊智能体。
+        </p>
+        <div class="meta">
+            <span>🦙 Ollama + Qwen2.5 7B</span>
+            <span>🐧 NapCat QQ 接口</span>
+            <span>⚡ asyncio 异步架构</span>
+        </div>
+        <div style="margin-top: 16px;">
+            <span class="tag purple">System Prompt 工程</span>
+            <span class="tag blue">记忆系统</span>
+            <span class="tag green">采样约束</span>
+            <span class="tag amber">WebSocket</span>
+            <span class="tag purple">asyncio</span>
+        </div>
+    </header>
+
+    <!-- ==================== 1. 总览 ==================== -->
+    <section class="section">
+        <h2>🧱 四层工程架构总览</h2>
+        <p>裸 Qwen 7B 是通用模型——不会角色扮演、没有记忆、输出不可控。通过四层增量叠加，将其改造为完整的群聊智能体：</p>
+
+        <table class="obs-table">
+            <thead>
+                <tr><th>#</th><th>层级</th><th>核心功能</th><th>关键技术</th></tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="dim">1</td>
+                    <td><strong>身份层</strong></td>
+                    <td>角色人格注入</td>
+                    <td>System Prompt + Few-shot 范例 + Recency Effect 锚定</td>
+                </tr>
+                <tr>
+                    <td class="dim">2</td>
+                    <td><strong>记忆层</strong></td>
+                    <td>长期 + 短期双轨</td>
+                    <td>滑动窗口 + 群聊摘要流水线 + 关键词检索 + 相似度去重</td>
+                </tr>
+                <tr>
+                    <td class="dim">3</td>
+                    <td><strong>质量层</strong></td>
+                    <td>输出可控与防崩溃</td>
+                    <td>采样参数约束 + 输出清洗 + 垃圾检测 + 自动降温度重试</td>
+                </tr>
+                <tr>
+                    <td class="dim">4</td>
+                    <td><strong>工程层</strong></td>
+                    <td>API 化与异步并发</td>
+                    <td>Ollama chat API + asyncio.Lock + WebSocket 长连接 + 多消息拆分</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <blockquote>
+            一句话总结：裸 Qwen 7B → 一个有身份、有记忆、输出可控、不会胡言乱语的 QQ 群聊机器人。
+        </blockquote>
+    </section>
+
+    <!-- ==================== 2. 身份层 ==================== -->
+    <section class="section accent">
+        <h2>🎭 第一层：身份层 — 人设注入</h2>
+        <p>裸模型是通用 AI，通过 <strong>System Prompt</strong> 注入完整角色人格。利用 7B 模型的 <strong>Recency Effect</strong>（最近信息权重最高），将人设规则放在 System Prompt 的最末尾，确保模型优先遵循角色约束。</p>
+
+        <div class="grid-2">
+            <div class="mini-card highlight">
+                <h4>👤 身份设定</h4>
+                <p style="margin:0; font-size:0.85em;">男大学生、王者中路玩家、爱吐槽吃瓜看戏。</p>
+            </div>
+            <div class="mini-card highlight">
+                <h4>🗣️ 语言约束</h4>
+                <p style="margin:0; font-size:0.85em;">不用句号逗号，换行代替停顿。0.5-1.2s 间隔连续发送。</p>
+            </div>
+            <div class="mini-card highlight">
+                <h4>💬 口头禅体系</h4>
+                <p style="margin:0; font-size:0.85em;">有各种生活化的口头禅，不僵硬，有人情味。</p>
+            </div>
+            <div class="mini-card highlight">
+                <h4>😊 Emoji 情绪层</h4>
+                <p style="margin:0; font-size:0.85em;">💀破防 😨震惊 😭哭泣 😲吃瓜。配合口头禅自然穿插，不过度使用。</p>
+            </div>
+        </div>
+
+        <h4>Few-shot 范例设计</h4>
+        <p>3 个正常聊天范例 + 2 个情绪爆发范例 = 5 个 Few-shot。告诉模型"平时自然说话，情绪到了才甩口头禅"，避免每句话都塞满梗的油腻感。正常聊天回复自然简短，情绪破防时才密集输出口头禅+emoji。</p>
+    </section>
+
+    <!-- ==================== 3. 记忆层 ==================== -->
+    <section class="section warning">
+        <h2>🧠 第二层：记忆层 — 长短期双轨</h2>
+        <p>裸模型每次对话都是"失忆"状态。通过三层记忆架构让机器人知道"刚才在聊什么""这阵子群里发生了什么""这个人的偏好是什么"。</p>
+
+        <table class="obs-table">
+            <thead>
+                <tr><th>记忆类型</th><th>存储结构</th><th>存活时间</th><th>作用</th></tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="dim">短期上下文</td>
+                    <td><code>deque(maxlen=100)</code> 按群隔离</td>
+                    <td>最近 30 条拼入 Prompt</td>
+                    <td>知道刚才在聊什么，多轮对话连贯</td>
+                </tr>
+                <tr>
+                    <td class="dim">群聊摘要</td>
+                    <td>每 100 条 → LLM 总结 → JSON 持久化</td>
+                    <td>摘要攒 5 条 → LLM 浓缩 → 循环</td>
+                    <td>知道这阵子群里的重要事件和话题走向</td>
+                </tr>
+                <tr>
+                    <td class="dim">用户记忆</td>
+                    <td>关键词检索 + 相似度去重（&gt;70% 跳过）</td>
+                    <td>持久化 JSON，跨会话</td>
+                    <td>例：提到"火锅"→ 想起"A 爱吃火锅"</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h4>记忆流转流水线</h4>
+        <div class="step-flow">
+            <span class="step-badge">📨 群聊消息</span>
+            <span class="step-arrow">→</span>
+            <span class="step-badge">攒 100 条</span>
+            <span class="step-arrow">→</span>
+            <span class="step-badge">🤖 LLM 总结<br><small>口语化 2-3 句</small></span>
+            <span class="step-arrow">→</span>
+            <span class="step-badge">💾 摘要存盘</span>
+            <span class="step-arrow">→</span>
+            <span class="step-badge">📊 攒 5 条</span>
+            <span class="step-arrow">→</span>
+            <span class="step-badge">🤖 LLM 浓缩<br><small>1-2 段精华</small></span>
+            <span class="step-arrow">→</span>
+            <span class="step-badge">🔄 循环</span>
+        </div>
+        <p>后台每 5 分钟扫描一次，异步执行，不阻塞消息处理。</p>
+    </section>
+
+    <!-- ==================== 4. 质量层 ==================== -->
+    <section class="section danger">
+        <h2>🛡️ 第三层：质量层 — 防胡言乱语</h2>
+        <p>裸 7B 模型输出不可控——格式崩溃、重复循环、回显 Prompt、乱码。通过三层防线兜底：</p>
+
+        <h3>防线 1：采样约束</h3>
+        <div class="code-box">
+            <span class="c">// Ollama API 采样参数 — 从源头控制输出质量</span>
+            <span class="k">temperature</span>:    <span class="v">0.75</span>       <span class="c">// 降低随机性，减少天马行空</span>
+            <span class="k">top_p</span>:          <span class="v">0.9</span>        <span class="c">// 截断低概率 token</span>
+            <span class="k">repeat_penalty</span>: <span class="v">1.15</span>      <span class="c">// 防止陷入重复循环</span>
+            <span class="k">stop</span>:           <span class="v">["&lt;|im_end|&gt;", "&lt;|im_start|&gt;"]</span>  <span class="c">// 防 ChatML 标签泄露</span>
+        </div>
+
+        <h3>防线 2：输出清洗</h3>
+        <ul>
+            <li><strong>物理强制无标点：</strong>逗号→空格，句号→换行，代码层面保证人设一致性</li>
+            <li><strong>非法字符过滤：</strong>正则保留中文+英文+数字+emoji+常用符号，剔除乱码</li>
+            <li><strong>Prompt 回显检测：</strong>检测模型是否复读了 System Prompt 或指令片段</li>
+        </ul>
+
+        <h3>防线 3：垃圾检测 + 自动重试</h3>
+        <p><code>is_garbage()</code> 函数进行多维度判断：回显 Prompt 关键词、纯符号/数字、同字符重复 &gt;15 次、高英文比例。检测到垃圾 → <strong>降低温度（0.75 → 0.5）重试</strong> → 还是垃圾 → 不发。宁可沉默，不崩人设。</p>
+    </section>
+
+    <!-- ==================== 5. 工程层 ==================== -->
+    <section class="section accent">
+        <h2>⚙️ 第四层：工程层 — NapCat 接入 + API 化与异步</h2>
+
+        <table class="obs-table">
+            <thead>
+                <tr><th>维度</th><th>裸 Ollama</th><th>本项目</th></tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="dim">调用方式</td>
+                    <td><code>ollama run</code> 子进程</td>
+                    <td><strong>aiohttp → /api/chat</strong>（原生 API，避免模板拼接 bug）</td>
+                </tr>
+                <tr>
+                    <td class="dim">模板</td>
+                    <td>手动拼 <code>&lt;|im_start|&gt;</code> → 双重嵌套</td>
+                    <td><strong>Ollama 原生 chat template</strong></td>
+                </tr>
+                <tr>
+                    <td class="dim">并发</td>
+                    <td>阻塞</td>
+                    <td><strong>asyncio.Lock</strong> + <strong>asyncio.create_task</strong></td>
+                </tr>
+                <tr>
+                    <td class="dim">回复方式</td>
+                    <td>单条消息</td>
+                    <td>换行自动拆成 <strong>1-3 条连续发送</strong>（随机 0.5-1.2s 间隔，模拟真人）</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h4>模块结构</h4>
+        <div class="code-box">
+            qq_bot/
+            ├── <span class="k">bot_main.py</span>            <span class="c">// 主入口：WebSocket 连接 + 消息分发</span>
+            ├── <span class="k">llm_client.py</span>          <span class="c">// Ollama /api/chat 异步客户端</span>
+            ├── <span class="k">memory_manager.py</span>      <span class="c">// 长期记忆：关键词检索 + 相似度去重</span>
+            ├── <span class="k">persona_manager.py</span>     <span class="c">// 用户人设与群背景管理</span>
+            ├── <span class="k">mention_resolver.py</span>    <span class="c">// @提及解析，定位群友身份</span>
+            ├── <span class="k">file_sender.py</span>         <span class="c">// 多媒体消息发送</span>
+            ├── <span class="k">message_router.py</span>      <span class="c">// 消息路由与触发策略</span>
+            ├── <span class="k">utils.py</span>               <span class="c">// 通用工具函数</span>
+            ├── <span class="k">config.json</span>            <span class="c">// 群配置、回复概率、触发词</span>
+            ├── <span class="k">人设.txt</span>               <span class="c">// System Prompt 角色定义</span>
+            └── <span class="k">data/</span>                   <span class="c">// 持久化数据（记忆、会话、用户映射）</span>
+        </div>
+
+        <h4>通信架构</h4>
+        <div class="step-flow">
+            <span class="step-badge">🐧 NapCat<br><small>QQ WebSocket</small></span>
+            <span class="step-arrow">⇄</span>
+            <span class="step-badge">🔌 bot_main.py<br><small>asyncio 事件循环</small></span>
+            <span class="step-arrow">→</span>
+            <span class="step-badge">🦙 Ollama<br><small>/api/chat</small></span>
+            <span class="step-arrow">→</span>
+            <span class="step-badge">🧠 Qwen 7B<br><small>本地 GPU 推理</small></span>
+        </div>
+        <p style="text-align: center; color: var(--muted); font-size: 0.85em;">
+            全链路：QQ 消息 → NapCat WebSocket → asyncio 异步分发 → System Prompt 组装（人设+记忆+上下文）→ Ollama API → Qwen 7B → 清洗 → 拆分 → 连续发送
+        </p>
+    </section>
+
+    <!-- ==================== 5. 架构决策：为什么不使用路由网络 ==================== -->
+    <section class="section danger">
+        <h2>🚫 架构决策：为什么不使用专家路由网络</h2>
+        <p>
+            一个常见的设计思路是在 LLM 前加一层轻量分类器（路由网络 / MoE 门控），
+            将不同意图的消息分发到不同模型或策略处理。经分析，<strong>该方案不适合当前场景</strong>，理由有三：
+        </p>
+
+        <h3>1. 延迟翻倍，群聊承受不起</h3>
+        <div class="grid-2">
+            <div class="mini-card" style="border-left: 4px solid var(--accent);">
+                <h4>✅ 当前方案</h4>
+                <p style="margin:0; font-size:0.85em;"><code>收到消息 → 1次 LLM 调用 → 回复</code></p>
+            </div>
+            <div class="mini-card" style="border-left: 4px solid var(--danger);">
+                <h4>❌ 路由方案</h4>
+                <p style="margin:0; font-size:0.85em;"><code>收到消息 → 分类LLM → 回复LLM → 回复</code></p>
+            </div>
+        </div>
+        <p style="margin-top: 12px;">
+            Qwen 7B 本地推理一次耗时约 5–30 秒。两次调用意味着最差情况需要一分钟才回复，
+            群聊场景里消息早已刷过去。<code>num_predict=5</code> 救不了——编码阶段需要处理全部输入 token，
+            decode 阶段短并不能抵消 encode 阶段的全部开销。
+        </p>
+        <blockquote>单次 LLM 调用已经是瓶颈，不能给它加排队。</blockquote>
+
+        <h3>2. Bot 的任务空间是一元的，不需要路由</h3>
+        <p>专家路由适合的场景：</p>
+        <div class="code-box">
+            <span class="c">// 典型路由场景 — 多意图多能力</span>
+            用户："帮我查今天的天气"  →  路由到 [<span class="v">工具调用</span>]
+            用户："这个函数怎么求导"  →  路由到 [<span class="v">知识问答</span>]
+            用户："哈哈哈笑死了"      →  路由到 [<span class="v">闲聊</span>]
+        </div>
+        <p>
+            但本 bot 只有一件事：<strong>扮演人物在群里聊天</strong>。不管是知识问答还是情绪宣泄，
+            都不需要换人设。
+        </p>
+
+        <h3>3. 已经有更轻量的决策层了</h3>
+        <p><code>should_reply()</code> 函数本质上就是一个<strong>零成本分类器</strong>：</p>
+        <div class="code-box">
+            <span class="c">// bot_main.py — 零延迟决策，不需要 LLM</span>
+            @机器人 / 触发词  →  <span class="v">必须回</span>
+            群权限 off       →  <span class="v">不回</span>
+            其他             →  <span class="v">10% 概率随机插嘴</span>
+        </div>
+        <p>三行逻辑覆盖了全部路由需求，延迟为零。</p>
+
+        <h3>什么时候才值得加路由</h3>
+        <p>如果 bot 未来需要真正分裂人格、用不同模型处理不同任务：</p>
+        <div class="code-box">
+            <span class="c">// 未来扩展场景（当前不需要）</span>
+            [闲聊]   →  <span class="v">Qwen 7B  + sxyl人设</span>
+            [认真问答] →  <span class="v">Qwen 14B + 专业prompt</span>
+            [生图]   →  <span class="v">调 SD API</span>
+        </div>
+        <p>但目前既没有多模型，也没有多能力，加分类器纯属<strong>多一次 LLM 调用的延迟惩罚，换不来任何收益</strong>。</p>
+    </section>
+
+    <!-- ==================== 6. 技术总结 ==================== -->
+    <section class="section">
+        <h2>📊 技术价值总结</h2>
+        <div class="grid-3">
+            <div class="mini-card">
+                <h4>🎯 Prompt 工程</h4>
+                <p style="margin:0; font-size:0.85em;">System Prompt 注入 + Few-shot 范例设计 + Recency Effect 利用。理解 7B 模型的注意力特性并据此优化 Prompt 结构。</p>
+            </div>
+            <div class="mini-card">
+                <h4>🧠 记忆系统设计</h4>
+                <p style="margin:0; font-size:0.85em;">短期滑动窗口 + 长期 JSON 持久化 + 关键词检索 + 字符集相似度去重。自主设计群聊摘要流水线（攒→总结→浓缩→循环）。</p>
+            </div>
+            <div class="mini-card">
+                <h4>🛡️ 鲁棒性工程</h4>
+                <p style="margin:0; font-size:0.85em;">多层输出质量保障：采样约束 + 物理清洗 + 垃圾检测 + 自动降温度重试。宁可沉默不崩人设。</p>
+            </div>
+            <div class="mini-card">
+                <h4>⚡ 异步架构</h4>
+                <p style="margin:0; font-size:0.85em;">aiohttp + asyncio.Lock + create_task 并发。WebSocket 长连接 + 后台定时任务（记忆压缩），全异步非阻塞。</p>
+            </div>
+            <div class="mini-card">
+                <h4>🔌 系统集成</h4>
+                <p style="margin:0; font-size:0.85em;">NapCat QQ 协议 → 本地 Ollama → Qwen 7B，完整端到端部署。群聊多用户上下文管理 + @触发 + 随机插话策略。</p>
+            </div>
+            <div class="mini-card">
+                <h4>📝 代码工程</h4>
+                <p style="margin:0; font-size:0.85em;">8 模块清晰分层，配置与逻辑分离，JSON 持久化，完善的异常处理与日志系统。</p>
+            </div>
+        </div>
+    </section>
+
+    <footer style="text-align: center; margin-top: 40px; padding: 24px 0; color: var(--muted); font-size: 0.9em; border-top: 1px solid var(--border);">
+        <a href="../life.html" style="color: var(--primary); text-decoration: none; font-weight: 600;">← 返回技术与生活</a>
+        &nbsp;·&nbsp; PUMA &nbsp;·&nbsp; 本地 LLM 群聊机器人
+    </footer>
+
+</div>
+
+</body>
+</html>

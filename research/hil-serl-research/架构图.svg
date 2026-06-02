@@ -1,0 +1,422 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- 由 Microsoft Visio, SVG Export 生成 架构图.svg Page-1 -->
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:ev="http://www.w3.org/2001/xml-events"
+		xmlns:v="http://schemas.microsoft.com/visio/2003/SVGExtensions/" width="11.6929in" height="11.8898in"
+		viewBox="0 0 841.89 856.063" xml:space="preserve" color-interpolation-filters="sRGB" class="st17">
+	<v:documentProperties v:langID="2052" v:metric="true" v:viewMarkup="false">
+		<v:userDefs>
+			<v:ud v:nameU="msvSubprocessMaster" v:prompt="" v:val="VT4(Rectangle)"/>
+			<v:ud v:nameU="msvNoAutoConnect" v:val="VT0(1):26"/>
+		</v:userDefs>
+	</v:documentProperties>
+
+	<style type="text/css">
+	<![CDATA[
+		.st1 {fill:#ffffff;stroke:#000000;stroke-width:0.75}
+		.st2 {fill:#000000;font-family:等线;font-size:0.833336em}
+		.st3 {font-size:1em}
+		.st4 {marker-end:url(#mrkr4-17);stroke:#156082;stroke-linecap:round;stroke-linejoin:round;stroke-width:1}
+		.st5 {fill:#156082;fill-opacity:1;stroke:#156082;stroke-opacity:1;stroke-width:0.28409090909091}
+		.st6 {fill:#ffffff;stroke:none;stroke-linecap:butt;stroke-width:7.2}
+		.st7 {fill:#000000;font-family:等线;font-size:0.666664em}
+		.st8 {fill:#f2f2f2;stroke:#0d4964;stroke-width:0.25}
+		.st9 {fill:#f2f2f2;stroke:none;stroke-width:0.25}
+		.st10 {fill:#000000;font-family:等线;font-size:1.16666em;font-weight:bold}
+		.st11 {fill:#d8d8d8;stroke:#0d4964;stroke-width:0.25}
+		.st12 {fill:none;stroke:none;stroke-width:0.25}
+		.st13 {fill:#000000;font-family:等线;font-size:1.00001em;font-weight:bold}
+		.st14 {fill:#000000;font-family:等线;font-size:1.00001em}
+		.st15 {fill:#ffffff;stroke:none;stroke-linecap:butt}
+		.st16 {font-size:1.125em}
+		.st17 {fill:none;fill-rule:evenodd;font-size:12px;overflow:visible;stroke-linecap:square;stroke-miterlimit:3}
+	]]>
+	</style>
+
+	<defs id="Markers">
+		<g id="lend4">
+			<path d="M 2 1 L 0 0 L 2 -1 L 2 1 " style="stroke:none"/>
+		</g>
+		<marker id="mrkr4-17" class="st5" v:arrowType="4" v:arrowSize="2" v:setback="7.04" refX="-7.04" orient="auto"
+				markerUnits="strokeWidth" overflow="visible">
+			<use xlink:href="#lend4" transform="scale(-3.52,-3.52) "/>
+		</marker>
+	</defs>
+	<g v:mID="0" v:index="1" v:groupContext="foregroundPage">
+		<v:userDefs>
+			<v:ud v:nameU="msvThemeOrder" v:val="VT0(0):26"/>
+		</v:userDefs>
+		<title>页-1</title>
+		<v:pageProperties v:drawingScale="0.0393701" v:pageScale="0.0393701" v:drawingUnits="24" v:shadowOffsetX="8.50394"
+				v:shadowOffsetY="-8.50394"/>
+		<v:layer v:name="连接线" v:index="0"/>
+		<g id="shape1-1" v:mID="1" v:groupContext="shape" transform="translate(56.3201,-515.495)">
+			<title>矩形</title>
+			<desc>相机、机械臂读取的图像、力矩、位姿等数据</desc>
+			<v:userDefs>
+				<v:ud v:nameU="visVersion" v:val="VT0(15):26"/>
+			</v:userDefs>
+			<v:textBlock v:margins="rect(4,4,4,4)" v:tabSpace="42.5197"/>
+			<v:textRect cx="48.189" cy="827.717" width="96.38" height="56.6929"/>
+			<rect x="0" y="799.37" width="96.378" height="56.6929" class="st1"/>
+			<text x="8.19" y="818.72" class="st2" v:langID="2052"><v:paragraph v:horizAlign="1"/><v:tabList/>相机、机械臂读取<tspan
+						x="8.19" dy="1.2em" class="st3">的图像</tspan>、力矩、位<tspan x="28.19" dy="1.2em" class="st3">姿等数据</tspan></text>		</g>
+		<g id="shape2-6" v:mID="2" v:groupContext="shape" transform="translate(268.151,-506.282)">
+			<title>矩形.2</title>
+			<desc>将力矩、位姿、夹持器状态等量合并为一维向量。 通过字典储存来自不同相机的图像</desc>
+			<v:userDefs>
+				<v:ud v:nameU="visVersion" v:val="VT0(15):26"/>
+			</v:userDefs>
+			<v:textBlock v:margins="rect(4,4,4,4)" v:tabSpace="42.5197"/>
+			<v:textRect cx="66.6142" cy="818.504" width="133.23" height="75.1181"/>
+			<rect x="0" y="780.945" width="133.228" height="75.1181" class="st1"/>
+			<text x="6.61" y="803.5" class="st2" v:langID="2052"><v:paragraph v:horizAlign="1" v:bulletSize="0.166667"/><v:tabList/>将力矩、位姿、夹持器状态<tspan
+						x="16.61" dy="1.2em" class="st3">等量合并为一维向量</tspan>。<v:newlineChar/><tspan x="6.61" dy="1.2em" class="st3">通过字典储存来自不同相机</tspan><tspan
+						x="51.61" dy="1.2em" class="st3">的图像</tspan></text>		</g>
+		<g id="shape3-12" v:mID="3" v:groupContext="shape" v:layerMember="0" transform="translate(152.698,-536.755)">
+			<title>动态连接线</title>
+			<desc>传入serl_obs_wrappers.py</desc>
+			<v:textBlock v:margins="rect(4,4,4,4)" v:tabSpace="42.5197"/>
+			<v:textRect cx="57.7264" cy="848.976" width="98.78" height="17.6036"/>
+			<path d="M0 848.98 L108.41 848.98" class="st4"/>
+			<rect v:rectContext="textBkgnd" x="13.4355" y="844.177" width="88.5819" height="9.59985" class="st6"/>
+			<text x="13.44" y="851.38" class="st7" v:langID="2052"><v:paragraph v:horizAlign="1"/><v:tabList/>传入<tspan class="st3"
+						v:langID="1033">serl_obs_wrappers.py</tspan></text>		</g>
+		<g id="shape7-21" v:mID="7" v:groupContext="shape" transform="translate(169.647,-234.156)">
+			<title>矩形.7</title>
+			<v:userDefs>
+				<v:ud v:nameU="visVersion" v:val="VT0(15):26"/>
+			</v:userDefs>
+			<rect x="0" y="600.945" width="330.236" height="255.118" class="st8"/>
+		</g>
+		<g id="shape8-23" v:mID="8" v:groupContext="shape" transform="translate(169.647,-462.912)">
+			<title>工作表.8</title>
+			<desc>train_rlpd.py</desc>
+			<v:textBlock v:margins="rect(4,4,4,4)" v:tabSpace="42.5197"/>
+			<v:textRect cx="48.189" cy="846.425" width="96.38" height="19.2756"/>
+			<rect x="0" y="836.787" width="96.378" height="19.2756" class="st9"/>
+			<text x="8.28" y="850.74" class="st10" v:langID="1033"><v:paragraph v:horizAlign="1"/><v:tabList/>train_rlpd<tspan
+						class="st3" v:langID="2052">.py</tspan> </text>		</g>
+		<g id="group14-27" transform="translate(188.013,-346.125)" v:mID="14" v:groupContext="group">
+			<title>工作表.14</title>
+			<g id="shape12-28" v:mID="12" v:groupContext="shape">
+				<title>矩形.12</title>
+				<desc>在传入的原数据中加入action, reward, done, next_observations等数据。并将所有帧的数据...</desc>
+				<v:userDefs>
+					<v:ud v:nameU="visVersion" v:val="VT0(15):26"/>
+				</v:userDefs>
+				<v:textBlock v:margins="rect(4,4,4,4)" v:tabSpace="42.5197"/>
+				<v:textRect cx="146.752" cy="802.205" width="293.51" height="107.717"/>
+				<rect x="0" y="748.346" width="293.504" height="107.717" class="st11"/>
+				<text x="0.4em 1.442em 2.485em 3.527em 4.57em 5.612em 6.654em 7.697em 8.739em 9.781em" y="799.2" class="st2"
+						v:langID="2052"><v:paragraph v:horizAlign="3" v:bulletSize="0.166667"/><v:tabList/>在传入的原数据中加入<tspan x="10.824em
+								 11.325em 11.777em 12.095em 12.319em 12.892em 13.442em 13.662em 13.978em 14.317em 14.831em 15.53em
+								 16.031em 16.37em 16.944em 17.164em 17.48em 18.054em 18.627em 19.178em 19.691em 19.911em 20.227em
+								 20.777em 21.291em 21.731em 22.049em 22.464em 23.037em 23.611em 24.017em 24.531em 24.87em 25.336em
+								 25.837em 26.155em 26.378em 26.951em 27.502em" dy="0em" class="st3" v:langID="1033">action, reward, done, next_observations</tspan><tspan
+							x="27.95em" dy="0em" class="st3">等</tspan><tspan x="0.4em 1.4em" dy="1.2em" class="st3">数据</tspan><tspan
+							x="2.4em" dy="0em" class="st3">。</tspan><tspan x="3.4em 4.4em 5.4em 6.4em 7.4em 8.4em 9.4em 10.4em 11.4em
+								 12.4em 13.4em 14.4em 15.4em 16.4em 17.4em 18.4em 19.4em 20.4em 21.4em" dy="0em" class="st3">并将所有帧的数据整合到同一个大型结构中</tspan></text>			</g>
+			<g id="shape13-36" v:mID="13" v:groupContext="shape" transform="translate(-4.13386,-91.4555)">
+				<title>工作表.13</title>
+				<desc>actor模块</desc>
+				<v:textBlock v:margins="rect(4,4,4,4)" v:tabSpace="42.5197"/>
+				<v:textRect cx="42.5197" cy="847.932" width="85.04" height="16.261"/>
+				<rect x="0" y="839.802" width="85.0394" height="16.261" class="st12"/>
+				<text x="16.59" y="851.53" class="st13" v:langID="2052"><v:paragraph v:horizAlign="1"/><v:tabList/>actor模块</text>			</g>
+		</g>
+		<g id="shape15-39" v:mID="15" v:groupContext="shape" v:layerMember="0" transform="translate(327.678,-506.282)">
+			<title>动态连接线.15</title>
+			<path d="M7.09 856.06 L7.09 901.46" class="st4"/>
+		</g>
+		<g id="shape18-44" v:mID="18" v:groupContext="shape" v:layerMember="0" transform="translate(481.517,-419.773)">
+			<title>动态连接线.18</title>
+			<desc>将图像数据传入reward_classifier.py</desc>
+			<v:textBlock v:margins="rect(4,4,4,4)" v:tabSpace="42.5197"/>
+			<v:textRect cx="96.3779" cy="863.15" width="132.01" height="17.6036"/>
+			<path d="M0 863.15 L185.72 863.15" class="st4"/>
+			<rect v:rectContext="textBkgnd" x="35.4719" y="858.35" width="121.812" height="9.59985" class="st6"/>
+			<text x="35.47" y="865.55" class="st7" v:langID="2052"><v:paragraph v:horizAlign="1"/><v:tabList/>将图像数据传入<tspan
+						class="st3" v:langID="1033">reward_classifier.py</tspan></text>		</g>
+		<g id="shape20-52" v:mID="20" v:groupContext="shape" transform="translate(674.273,-384.34)">
+			<title>矩形.20</title>
+			<desc>通过二元分类器输出reward</desc>
+			<v:userDefs>
+				<v:ud v:nameU="visVersion" v:val="VT0(15):26"/>
+			</v:userDefs>
+			<v:textBlock v:margins="rect(4,4,4,4)" v:tabSpace="42.5197"/>
+			<v:textRect cx="48.189" cy="827.717" width="96.38" height="56.6929"/>
+			<rect x="0" y="799.37" width="96.378" height="56.6929" class="st1"/>
+			<text x="6.19" y="824.12" class="st14" v:langID="2052"><v:paragraph v:horizAlign="1"/><v:tabList/>通过二元分类器<tspan
+						x="18.39" dy="1.2em" class="st3">输出</tspan><tspan class="st3" v:langID="1033">reward</tspan></text>		</g>
+		<g id="shape24-57" v:mID="24" v:groupContext="shape" v:layerMember="0" transform="translate(722.462,-387.783)">
+			<title>动态连接线.24</title>
+			<desc>将reward传回actor模块</desc>
+			<v:textBlock v:margins="rect(4,4,4,4)" v:tabSpace="42.5197"/>
+			<v:textRect cx="-116.829" cy="866.793" width="91.4" height="17.6036"/>
+			<path d="M0 859.51 L0 866.79 L-233.9 866.79" class="st4"/>
+			<rect v:rectContext="textBkgnd" x="-157.428" y="861.993" width="81.1989" height="9.59985" class="st6"/>
+			<text x="-157.43" y="869.19" class="st7" v:langID="2052"><v:paragraph v:horizAlign="1"/><v:tabList/>将reward传回actor模块</text>		</g>
+		<g id="shape32-64" v:mID="32" v:groupContext="shape" transform="translate(237.047,-258.355)">
+			<title>矩形.12</title>
+			<desc>按照1:1取数据进行训练</desc>
+			<v:userDefs>
+				<v:ud v:nameU="visVersion" v:val="VT0(15):26"/>
+			</v:userDefs>
+			<v:textBlock v:margins="rect(4,4,4,4)" v:tabSpace="42.5197"/>
+			<v:textRect cx="97.7178" cy="825.643" width="195.44" height="60.8409"/>
+			<rect x="0" y="795.222" width="195.436" height="60.8409" class="st11"/>
+			<text x="36.08" y="829.24" class="st14" v:langID="2052"><v:paragraph v:horizAlign="1" v:bulletSize="0.166667"/><v:tabList/>按照<tspan
+						class="st3" v:langID="1033">1:1</tspan>取数据进行训练</text>		</g>
+		<g id="shape33-68" v:mID="33" v:groupContext="shape" transform="translate(236.697,-299.939)">
+			<title>工作表.33</title>
+			<desc>learn模块</desc>
+			<v:textBlock v:margins="rect(4,4,4,4)" v:tabSpace="42.5197"/>
+			<v:textRect cx="39.8622" cy="846.435" width="79.73" height="19.2564"/>
+			<rect x="0" y="836.807" width="79.7244" height="19.2564" class="st12"/>
+			<text x="14.25" y="850.03" class="st13" v:langID="2052"><v:paragraph v:horizAlign="1"/><v:tabList/>learn模块</text>		</g>
+		<g id="shape34-71" v:mID="34" v:groupContext="shape" transform="translate(655.848,-219.566)">
+			<title>矩形.34</title>
+			<desc>封装底层数据体训练时提供 JAX 极速采样提取 Batch</desc>
+			<v:userDefs>
+				<v:ud v:nameU="visVersion" v:val="VT0(15):26"/>
+			</v:userDefs>
+			<v:textBlock v:margins="rect(4,4,4,4)" v:tabSpace="42.5197"/>
+			<v:textRect cx="66.6142" cy="816.878" width="133.23" height="78.3696"/>
+			<rect x="0" y="777.693" width="133.228" height="78.3696" class="st1"/>
+			<text x="6.61" y="806.08" class="st14" v:langID="2052"><v:paragraph v:horizAlign="1" v:bulletSize="0.166667"/><v:tabList/>封装底层数据体，训练<tspan
+						x="6.01" dy="1.2em" class="st3">时提供</tspan> <tspan class="st3" v:langID="1033">JAX </tspan>极速采样，<tspan
+						x="38.69" dy="1.2em" class="st3">提取</tspan> <tspan class="st3" v:langID="1033">Batch</tspan></text>		</g>
+		<g id="shape36-78" v:mID="36" v:groupContext="shape" v:layerMember="0" transform="translate(481.517,-361.125)">
+			<title>动态连接线.36</title>
+			<desc>将数据传入Replay Buffer 再由Dataset.py处理调用</desc>
+			<v:textBlock v:margins="rect(4,4,4,4)" v:tabSpace="42.5197"/>
+			<v:textRect cx="152.067" cy="856.063" width="95.65" height="27.4669"/>
+			<path d="M0 856.06 L240.94 856.06 L240.94 912.21" class="st4"/>
+			<rect v:rectContext="textBkgnd" x="109.341" y="846.332" width="85.453" height="19.4631" class="st6"/>
+			<text x="109.34" y="853.53" class="st7" v:langID="2052"><v:paragraph v:horizAlign="1"/><v:tabList/>将数据传入<tspan
+						class="st3" v:langID="1033">Replay Buffer<v:newlineChar/></tspan><tspan x="110.04" dy="1.225em" class="st3">再由</tspan><tspan
+						class="st3" v:langID="1033">Dataset.py</tspan>处理调用</text>		</g>
+		<g id="shape38-88" v:mID="38" v:groupContext="shape" transform="translate(665.06,-109.432)">
+			<title>矩形.38</title>
+			<desc>人类离线操作范例</desc>
+			<v:userDefs>
+				<v:ud v:nameU="visVersion" v:val="VT0(15):26"/>
+			</v:userDefs>
+			<v:textBlock v:margins="rect(4,4,4,4)" v:tabSpace="42.5197"/>
+			<v:textRect cx="57.4016" cy="832.677" width="114.81" height="46.7717"/>
+			<rect x="0" y="809.291" width="114.803" height="46.7717" class="st1"/>
+			<text x="9.4" y="836.28" class="st14" v:langID="2052"><v:paragraph v:horizAlign="1" v:bulletSize="0.166667"/><v:tabList/>人类离线操作范例</text>		</g>
+		<g id="shape45-91" v:mID="45" v:groupContext="shape" transform="translate(268.151,-58.8564)">
+			<title>矩形.45</title>
+			<desc>误差、求导、更新神经网络的权重 机械臂运动SAC与夹爪DQN分开设计训练模型</desc>
+			<v:userDefs>
+				<v:ud v:nameU="visVersion" v:val="VT0(15):26"/>
+			</v:userDefs>
+			<v:textBlock v:margins="rect(4,4,4,4)" v:tabSpace="42.5197"/>
+			<v:textRect cx="66.6142" cy="816.878" width="133.23" height="78.3696"/>
+			<rect x="0" y="777.693" width="133.228" height="78.3696" class="st1"/>
+			<text x="6.61" y="791.68" class="st14" v:langID="2052"><v:paragraph v:horizAlign="1" v:bulletSize="0.166667"/><v:tabList/>误差、求导、更新神经<tspan
+						x="36.61" dy="1.2em" class="st3">网络的权重<v:newlineChar/></tspan><tspan x="7.99" dy="1.2em" class="st3">机械臂运动</tspan>（<tspan
+						class="st3" v:langID="1033">SAC</tspan>）与<tspan x="5.57" dy="1.2em" class="st3">夹爪</tspan>（<tspan
+						class="st3" v:langID="1033">DQN</tspan>）分开设计<tspan x="42.61" dy="1.2em" class="st3">训练模型</tspan></text>		</g>
+		<g id="shape47-100" v:mID="47" v:groupContext="shape" v:layerMember="0" transform="translate(327.678,-258.355)">
+			<title>动态连接线.47</title>
+			<desc>将数据传入sac_hybrid_single.py 调用update</desc>
+			<v:textBlock v:margins="rect(4,4,4,4)" v:tabSpace="42.5197"/>
+			<v:textRect cx="6.43701" cy="939.113" width="119.57" height="27.2035"/>
+			<path d="M7.09 856.06 L7.09 970.15" class="st4"/>
+			<rect v:rectContext="textBkgnd" x="-48.2502" y="929.513" width="109.375" height="19.1997" class="st6"/>
+			<text x="-48.25" y="936.71" class="st7" v:langID="2052"><v:paragraph v:horizAlign="1"/><v:tabList/>将数据传入<tspan
+						class="st3" v:langID="1033">sac_hybrid_single.py<v:newlineChar/></tspan><tspan x="-13.69" dy="1.2em"
+						class="st3">调用</tspan><tspan class="st3" v:langID="1033">update</tspan></text>		</g>
+		<g id="shape62-110" v:mID="62" v:groupContext="shape" transform="translate(42.5197,-376.597)">
+			<title>矩形.62</title>
+			<desc>人类在线纠错数据</desc>
+			<v:userDefs>
+				<v:ud v:nameU="visVersion" v:val="VT0(15):26"/>
+			</v:userDefs>
+			<v:textBlock v:margins="rect(4,4,4,4)" v:tabSpace="42.5197"/>
+			<v:textRect cx="57.4016" cy="832.677" width="114.81" height="46.7717"/>
+			<rect x="0" y="809.291" width="114.803" height="46.7717" class="st1"/>
+			<text x="9.4" y="836.28" class="st14" v:langID="2052"><v:paragraph v:horizAlign="1" v:bulletSize="0.166667"/><v:tabList/>人类在线纠错数据</text>		</g>
+		<g id="shape63-113" v:mID="63" v:groupContext="shape" v:layerMember="0" transform="translate(157.323,-392.896)">
+			<title>动态连接线.63</title>
+			<path d="M0 848.98 L23.65 848.98" class="st4"/>
+		</g>
+		<g id="shape66-118" v:mID="66" v:groupContext="shape" v:layerMember="0" transform="translate(715.375,-156.203)">
+			<title>动态连接线.66</title>
+			<desc>将数据传入Dataset.py 删除表现差的数据</desc>
+			<v:textBlock v:margins="rect(4,4,4,4)" v:tabSpace="42.5197"/>
+			<v:textRect cx="7.08661" cy="824.382" width="86.25" height="27.4669"/>
+			<path d="M7.09 856.06 L7.09 799.74" class="st4"/>
+			<rect v:rectContext="textBkgnd" x="-30.9387" y="814.65" width="76.0509" height="19.4631" class="st6"/>
+			<text x="-30.94" y="821.85" class="st7" v:langID="2052"><v:paragraph v:horizAlign="1"/><v:tabList/>将数据传入<tspan
+						class="st3" v:langID="1033">Dataset.py<v:newlineChar/></tspan><tspan x="-24.91" dy="1.225em" class="st3">删除表现差的数据</tspan></text>		</g>
+		<g id="shape69-127" v:mID="69" v:groupContext="shape" transform="translate(521.143,-189.511)">
+			<title>矩形.69</title>
+			<desc>筛选后的人类离线操作数据池2</desc>
+			<v:userDefs>
+				<v:ud v:nameU="visVersion" v:val="VT0(15):26"/>
+			</v:userDefs>
+			<v:textBlock v:margins="rect(4,4,4,4)" v:tabSpace="42.5197"/>
+			<v:textRect cx="57.4016" cy="832.677" width="114.81" height="46.7717"/>
+			<rect x="0" y="809.291" width="114.803" height="46.7717" class="st1"/>
+			<text x="9.4" y="829.08" class="st14" v:langID="2052"><v:paragraph v:horizAlign="1" v:bulletSize="0.166667"/><v:tabList/>筛选后的人类离线<tspan
+						x="12.24" dy="1.2em" class="st3">操作</tspan>（数据池2）</text>		</g>
+		<g id="shape70-131" v:mID="70" v:groupContext="shape" transform="translate(519.785,-265.389)">
+			<title>矩形.70</title>
+			<desc>随机选取的在线经验池数据池1</desc>
+			<v:userDefs>
+				<v:ud v:nameU="visVersion" v:val="VT0(15):26"/>
+			</v:userDefs>
+			<v:textBlock v:margins="rect(4,4,4,4)" v:tabSpace="42.5197"/>
+			<v:textRect cx="57.4016" cy="832.677" width="114.81" height="46.7717"/>
+			<rect x="0" y="809.291" width="114.803" height="46.7717" class="st1"/>
+			<text x="9.4" y="829.08" class="st14" v:langID="2052"><v:paragraph v:horizAlign="1" v:bulletSize="0.166667"/><v:tabList/>随机选取的在线经<tspan
+						x="12.24" dy="1.2em" class="st3">验池</tspan>（数据池1）</text>		</g>
+		<g id="shape71-135" v:mID="71" v:groupContext="shape" v:layerMember="0" transform="translate(655.848,-258.751)">
+			<title>动态连接线.71</title>
+			<path d="M0 856.06 L-7.2 856.06 L-7.2 826.04 L-14.22 826.04" class="st4"/>
+		</g>
+		<g id="shape72-140" v:mID="72" v:groupContext="shape" v:layerMember="0" transform="translate(655.848,-258.751)">
+			<title>动态连接线.72</title>
+			<path d="M0 856.06 L-6.34 856.06 L-6.34 901.92 L-12.86 901.92" class="st4"/>
+		</g>
+		<g id="shape73-145" v:mID="73" v:groupContext="shape" v:layerMember="0" transform="translate(519.785,-281.688)">
+			<title>动态连接线.73</title>
+			<path d="M0 848.98 L-80.26 848.98" class="st4"/>
+		</g>
+		<g id="shape75-150" v:mID="75" v:groupContext="shape" v:layerMember="0" transform="translate(521.143,-212.896)">
+			<title>动态连接线.75</title>
+			<path d="M0 856.06 L-184.02 856.06 A2.3622 2.3622 -180 1 0 -188.74 856.06 L-296.77 856.06 L-296.77 780.18 L-291.14 780.18"
+					class="st4"/>
+		</g>
+		<g id="shape77-155" v:mID="77" v:groupContext="shape" transform="translate(605.622,-517.673)">
+			<title>矩形.77</title>
+			<desc>经过神经网络做前向传播输出运动指令action</desc>
+			<v:userDefs>
+				<v:ud v:nameU="visVersion" v:val="VT0(15):26"/>
+			</v:userDefs>
+			<v:textBlock v:margins="rect(4,4,4,4)" v:tabSpace="42.5197"/>
+			<v:textRect cx="54.1679" cy="824.199" width="108.34" height="63.727"/>
+			<rect x="0" y="792.336" width="108.336" height="63.727" class="st1"/>
+			<text x="6.17" y="813.4" class="st14" v:langID="2052"><v:paragraph v:horizAlign="1"/><v:tabList/>经过神经网络做前<tspan
+						x="6.17" dy="1.2em" class="st3">向传播</tspan>，输出运动<tspan x="26.46" dy="1.2em" class="st3">指令</tspan>action</text>		</g>
+		<g id="shape83-160" v:mID="83" v:groupContext="shape" v:layerMember="0" transform="translate(441.213,-453.841)">
+			<title>动态连接线.83</title>
+			<desc>将数据传入sac_hybrid_single.py 调用sample_actions</desc>
+			<v:textBlock v:margins="rect(4,4,4,4)" v:tabSpace="42.5197"/>
+			<v:textRect cx="73.7008" cy="758.32" width="119.57" height="27.2035"/>
+			<path d="M0 856.06 L0 760.37 L157.37 760.37" class="st4"/>
+			<rect v:rectContext="textBkgnd" x="19.0136" y="748.72" width="109.375" height="19.1997" class="st6"/>
+			<text x="19.01" y="755.92" class="st7" v:langID="2052"><v:paragraph v:horizAlign="1"/><v:tabList/>将数据传入<tspan
+						class="st3" v:langID="1033">sac_hybrid_single.py<v:newlineChar/></tspan><tspan x="39.7" dy="1.2em"
+						class="st3">调用</tspan><tspan class="st3" v:langID="1033">sample_actions</tspan></text>		</g>
+		<g id="shape84-170" v:mID="84" v:groupContext="shape" v:layerMember="0" transform="translate(659.79,-517.673)">
+			<title>动态连接线.84</title>
+			<desc>将得到的action传回actor</desc>
+			<v:textBlock v:margins="rect(4,4,4,4)" v:tabSpace="42.5197"/>
+			<v:textRect cx="-79.2113" cy="929.868" width="96.62" height="17.6036"/>
+			<path d="M0 856.06 L0 929.87 L-171.23 929.87" class="st4"/>
+			<rect v:rectContext="textBkgnd" x="-122.42" y="925.069" width="86.4179" height="9.59985" class="st6"/>
+			<text x="-122.42" y="932.27" class="st7" v:langID="2052"><v:paragraph v:horizAlign="1"/><v:tabList/>将得到的action传回actor</text>		</g>
+		<g id="shape87-177" v:mID="87" v:groupContext="shape" transform="translate(499.942,-58.8564)">
+			<title>矩形.49</title>
+			<desc>价值判断网络通过计算得到最终的动作分布</desc>
+			<v:userDefs>
+				<v:ud v:nameU="visVersion" v:val="VT0(15):26"/>
+			</v:userDefs>
+			<v:textBlock v:margins="rect(4,4,4,4)" v:tabSpace="42.5197"/>
+			<v:textRect cx="54.5669" cy="816.878" width="109.14" height="78.3696"/>
+			<rect x="0" y="777.693" width="109.134" height="78.3696" class="st1"/>
+			<text x="6.57" y="806.08" class="st14" v:langID="2052"><v:paragraph v:horizAlign="1" v:bulletSize="0.166667"/><v:tabList/>价值判断网络，通<tspan
+						x="6.57" dy="1.2em" class="st3">过计算得到最终的</tspan><tspan x="30.57" dy="1.2em" class="st3">动作分布</tspan></text>		</g>
+		<g id="shape88-182" v:mID="88" v:groupContext="shape" v:layerMember="0" transform="translate(401.379,-90.9546)">
+			<title>动态连接线.50</title>
+			<desc>将数据传入 actor_critic_nets.py</desc>
+			<v:textBlock v:margins="rect(4,4,4,4)" v:tabSpace="42.5197"/>
+			<v:textRect cx="49.2815" cy="848.976" width="84.93" height="28.4036"/>
+			<path d="M0 848.98 L91.52 848.98" class="st4"/>
+			<rect v:rectContext="textBkgnd" x="12.9564" y="838.777" width="72.6504" height="20.3997" class="st15"/>
+			<text x="29.28" y="845.98" class="st7" v:langID="2052"><v:paragraph v:horizAlign="1"/><v:tabList/>将数据传入<v:newlineChar/><tspan
+						x="12.96" dy="1.167em" class="st16" v:langID="1033">actor_critic_nets.py </tspan> </text>		</g>
+		<g id="shape92-190" v:mID="92" v:groupContext="shape" v:layerMember="0" transform="translate(554.509,-51.7698)">
+			<title>动态连接线.60</title>
+			<desc>处理结果传回 sac_hybrid_single.py</desc>
+			<v:textBlock v:margins="rect(4,4,4,4)" v:tabSpace="42.5197"/>
+			<v:textRect cx="-109.872" cy="861.648" width="79.19" height="27.4669"/>
+			<path d="M0 848.98 L0 861.65 L-219.74 861.65 L-219.74 856.02" class="st4"/>
+			<rect v:rectContext="textBkgnd" x="-144.559" y="851.917" width="69.3748" height="19.4631" class="st6"/>
+			<text x="-133.87" y="859.12" class="st7" v:langID="2052"><v:paragraph v:horizAlign="1"/><v:tabList/>处理结果传回<v:newlineChar/><v:paragraph
+						v:horizAlign="1"/><tspan x="-144.56" dy="1.225em" class="st3" v:langID="1033">sac_hybrid_single.py</tspan></text>		</g>
+		<g id="shape93-198" v:mID="93" v:groupContext="shape" transform="translate(598.136,-629.12)">
+			<title>矩形.93</title>
+			<desc>通过处理后的图像数据计算得到最终动作指令的均值与方差</desc>
+			<v:userDefs>
+				<v:ud v:nameU="visVersion" v:val="VT0(15):26"/>
+			</v:userDefs>
+			<v:textBlock v:margins="rect(4,4,4,4)" v:tabSpace="42.5197"/>
+			<v:textRect cx="61.6535" cy="816.878" width="123.31" height="78.3696"/>
+			<rect x="0" y="777.693" width="123.307" height="78.3696" class="st1"/>
+			<text x="7.65" y="806.08" class="st14" v:langID="2052"><v:paragraph v:horizAlign="1" v:bulletSize="0.166667"/><v:tabList/>通过处理后的图像数<tspan
+						x="7.65" dy="1.2em" class="st3">据计算得到最终动作</tspan><tspan x="13.65" dy="1.2em" class="st3">指令的均值与方差</tspan></text>		</g>
+		<g id="shape94-203" v:mID="94" v:groupContext="shape" v:layerMember="0" transform="translate(652.703,-581.4)">
+			<title>动态连接线.94</title>
+			<desc>将数据传入 actor_critic_nets.py</desc>
+			<v:textBlock v:margins="rect(4,4,4,4)" v:tabSpace="42.5197"/>
+			<v:textRect cx="7.08661" cy="832.203" width="84.93" height="28.4036"/>
+			<path d="M7.09 856.06 L7.09 815.38" class="st4"/>
+			<rect v:rectContext="textBkgnd" x="-29.2385" y="822.003" width="72.6504" height="20.3997" class="st6"/>
+			<text x="-12.91" y="829.2" class="st7" v:langID="2052"><v:paragraph v:horizAlign="1"/><v:tabList/>将数据传入<v:newlineChar/><tspan
+						x="-29.24" dy="1.167em" class="st16" v:langID="1033">actor_critic_nets.py </tspan> </text>		</g>
+		<g id="shape95-211" v:mID="95" v:groupContext="shape" transform="translate(605.622,-752.853)">
+			<title>矩形.95</title>
+			<desc>通过卷积层、SpatialSoftmax等进行空间特征提取</desc>
+			<v:userDefs>
+				<v:ud v:nameU="visVersion" v:val="VT0(15):26"/>
+			</v:userDefs>
+			<v:textBlock v:margins="rect(4,4,4,4)" v:tabSpace="42.5197"/>
+			<v:textRect cx="54.5669" cy="816.878" width="109.14" height="78.3696"/>
+			<rect x="0" y="777.693" width="109.134" height="78.3696" class="st1"/>
+			<text x="18.57" y="806.08" class="st14" v:langID="2052"><v:paragraph v:horizAlign="1" v:bulletSize="0.166667"/><v:tabList/>通过卷积层、<tspan
+						x="4.54" dy="1.2em" class="st3" v:langID="1033">SpatialSoftmax</tspan>等进<tspan x="12.57" dy="1.2em"
+						class="st3">行空间特征提取</tspan> </text>		</g>
+		<g id="shape96-216" v:mID="96" v:groupContext="shape" v:layerMember="0" transform="translate(652.903,-707.49)">
+			<title>动态连接线.96</title>
+			<desc>将图像数据传入 resnet_v1.py</desc>
+			<v:textBlock v:margins="rect(4,4,4,4)" v:tabSpace="42.5197"/>
+			<v:textRect cx="7.28611" cy="833.581" width="66.2" height="27.2035"/>
+			<path d="M6.89 856.06 L6.89 843.39 L7.29 843.39 L7.29 817.74" class="st4"/>
+			<rect v:rectContext="textBkgnd" x="-20.7137" y="823.981" width="55.9998" height="19.1997" class="st6"/>
+			<text x="-20.71" y="831.18" class="st7" v:langID="2052"><v:paragraph v:horizAlign="1" v:bulletSize="0.125"/><v:tabList/>将图像数据传入<v:newlineChar/><tspan
+						x="-13.95" dy="1.2em" class="st3" v:langID="1033">resnet_v1.py </tspan> </text>		</g>
+		<g id="shape97-224" v:mID="97" v:groupContext="shape" v:layerMember="0" transform="translate(608.966,-792.038)">
+			<title>动态连接线.97</title>
+			<desc>处理结果传回 actor_critic_nets.py</desc>
+			<v:textBlock v:margins="rect(4,4,4,4)" v:tabSpace="42.5197"/>
+			<v:textRect cx="-23.5014" cy="914.186" width="84.93" height="28.4036"/>
+			<path d="M-3.34 856.06 L-23.5 856.06 L-23.5 979.8 L-17.87 979.8" class="st4"/>
+			<rect v:rectContext="textBkgnd" x="-59.8265" y="903.987" width="72.6504" height="20.3997" class="st6"/>
+			<text x="-47.5" y="911.19" class="st7" v:langID="2052"><v:paragraph v:horizAlign="1"/><v:tabList/>处理结果传回<v:newlineChar/><v:paragraph
+						v:horizAlign="1"/><tspan x="-59.83" dy="1.167em" class="st16" v:langID="1033">actor_critic_nets.py </tspan> </text>		</g>
+		<g id="shape98-232" v:mID="98" v:groupContext="shape" v:layerMember="0" transform="translate(724.787,-668.305)">
+			<title>动态连接线.98</title>
+			<desc>处理结果传回 sac_hybrid_single.py</desc>
+			<v:textBlock v:margins="rect(4,4,4,4)" v:tabSpace="42.5197"/>
+			<v:textRect cx="9.32819" cy="919.19" width="79.19" height="27.4669"/>
+			<path d="M-3.34 856.06 L9.33 856.06 L9.33 974.83 L-3.79 974.83" class="st4"/>
+			<rect v:rectContext="textBkgnd" x="-25.3591" y="909.459" width="69.3748" height="19.4631" class="st6"/>
+			<text x="-14.67" y="916.66" class="st7" v:langID="2052"><v:paragraph v:horizAlign="1"/><v:tabList/>处理结果传回<v:newlineChar/><v:paragraph
+						v:horizAlign="1"/><tspan x="-25.36" dy="1.225em" class="st3" v:langID="1033">sac_hybrid_single.py</tspan></text>		</g>
+		<g id="shape99-240" v:mID="99" v:groupContext="shape" v:layerMember="0" transform="translate(99.9213,-376.597)">
+			<title>动态连接线.99</title>
+			<desc>进入数据池2</desc>
+			<v:textBlock v:margins="rect(4,4,4,4)" v:tabSpace="42.5197"/>
+			<v:textRect cx="64.4882" cy="1073.92" width="54.41" height="17.6036"/>
+			<path d="M0 856.06 L0 1073.92 L232.48 1073.92 A2.3622 2.3622 0 0 1 237.21 1073.92 L478.62 1073.92 L478.62 1050.19"
+					class="st4"/>
+			<rect v:rectContext="textBkgnd" x="42.3809" y="1069.12" width="44.2148" height="9.59985" class="st6"/>
+			<text x="42.38" y="1076.32" class="st7" v:langID="2052"><v:paragraph v:horizAlign="1"/><v:tabList/>进入数据池2</text>		</g>
+	</g>
+</svg>

@@ -155,7 +155,7 @@
             <span class="tag green">Human-in-the-Loop</span>
             <span class="tag green">ResNet-10</span>
             <span class="tag amber">SAC + DQN</span>
-            <span class="tag amber">Continuous Learning</span>
+            <span class="tag amber">Continual Learning</span>
         </div>
     </header>
 
@@ -236,7 +236,7 @@
 
         <h4>关键设计细节</h4>
         <ul>
-            <li><strong>ResNet-10 权重冻结：</strong>使用预训练模型的强大特征提取能力，但不参与梯度更新，大幅提升训练效率</li>
+            <li><strong>ResNet-10 视觉主干：</strong>使用 ImageNet 预训练权重初始化，与策略网络联合端到端训练，保证视觉表征与 RL 目标的协同优化</li>
             <li><strong>人类纠错即时接管：</strong>一旦人工开始操作，控制权立即从策略网络移交至人工，纠错数据实时写入回放池</li>
             <li><strong>回合划分：</strong>通过逐帧判断 done（成功/失败/超时）将连续数据划分为独立操作回合</li>
         </ul>

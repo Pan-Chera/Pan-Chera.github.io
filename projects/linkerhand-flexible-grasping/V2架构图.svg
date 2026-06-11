@@ -1,1 +1,527 @@
-<svg width="554" height="457" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" overflow="hidden"><g><path d="M0 338.871 454.366 338.871 454.366 456.78-1.16832e-05 456.78Z" stroke="#0D4964" stroke-width="0.244154" stroke-linecap="square" stroke-miterlimit="3" fill="#EAF8FD" fill-rule="evenodd" transform="matrix(1.00059 0 0 1 71.6661 -24.8057)"/><path d="M0 355.481 115.225 355.481 115.225 456.78 1.13255e-06 456.78Z" stroke="#0D4964" stroke-width="0.244154" stroke-linecap="square" stroke-miterlimit="3" fill="#D9F2D0" fill-rule="evenodd" transform="matrix(1.00059 0 0 1 72.02 -318.252)"/><path d="M0 405.691 80.2826 405.691 80.2826 456.78-3.26652e-06 456.78Z" stroke="#000000" stroke-width="0.976618" stroke-linecap="square" stroke-miterlimit="3" fill="#FFFFFF" fill-rule="evenodd" transform="matrix(1.00059 0 0 1 90.8868 -332.094)"/><text font-family="DengXian,DengXian_MSFontService,sans-serif" font-weight="400" font-size="10" transform="matrix(0.977195 0 0 0.976618 122.685 90)">VLA</text><text font-family="DengXian,DengXian_MSFontService,sans-serif" font-weight="400" font-size="10" transform="matrix(0.977195 0 0 0.976618 96.8477 102)">输入动作指令与</text><text font-family="DengXian,DengXian_MSFontService,sans-serif" font-weight="400" font-size="10" transform="matrix(0.977195 0 0 0.976618 111.506 114)">相关参数</text><path d="M0 405.691 80.2826 405.691 80.2826 456.78-3.26652e-06 456.78Z" stroke="#000000" stroke-width="0.976618" stroke-linecap="square" stroke-miterlimit="3" fill="#FFFFFF" fill-rule="evenodd" transform="matrix(1.00059 0 0 1 293.62 -59.5361)"/><text font-family="DengXian,DengXian_MSFontService,sans-serif" font-weight="400" font-size="10" transform="matrix(0.977195 0 0 0.976618 304.466 375)">小型神经网络</text><path d="M0 405.691 89.9719 405.691 89.9719 456.78-5.36472e-07 456.78Z" stroke="#000000" stroke-width="0.976618" stroke-linecap="square" stroke-miterlimit="3" fill="#FFFFFF" fill-rule="evenodd" transform="matrix(1.00059 0 0 1 123.957 -59.5361)"/><text font-family="DengXian,DengXian_MSFontService,sans-serif" font-weight="400" font-size="10" transform="matrix(0.977195 0 0 0.976618 128.032 363)">未接触物体</text><text font-family="DengXian,DengXian_MSFontService,sans-serif" font-weight="400" font-size="10" transform="matrix(0.977195 0 0 0.976618 176.892 363)">/</text><text font-family="DengXian,DengXian_MSFontService,sans-serif" font-weight="400" font-size="10" transform="matrix(0.977195 0 0 0.976618 180.585 363)">未造成</text><text font-family="DengXian,DengXian_MSFontService,sans-serif" font-weight="400" font-size="10" transform="matrix(0.977195 0 0 0.976618 129.684 375)">过大压力</text><text font-family="DengXian,DengXian_MSFontService,sans-serif" font-weight="400" font-size="10" transform="matrix(0.977195 0 0 0.976618 168.771 375)">，</text><text font-family="DengXian,DengXian_MSFontService,sans-serif" font-weight="400" font-size="10" transform="matrix(0.977195 0 0 0.976618 178.543 375)">RL</text><text font-family="DengXian,DengXian_MSFontService,sans-serif" font-weight="400" font-size="10" transform="matrix(0.977195 0 0 0.976618 188.716 375)">不介</text><text font-family="DengXian,DengXian_MSFontService,sans-serif" font-weight="400" font-size="10" transform="matrix(0.977195 0 0 0.976618 164.081 386)">入</text><path d="M0 456.784-35.461 456.784-35.461 641.159 75.727 641.159C75.727 639.884 76.761 638.85 78.0367 638.85 79.3123 638.85 80.3464 639.884 80.3464 641.159L242.758 641.159 242.758 696.915" stroke="#156082" stroke-width="0.976618" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="3" fill="none" fill-rule="evenodd" transform="matrix(1.00059 0 0 1 90.8868 -357.639)"/><path d="M6.87539 3.4377 0 0 6.87539-3.4377 6.87539 3.4377" stroke="#156082" stroke-width="0.976618" stroke-linecap="square" stroke-miterlimit="3" fill="#156082" fill-rule="evenodd" transform="matrix(-6.12685e-17 -1 1.00059 -6.12323e-17 333.788 346.151)"/><path d="M227.49 662.192 255.252 662.192 255.252 671.567 227.49 671.567Z" fill="#FFFFFF" fill-rule="evenodd" transform="matrix(1.00059 0 0 1 90.8868 -357.639)"/><text font-family="DengXian,DengXian_MSFontService,sans-serif" font-weight="400" font-size="7.99997" transform="matrix(0.977195 0 0 0.976618 318.515 312)">预设</text><text font-family="DengXian,DengXian_MSFontService,sans-serif" font-weight="400" font-size="7.99997" transform="matrix(0.977195 0 0 0.976618 334.15 312)">K</text><text font-family="DengXian,DengXian_MSFontService,sans-serif" font-weight="400" font-size="7.99997" transform="matrix(0.977195 0 0 0.976618 338.474 312)">值</text><path d="M0 449.86 72.719 449.86" stroke="#156082" stroke-width="0.976618" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="3" fill="none" fill-rule="evenodd" transform="matrix(1.00059 0 0 1 213.982 -78.1597)"/><path d="M6.87539 3.4377 0 0 6.87539-3.4377 6.87539 3.4377" stroke="#156082" stroke-width="0.976618" stroke-linecap="square" stroke-miterlimit="3" fill="#156082" fill-rule="evenodd" transform="matrix(-1.00059 0 0 -1 293.624 371.7)"/><path d="M16.3566 445.172 63.2341 445.172 63.2341 454.547 16.3566 454.547Z" fill="#FFFFFF" fill-rule="evenodd" transform="matrix(1.00059 0 0 1 213.982 -78.1597)"/><text font-family="DengXian,DengXian_MSFontService,sans-serif" font-weight="400" font-size="7.99997" transform="matrix(0.977195 0 0 0.976618 230.35 374)">判定接触物体</text><path d="M0 405.691 80.2826 405.691 80.2826 456.78-3.26652e-06 456.78Z" stroke="#000000" stroke-width="0.976618" stroke-linecap="square" stroke-miterlimit="3" fill="#FFFFFF" fill-rule="evenodd" transform="matrix(1.00059 0 0 1 432.12 -59.5361)"/><text font-family="DengXian,DengXian_MSFontService,sans-serif" font-weight="400" font-size="10" transform="matrix(0.977195 0 0 0.976618 452.739 369)">残差控制</text><text font-family="DengXian,DengXian_MSFontService,sans-serif" font-weight="400" font-size="10" transform="matrix(0.977195 0 0 0.976618 440.27 380)">位置与</text><text font-family="DengXian,DengXian_MSFontService,sans-serif" font-weight="400" font-size="10" transform="matrix(0.977195 0 0 0.976618 469.586 380)">K</text><text font-family="DengXian,DengXian_MSFontService,sans-serif" font-weight="400" font-size="10" transform="matrix(0.977195 0 0 0.976618 474.992 380)">值输出</text><path d="M0 449.86 51.2627 449.86" stroke="#156082" stroke-width="0.976618" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="3" fill="none" fill-rule="evenodd" transform="matrix(1.00059 0 0 1 373.95 -78.1597)"/><path d="M6.87539 3.4377 0 0 6.87539-3.4377 6.87539 3.4377" stroke="#156082" stroke-width="0.976618" stroke-linecap="square" stroke-miterlimit="3" fill="#156082" fill-rule="evenodd" transform="matrix(-1.00059 0 0 -1 432.122 371.7)"/><path d="M0 405.691 80.2826 405.691 80.2826 456.78-3.26652e-06 456.78Z" stroke="#000000" stroke-width="0.976618" stroke-linecap="square" stroke-miterlimit="3" fill="#FFFFFF" fill-rule="evenodd" transform="matrix(1.00059 0 0 1 432.12 -332.094)"/><text font-family="DengXian,DengXian_MSFontService,sans-serif" font-weight="400" font-size="10" transform="matrix(0.977195 0 0 0.976618 442.967 102)">柔性执行任务</text><path d="M0 463.698 0 486.112-138.416 486.112-138.416 470.574" stroke="#156082" stroke-width="0.976618" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="3" fill="none" fill-rule="evenodd" transform="matrix(1.00059 0 0 1 472.285 -66.457)"/><path d="M6.87539 3.4377 0 0 6.87539-3.4377 6.87539 3.4377" stroke="#156082" stroke-width="0.976618" stroke-linecap="square" stroke-miterlimit="3" fill="#156082" fill-rule="evenodd" transform="matrix(-6.12685e-17 1 -1.00059 -6.12323e-17 333.787 397.241)"/><path d="M-136.581 481.777-30.6912 481.777-30.6912 491.153-136.581 491.153Z" fill="#FFFFFF" fill-rule="evenodd" transform="matrix(1.00059 0 0 1 472.285 -66.457)"/><text font-family="DengXian,DengXian_MSFontService,sans-serif" font-weight="400" font-size="7.99997" transform="matrix(0.977195 0 0 0.976618 335.624 422)">传回位置</text><text font-family="DengXian,DengXian_MSFontService,sans-serif" font-weight="400" font-size="7.99997" transform="matrix(0.977195 0 0 0.976618 366.894 422)">、</text><text font-family="DengXian,DengXian_MSFontService,sans-serif" font-weight="400" font-size="7.99997" transform="matrix(0.977195 0 0 0.976618 374.712 422)">K</text><text font-family="DengXian,DengXian_MSFontService,sans-serif" font-weight="400" font-size="7.99997" transform="matrix(0.977195 0 0 0.976618 379.037 422)">值参量</text><text font-family="DengXian,DengXian_MSFontService,sans-serif" font-weight="400" font-size="7.99997" transform="matrix(0.977195 0 0 0.976618 402.489 422)">，</text><text font-family="DengXian,DengXian_MSFontService,sans-serif" font-weight="400" font-size="7.99997" transform="matrix(0.977195 0 0 0.976618 410.307 422)">闭环控制</text><text font-family="DengXian,DengXian_MSFontService,sans-serif" font-weight="700" font-size="13.9999" transform="matrix(0.977195 0 0 0.976618 81.761 57)">顶层</text><text font-family="DengXian,DengXian_MSFontService,sans-serif" font-weight="700" font-size="13.9999" transform="matrix(0.977195 0 0 0.976618 109.122 57)">VLA</text><text font-family="DengXian,DengXian_MSFontService,sans-serif" font-weight="700" font-size="13.9999" transform="matrix(0.977195 0 0 0.976618 133.771 57)">/</text><text font-family="DengXian,DengXian_MSFontService,sans-serif" font-weight="700" font-size="13.9999" transform="matrix(0.977195 0 0 0.976618 139.429 57)">VLM</text><text font-family="DengXian,DengXian_MSFontService,sans-serif" font-weight="700" font-size="13.9999" transform="matrix(0.977195 0 0 0.976618 78.8429 332)">底层控制器</text><path d="M0 355.481 163.687 355.481 163.687 456.78 2.74197e-06 456.78Z" stroke="#0D4964" stroke-width="0.244154" stroke-linecap="square" stroke-miterlimit="3" fill="#FAE2D6" fill-rule="evenodd" transform="matrix(1.00059 0 0 1 71.6661 -189.269)"/><path d="M0 405.691 89.9719 405.691 89.9719 456.78-5.36472e-07 456.78Z" stroke="#000000" stroke-width="0.976618" stroke-linecap="square" stroke-miterlimit="3" fill="#FFFFFF" fill-rule="evenodd" transform="matrix(1.00059 0 0 1 123.957 -207.39)"/><text font-family="DengXian,DengXian_MSFontService,sans-serif" font-weight="400" font-size="10" transform="matrix(0.977195 0 0 0.976618 131.286 221)">接收</text><text font-family="DengXian,DengXian_MSFontService,sans-serif" font-weight="400" font-size="10" transform="matrix(0.977195 0 0 0.976618 150.83 221)">VLA</text><text font-family="DengXian,DengXian_MSFontService,sans-serif" font-weight="400" font-size="10" transform="matrix(0.977195 0 0 0.976618 167.568 221)">指令进行</text><text font-family="DengXian,DengXian_MSFontService,sans-serif" font-weight="400" font-size="10" transform="matrix(0.977195 0 0 0.976618 149.423 233)">相关操作</text><text font-family="DengXian,DengXian_MSFontService,sans-serif" font-weight="700" font-size="13.9999" transform="matrix(0.977195 0 0 0.976618 78.0905 184)">中层</text><text font-family="DengXian,DengXian_MSFontService,sans-serif" font-weight="700" font-size="13.9999" transform="matrix(0.977195 0 0 0.976618 105.452 184)">CL</text><text font-family="DengXian,DengXian_MSFontService,sans-serif" font-weight="700" font-size="13.9999" transform="matrix(0.977195 0 0 0.976618 120.635 184)">控制</text><path d="M6.92422 456.784 6.92422 546.672" stroke="#156082" stroke-width="0.976618" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="3" fill="none" fill-rule="evenodd" transform="matrix(1.00059 0 0 1 162.045 -207.39)"/><path d="M6.87539 3.4377 0 0 6.87539-3.4377 6.87539 3.4377" stroke="#156082" stroke-width="0.976618" stroke-linecap="square" stroke-miterlimit="3" fill="#156082" fill-rule="evenodd" transform="matrix(-6.12685e-17 -1 1.00059 -6.12323e-17 168.974 346.158)"/><path d="M0 456.784 0 552.453 61.6441 552.453" stroke="#156082" stroke-width="0.976618" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="3" fill="none" fill-rule="evenodd" transform="matrix(1.00059 0 0 1 55.4 -180.757)"/><path d="M6.87539 3.4377 0 0 6.87539-3.4377 6.87539 3.4377" stroke="#156082" stroke-width="0.976618" stroke-linecap="square" stroke-miterlimit="3" fill="#156082" fill-rule="evenodd" transform="matrix(-1.00059 0 0 -1 123.96 371.696)"/><path d="M-19.5322 521.712 19.5324 521.712 19.5324 532.113-19.5322 532.113Z" fill="#FFFFFF" fill-rule="evenodd" transform="matrix(1.00059 0 0 1 55.4 -180.757)"/><text font-family="SimSun,SimSun_MSFontService,sans-serif" font-weight="400" font-size="7.99997" transform="matrix(0.977195 0 0 0.976618 35.8561 349)">判定临界值</text><path d="M0 405.691 80.2826 405.691 80.2826 456.78-3.26652e-06 456.78Z" stroke="#000000" stroke-width="0.976618" stroke-linecap="square" stroke-miterlimit="3" fill="#FFFFFF" fill-rule="evenodd" transform="matrix(1.00059 0 0 1 267.644 -332.094)"/><text font-family="DengXian,DengXian_MSFontService,sans-serif" font-weight="400" font-size="10" transform="matrix(0.977195 0 0 0.976618 273.605 96)">人类给出操作指</text><text font-family="DengXian,DengXian_MSFontService,sans-serif" font-weight="400" font-size="10" transform="matrix(0.977195 0 0 0.976618 302.921 108)">令</text><path d="M0 449.86-89.4973 449.86" stroke="#156082" stroke-width="0.976618" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="3" fill="none" fill-rule="evenodd" transform="matrix(1.00059 0 0 1 267.644 -350.718)"/><path d="M6.87539 3.4377 0 0 6.87539-3.4377 6.87539 3.4377" stroke="#156082" stroke-width="0.976618" stroke-linecap="square" stroke-miterlimit="3" fill="#156082" fill-rule="evenodd" transform="matrix(1.00059 -1.22465e-16 1.22537e-16 1 171.214 99.1416)"/><path d="M0 456.784 0 485.848 37.8928 485.848 37.8928 523.516" stroke="#156082" stroke-width="0.976618" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="3" fill="none" fill-rule="evenodd" transform="matrix(1.00059 0 0 1 131.052 -332.094)"/><path d="M6.87539 3.4377 0 0 6.87539-3.4377 6.87539 3.4377" stroke="#156082" stroke-width="0.976618" stroke-linecap="square" stroke-miterlimit="3" fill="#156082" fill-rule="evenodd" transform="matrix(-6.12685e-17 -1 1.00059 -6.12323e-17 168.967 198.298)"/><path d="M3.24865 481.687 34.5003 481.687 34.5003 492.088 3.24865 492.088Z" fill="#FFFFFF" fill-rule="evenodd" transform="matrix(1.00059 0 0 1 131.052 -332.094)"/><text font-family="SimSun,SimSun_MSFontService,sans-serif" font-weight="400" font-size="7.99997" transform="matrix(0.977195 0 0 0.976618 134.306 157)">动作指令</text><path d="M6.92422 456.784 6.92422 242.182" stroke="#156082" stroke-width="0.976618" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="3" fill="none" fill-rule="evenodd" transform="matrix(1.00059 0 0 1 465.36 -110.625)"/><path d="M6.87539 3.4377 0 0 6.87539-3.4377 6.87539 3.4377" stroke="#156082" stroke-width="0.976618" stroke-linecap="square" stroke-miterlimit="3" fill="#156082" fill-rule="evenodd" transform="matrix(-6.12685e-17 1 -1.00059 -6.12323e-17 472.288 124.681)"/><path d="M-17.9019 373.512 28.9756 373.512 28.9756 383.913-17.9019 383.913Z" fill="#FFFFFF" fill-rule="evenodd" transform="matrix(1.00059 0 0 1 465.36 -110.625)"/><text font-family="SimSun,SimSun_MSFontService,sans-serif" font-weight="400" font-size="7.99997" transform="matrix(0.977195 0 0 0.976618 447.448 271)">残差控制微调</text><path d="M0 456.784 258.149 456.784 258.149 364.493" stroke="#156082" stroke-width="0.976618" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="3" fill="none" fill-rule="evenodd" transform="matrix(1.00059 0 0 1 213.982 -232.934)"/><path d="M6.87539 3.4377 0 0 6.87539-3.4377 6.87539 3.4377" stroke="#156082" stroke-width="0.976618" stroke-linecap="square" stroke-miterlimit="3" fill="#156082" fill-rule="evenodd" transform="matrix(-6.12685e-17 1 -1.00059 -6.12323e-17 472.284 124.684)"/><path d="M105.025 453.465 159.353 453.465 159.353 463.866 105.025 463.866Z" fill="#FFFFFF" fill-rule="evenodd" transform="matrix(1.00059 0 0 1 213.982 -232.934)"/><text font-family="Calibri,Calibri_MSFontService,sans-serif" font-weight="400" font-size="7.99997" transform="matrix(0.977195 0 0 0.976618 319.07 228)">CL</text><text font-family="SimSun,SimSun_MSFontService,sans-serif" font-weight="400" font-size="7.99997" transform="matrix(0.977195 0 0 0.976618 326.525 228)">模型直接输出</text><path d="M0 449.86-77.2212 449.86" stroke="#156082" stroke-width="0.976618" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="3" fill="none" fill-rule="evenodd" transform="matrix(1.00059 0 0 1 432.12 -350.718)"/><path d="M6.87539 3.4377 0 0 6.87539-3.4377 6.87539 3.4377" stroke="#156082" stroke-width="0.976618" stroke-linecap="square" stroke-miterlimit="3" fill="#156082" fill-rule="evenodd" transform="matrix(1.00059 -1.22465e-16 1.22537e-16 1 347.974 99.1416)"/></g></svg>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- 由 Microsoft Visio, SVG Export 生成 绘图1.svg V2架构图 -->
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:ev="http://www.w3.org/2001/xml-events"
+		xmlns:v="http://schemas.microsoft.com/visio/2003/SVGExtensions/" width="5.77083in" height="4.76042in"
+		viewBox="0 0 415.5 342.75" xml:space="preserve" color-interpolation-filters="sRGB" class="st17">
+	<v:documentProperties v:langID="2052" v:viewMarkup="false"/>
+
+	<style type="text/css">
+	<![CDATA[
+		.st1 {fill:#eaf8fd;stroke:#0d4964;stroke-width:0.18317}
+		.st2 {fill:#d9f2d0;stroke:#0d4964;stroke-width:0.18317}
+		.st3 {fill:#ffffff;stroke:#000000;stroke-width:0.73268}
+		.st4 {fill:none;stroke:none;stroke-linecap:butt;stroke-width:0.75}
+		.st5 {fill:#000000;font-family:等线;font-size:0.610382em;font-stretch:normal}
+		.st6 {fill:none}
+		.st7 {stroke:#156082;stroke-linecap:round;stroke-linejoin:round;stroke-width:0.73268}
+		.st8 {fill:#156082;stroke:#156082;stroke-width:0.73268}
+		.st9 {fill:#ffffff;stroke:none;stroke-linecap:butt;stroke-width:0.750221}
+		.st10 {fill:#000000;font-family:等线;font-size:0.488297em;font-stretch:normal}
+		.st11 {fill:#000000;font-family:等线;font-size:0.85453em;font-stretch:normal;font-weight:bold}
+		.st12 {fill:#fae2d6;stroke:#0d4964;stroke-width:0.18317}
+		.st13 {fill:#000000;font-family:宋体;font-size:0.488297em;font-stretch:normal}
+		.st14 {fill:#000000;font-family:Calibri;font-size:0.499992em;font-stretch:normal}
+		.st15 {fill:none;stroke:none;stroke-linecap:round;stroke-linejoin:round;stroke-width:0.75}
+		.st16 {fill:#000000;font-family:等线;font-size:0.874992em;font-weight:bold}
+		.st17 {fill:none;fill-rule:evenodd;font-size:12px;overflow:visible;stroke-linecap:square;stroke-miterlimit:3}
+	]]>
+	</style>
+
+	<g v:mID="0" v:index="1" v:groupContext="foregroundPage">
+		<title>V2架构图</title>
+		<v:pageProperties v:drawingScale="1" v:pageScale="1" v:drawingUnits="19" v:shadowOffsetX="9" v:shadowOffsetY="-9"/>
+		<g id="group1-1" transform="translate(26.8921,-18.7693)" v:mID="1" v:groupContext="group">
+			<title>工作表.1</title>
+			<g id="shape2-2" v:mID="2" v:groupContext="shape" transform="translate(26.8575,6.25278E-13)">
+				<title>工作表.2</title>
+				<path d="M0 254.32 L340.98 254.32 L340.98 342.75 L0 342.75 L0 254.32 Z" class="st1"/>
+			</g>
+			<g id="shape3-4" v:mID="3" v:groupContext="shape" transform="translate(27.1229,-220.085)">
+				<title>工作表.3</title>
+				<path d="M0 266.78 L86.47 266.78 L86.47 342.75 L0 342.75 L0 266.78 Z" class="st2"/>
+			</g>
+			<g id="shape4-6" v:mID="4" v:groupContext="shape" transform="translate(41.273,-230.466)">
+				<title>工作表.4</title>
+				<path d="M0 304.43 L60.25 304.43 L60.25 342.75 L0 342.75 L0 304.43 Z" class="st3"/>
+			</g>
+			<g id="shape5-8" v:mID="5" v:groupContext="shape" transform="translate(65.1217,-254.283)">
+				<title>工作表.5</title>
+				<desc>VLA</desc>
+				<v:textBlock v:margins="rect(0,0,0,0)"/>
+				<v:textRect cx="10.9934" cy="338.355" width="21.99" height="8.78956"/>
+				<rect x="0" y="333.96" width="21.9869" height="8.78956" class="st4"/>
+				<text x="0" y="340.55" class="st5" v:langID="2052"><v:paragraph/><v:tabList/>VLA</text>			</g>
+			<g id="shape6-11" v:mID="6" v:groupContext="shape" transform="translate(45.7437,-245.283)">
+				<title>工作表.6</title>
+				<desc>输入动作指令与</desc>
+				<v:textBlock v:margins="rect(0,0,0,0)"/>
+				<v:textRect cx="25.6514" cy="338.355" width="51.31" height="8.78956"/>
+				<rect x="0" y="333.96" width="51.3027" height="8.78956" class="st4"/>
+				<text x="0" y="340.55" class="st5" v:langID="2052"><v:paragraph/><v:tabList/>输入动作指令与</text>			</g>
+			<g id="shape7-14" v:mID="7" v:groupContext="shape" transform="translate(56.7374,-236.283)">
+				<title>工作表.7</title>
+				<desc>相关参数</desc>
+				<v:textBlock v:margins="rect(0,0,0,0)"/>
+				<v:textRect cx="14.6579" cy="338.355" width="29.32" height="8.78956"/>
+				<rect x="0" y="333.96" width="29.3159" height="8.78956" class="st4"/>
+				<text x="0" y="340.55" class="st5" v:langID="2052"><v:paragraph/><v:tabList/>相关参数</text>			</g>
+			<g id="shape8-17" v:mID="8" v:groupContext="shape" transform="translate(193.323,-26.0478)">
+				<title>工作表.8</title>
+				<path d="M0 304.43 L60.25 304.43 L60.25 342.75 L0 342.75 L0 304.43 Z" class="st3"/>
+			</g>
+			<g id="shape9-19" v:mID="9" v:groupContext="shape" transform="translate(201.457,-40.5333)">
+				<title>工作表.9</title>
+				<desc>小型神经网络</desc>
+				<v:textBlock v:margins="rect(0,0,0,0)"/>
+				<v:textRect cx="21.9869" cy="338.355" width="43.98" height="8.78956"/>
+				<rect x="0" y="333.96" width="43.9738" height="8.78956" class="st4"/>
+				<text x="0" y="340.55" class="st5" v:langID="2052"><v:paragraph/><v:tabList/>小型神经网络</text>			</g>
+			<g id="shape10-22" v:mID="10" v:groupContext="shape" transform="translate(66.0757,-26.0478)">
+				<title>工作表.10</title>
+				<path d="M0 304.43 L67.52 304.43 L67.52 342.75 L0 342.75 L0 304.43 Z" class="st3"/>
+			</g>
+			<g id="shape11-24" v:mID="11" v:groupContext="shape" transform="translate(69.1319,-49.5333)">
+				<title>工作表.11</title>
+				<desc>未接触物体</desc>
+				<v:textBlock v:margins="rect(0,0,0,0)"/>
+				<v:textRect cx="18.3224" cy="338.355" width="36.65" height="8.78956"/>
+				<rect x="0" y="333.96" width="36.6448" height="8.78956" class="st4"/>
+				<text x="-0" y="340.55" class="st5" v:langID="2052"><v:paragraph/><v:tabList/>未接触物体</text>			</g>
+			<g id="shape12-27" v:mID="12" v:groupContext="shape" transform="translate(105.777,-49.5333)">
+				<title>工作表.12</title>
+				<desc>/</desc>
+				<v:textBlock v:margins="rect(0,0,0,0)"/>
+				<v:textRect cx="3.66448" cy="338.355" width="7.33" height="8.78956"/>
+				<rect x="0" y="333.96" width="7.32896" height="8.78956" class="st4"/>
+				<text x="0" y="340.55" class="st5" v:langID="2052"><v:paragraph/><v:tabList/>/</text>			</g>
+			<g id="shape13-30" v:mID="13" v:groupContext="shape" transform="translate(108.547,-49.5333)">
+				<title>工作表.13</title>
+				<desc>未造成</desc>
+				<v:textBlock v:margins="rect(0,0,0,0)"/>
+				<v:textRect cx="10.9934" cy="338.355" width="21.99" height="8.78956"/>
+				<rect x="0" y="333.96" width="21.9869" height="8.78956" class="st4"/>
+				<text x="0" y="340.55" class="st5" v:langID="2052"><v:paragraph/><v:tabList/>未造成</text>			</g>
+			<g id="shape14-33" v:mID="14" v:groupContext="shape" transform="translate(70.3709,-40.5333)">
+				<title>工作表.14</title>
+				<desc>过大压力</desc>
+				<v:textBlock v:margins="rect(0,0,0,0)"/>
+				<v:textRect cx="14.6579" cy="338.355" width="29.32" height="8.78956"/>
+				<rect x="0" y="333.96" width="29.3159" height="8.78956" class="st4"/>
+				<text x="-0" y="340.55" class="st5" v:langID="2052"><v:paragraph/><v:tabList/>过大压力</text>			</g>
+			<g id="shape15-36" v:mID="15" v:groupContext="shape" transform="translate(99.6862,-40.5333)">
+				<title>工作表.15</title>
+				<v:textBlock v:margins="rect(0,0,0,0)"/>
+				<v:textRect cx="3.66448" cy="338.355" width="7.33" height="8.78956"/>
+				<rect x="0" y="333.96" width="7.32896" height="8.78956" class="st4"/>
+				<text x="-0" y="340.55" class="st5" v:langID="2052"><v:paragraph/><v:tabList/>，</text>			</g>
+			<g id="shape16-39" v:mID="16" v:groupContext="shape" transform="translate(107.015,-40.5333)">
+				<title>工作表.16</title>
+				<desc>RL</desc>
+				<v:textBlock v:margins="rect(0,0,0,0)"/>
+				<v:textRect cx="7.32896" cy="338.355" width="14.66" height="8.78956"/>
+				<rect x="0" y="333.96" width="14.6579" height="8.78956" class="st4"/>
+				<text x="0" y="340.55" class="st5" v:langID="2052"><v:paragraph/><v:tabList/>RL</text>			</g>
+			<g id="shape17-42" v:mID="17" v:groupContext="shape" transform="translate(114.645,-40.5333)">
+				<title>工作表.17</title>
+				<desc>不介</desc>
+				<v:textBlock v:margins="rect(0,0,0,0)"/>
+				<v:textRect cx="7.32896" cy="338.355" width="14.66" height="8.78956"/>
+				<rect x="0" y="333.96" width="14.6579" height="8.78956" class="st4"/>
+				<text x="0" y="340.55" class="st5" v:langID="2052"><v:paragraph/><v:tabList/>不介</text>			</g>
+			<g id="shape18-45" v:mID="18" v:groupContext="shape" transform="translate(96.1687,-32.2833)">
+				<title>工作表.18</title>
+				<desc>入</desc>
+				<v:textBlock v:margins="rect(0,0,0,0)"/>
+				<v:textRect cx="3.66448" cy="338.355" width="7.33" height="8.78956"/>
+				<rect x="0" y="333.96" width="7.32896" height="8.78956" class="st4"/>
+				<text x="0" y="340.55" class="st5" v:langID="2052"><v:paragraph/><v:tabList/>入</text>			</g>
+			<g id="shape19-48" v:mID="19" v:groupContext="shape" transform="translate(14.6616,-69.5237)">
+				<title>工作表.19</title>
+				<path d="M26.61 162.65 L0 162.65 L0 300.93 L83.44 300.93 C83.44 299.98 84.22 299.2 85.17 299.2 C86.13 299.2 86.91
+							 299.98 86.91 300.93 L208.79 300.93 L208.79 342.75 L26.61 162.65 Z" class="st6"/>
+				<path d="M26.61 162.65 L0 162.65 L0 300.93 L83.44 300.93 C83.44 299.98 84.22 299.2 85.17 299.2 C86.13 299.2 86.91
+							 299.98 86.91 300.93 L208.79 300.93 L208.79 342.75" class="st7"/>
+			</g>
+			<g id="shape20-51" v:mID="20" v:groupContext="shape" transform="translate(-116.721,278.383) rotate(-90)">
+				<title>工作表.20</title>
+				<path d="M5.16 342.75 L0 340.17 L5.16 337.59 L5.16 342.75 Z" class="st8"/>
+			</g>
+			<g id="shape21-53" v:mID="21" v:groupContext="shape" transform="translate(211.991,-88.5347)">
+				<title>工作表.21</title>
+				<rect x="0" y="335.719" width="20.8338" height="7.03125" class="st9"/>
+			</g>
+			<g id="shape22-55" v:mID="22" v:groupContext="shape" transform="translate(211.994,-88.2228)">
+				<title>工作表.22</title>
+				<desc>预设</desc>
+				<v:textBlock v:margins="rect(0,0,0,0)"/>
+				<v:textRect cx="5.86315" cy="339.234" width="11.73" height="7.03162"/>
+				<rect x="0" y="335.718" width="11.7263" height="7.03162" class="st4"/>
+				<text x="0" y="340.99" class="st10" v:langID="2052"><v:paragraph/><v:tabList/>预设</text>			</g>
+			<g id="shape23-58" v:mID="23" v:groupContext="shape" transform="translate(223.72,-88.2228)">
+				<title>工作表.23</title>
+				<desc>K</desc>
+				<v:textBlock v:margins="rect(0,0,0,0)"/>
+				<v:textRect cx="2.93157" cy="339.234" width="5.87" height="7.03162"/>
+				<rect x="0" y="335.718" width="5.86315" height="7.03162" class="st4"/>
+				<text x="0" y="340.99" class="st10" v:langID="2052"><v:paragraph/><v:tabList/>K</text>			</g>
+			<g id="shape24-61" v:mID="24" v:groupContext="shape" transform="translate(226.963,-88.2228)">
+				<title>工作表.24</title>
+				<desc>值</desc>
+				<v:textBlock v:margins="rect(0,0,0,0)"/>
+				<v:textRect cx="2.93157" cy="339.234" width="5.87" height="7.03162"/>
+				<rect x="0" y="335.718" width="5.86315" height="7.03162" class="st4"/>
+				<text x="0" y="340.99" class="st10" v:langID="2052"><v:paragraph/><v:tabList/>值</text>			</g>
+			<g id="shape25-64" v:mID="25" v:groupContext="shape" transform="translate(133.594,-45.2055)">
+				<title>工作表.25</title>
+				<path d="M0 342.75 L54.57 342.75 L0 342.75 Z" class="st6"/>
+				<path d="M0 342.75 L54.57 342.75" class="st7"/>
+			</g>
+			<g id="shape26-67" v:mID="26" v:groupContext="shape" transform="translate(193.326,637.716) rotate(180)">
+				<title>工作表.26</title>
+				<path d="M5.16 342.75 L0 340.17 L5.16 337.59 L5.16 342.75 Z" class="st8"/>
+			</g>
+			<g id="shape27-69" v:mID="27" v:groupContext="shape" transform="translate(145.869,-41.6902)">
+				<title>工作表.27</title>
+				<rect x="0" y="335.719" width="35.1789" height="7.03125" class="st9"/>
+			</g>
+			<g id="shape28-71" v:mID="28" v:groupContext="shape" transform="translate(145.87,-41.7228)">
+				<title>工作表.28</title>
+				<desc>判定接触物体</desc>
+				<v:textBlock v:margins="rect(0,0,0,0)"/>
+				<v:textRect cx="17.5894" cy="339.234" width="35.18" height="7.03162"/>
+				<rect x="0" y="335.718" width="35.1789" height="7.03162" class="st4"/>
+				<text x="0" y="340.99" class="st10" v:langID="2052"><v:paragraph/><v:tabList/>判定接触物体</text>			</g>
+			<g id="shape29-74" v:mID="29" v:groupContext="shape" transform="translate(297.198,-26.0478)">
+				<title>工作表.29</title>
+				<path d="M0 304.43 L60.25 304.43 L60.25 342.75 L0 342.75 L0 304.43 Z" class="st3"/>
+			</g>
+			<g id="shape30-76" v:mID="30" v:groupContext="shape" transform="translate(312.662,-45.0333)">
+				<title>工作表.30</title>
+				<desc>残差控制</desc>
+				<v:textBlock v:margins="rect(0,0,0,0)"/>
+				<v:textRect cx="14.6579" cy="338.355" width="29.32" height="8.78956"/>
+				<rect x="0" y="333.96" width="29.3159" height="8.78956" class="st4"/>
+				<text x="0" y="340.55" class="st5" v:langID="2052"><v:paragraph/><v:tabList/>残差控制</text>			</g>
+			<g id="shape31-79" v:mID="31" v:groupContext="shape" transform="translate(303.31,-36.7833)">
+				<title>工作表.31</title>
+				<desc>位置与</desc>
+				<v:textBlock v:margins="rect(0,0,0,0)"/>
+				<v:textRect cx="10.9934" cy="338.355" width="21.99" height="8.78956"/>
+				<rect x="0" y="333.96" width="21.9869" height="8.78956" class="st4"/>
+				<text x="0" y="340.55" class="st5" v:langID="2052"><v:paragraph/><v:tabList/>位置与</text>			</g>
+			<g id="shape32-82" v:mID="32" v:groupContext="shape" transform="translate(325.297,-36.7833)">
+				<title>工作表.32</title>
+				<desc>K</desc>
+				<v:textBlock v:margins="rect(0,0,0,0)"/>
+				<v:textRect cx="3.66448" cy="338.355" width="7.33" height="8.78956"/>
+				<rect x="0" y="333.96" width="7.32896" height="8.78956" class="st4"/>
+				<text x="-0" y="340.55" class="st5" v:langID="2052"><v:paragraph/><v:tabList/>K</text>			</g>
+			<g id="shape33-85" v:mID="33" v:groupContext="shape" transform="translate(329.352,-36.7833)">
+				<title>工作表.33</title>
+				<desc>值输出</desc>
+				<v:textBlock v:margins="rect(0,0,0,0)"/>
+				<v:textRect cx="10.9934" cy="338.355" width="21.99" height="8.78956"/>
+				<rect x="0" y="333.96" width="21.9869" height="8.78956" class="st4"/>
+				<text x="0" y="340.55" class="st5" v:langID="2052"><v:paragraph/><v:tabList/>值输出</text>			</g>
+			<g id="shape34-88" v:mID="34" v:groupContext="shape" transform="translate(253.57,-45.2055)">
+				<title>工作表.34</title>
+				<path d="M0 342.75 L38.47 342.75 L0 342.75 Z" class="st6"/>
+				<path d="M0 342.75 L38.47 342.75" class="st7"/>
+			</g>
+			<g id="shape35-91" v:mID="35" v:groupContext="shape" transform="translate(297.199,637.716) rotate(180)">
+				<title>工作表.35</title>
+				<path d="M5.16 342.75 L0 340.17 L5.16 337.59 L5.16 342.75 Z" class="st8"/>
+			</g>
+			<g id="shape36-93" v:mID="36" v:groupContext="shape" transform="translate(297.198,-230.466)">
+				<title>工作表.36</title>
+				<path d="M0 304.43 L60.25 304.43 L60.25 342.75 L0 342.75 L0 304.43 Z" class="st3"/>
+			</g>
+			<g id="shape37-95" v:mID="37" v:groupContext="shape" transform="translate(305.333,-245.283)">
+				<title>工作表.37</title>
+				<desc>柔性执行任务</desc>
+				<v:textBlock v:margins="rect(0,0,0,0)"/>
+				<v:textRect cx="21.9869" cy="338.355" width="43.98" height="8.78956"/>
+				<rect x="0" y="333.96" width="43.9738" height="8.78956" class="st4"/>
+				<text x="-0" y="340.55" class="st5" v:langID="2052"><v:paragraph/><v:tabList/>柔性执行任务</text>			</g>
+			<g id="shape38-98" v:mID="38" v:groupContext="shape" transform="translate(223.448,-9.23948)">
+				<title>工作表.38</title>
+				<path d="M103.87 325.94 L103.87 342.75 L0 342.75 L0 331.1 L103.87 325.94 Z" class="st6"/>
+				<path d="M103.87 325.94 L103.87 342.75 L0 342.75 L0 331.1" class="st7"/>
+			</g>
+			<g id="shape39-101" v:mID="39" v:groupContext="shape" transform="translate(563.618,316.7) rotate(90)">
+				<title>工作表.39</title>
+				<path d="M5.16 342.75 L0 340.17 L5.16 337.59 L5.16 342.75 Z" class="st8"/>
+			</g>
+			<g id="shape40-103" v:mID="40" v:groupContext="shape" transform="translate(224.825,-5.45872)">
+				<title>工作表.40</title>
+				<rect x="0" y="335.718" width="79.4642" height="7.032" class="st9"/>
+			</g>
+			<g id="shape41-105" v:mID="41" v:groupContext="shape" transform="translate(224.826,-5.72282)">
+				<title>工作表.41</title>
+				<desc>传回位置</desc>
+				<v:textBlock v:margins="rect(0,0,0,0)"/>
+				<v:textRect cx="11.7263" cy="339.234" width="23.46" height="7.03162"/>
+				<rect x="0" y="335.718" width="23.4526" height="7.03162" class="st4"/>
+				<text x="0" y="340.99" class="st10" v:langID="2052"><v:paragraph/><v:tabList/>传回位置</text>			</g>
+			<g id="shape42-108" v:mID="42" v:groupContext="shape" transform="translate(248.278,-5.72282)">
+				<title>工作表.42</title>
+				<desc>、</desc>
+				<v:textBlock v:margins="rect(0,0,0,0)"/>
+				<v:textRect cx="2.93157" cy="339.234" width="5.87" height="7.03162"/>
+				<rect x="0" y="335.718" width="5.86315" height="7.03162" class="st4"/>
+				<text x="0" y="340.99" class="st10" v:langID="2052"><v:paragraph/><v:tabList/>、</text>			</g>
+			<g id="shape43-111" v:mID="43" v:groupContext="shape" transform="translate(254.142,-5.72282)">
+				<title>工作表.43</title>
+				<desc>K</desc>
+				<v:textBlock v:margins="rect(0,0,0,0)"/>
+				<v:textRect cx="2.93157" cy="339.234" width="5.87" height="7.03162"/>
+				<rect x="0" y="335.718" width="5.86315" height="7.03162" class="st4"/>
+				<text x="0" y="340.99" class="st10" v:langID="2052"><v:paragraph/><v:tabList/>K</text>			</g>
+			<g id="shape44-114" v:mID="44" v:groupContext="shape" transform="translate(257.386,-5.72282)">
+				<title>工作表.44</title>
+				<desc>值参量</desc>
+				<v:textBlock v:margins="rect(0,0,0,0)"/>
+				<v:textRect cx="8.79472" cy="339.234" width="17.59" height="7.03162"/>
+				<rect x="0" y="335.718" width="17.5894" height="7.03162" class="st4"/>
+				<text x="0" y="340.99" class="st10" v:langID="2052"><v:paragraph/><v:tabList/>值参量</text>			</g>
+			<g id="shape45-117" v:mID="45" v:groupContext="shape" transform="translate(274.975,-5.72282)">
+				<title>工作表.45</title>
+				<v:textBlock v:margins="rect(0,0,0,0)"/>
+				<v:textRect cx="2.93157" cy="339.234" width="5.87" height="7.03162"/>
+				<rect x="0" y="335.718" width="5.86315" height="7.03162" class="st4"/>
+				<text x="0" y="340.99" class="st10" v:langID="2052"><v:paragraph/><v:tabList/>，</text>			</g>
+			<g id="shape46-120" v:mID="46" v:groupContext="shape" transform="translate(280.838,-5.72282)">
+				<title>工作表.46</title>
+				<desc>闭环控制</desc>
+				<v:textBlock v:margins="rect(0,0,0,0)"/>
+				<v:textRect cx="11.7263" cy="339.234" width="23.46" height="7.03162"/>
+				<rect x="0" y="335.718" width="23.4526" height="7.03162" class="st4"/>
+				<text x="0" y="340.99" class="st10" v:langID="2052"><v:paragraph/><v:tabList/>闭环控制</text>			</g>
+			<g id="shape47-123" v:mID="47" v:groupContext="shape" transform="translate(34.4287,-278.154)">
+				<title>工作表.47</title>
+				<desc>顶层</desc>
+				<v:textBlock v:margins="rect(0,0,0,0)"/>
+				<v:textRect cx="10.2605" cy="336.597" width="20.53" height="12.3053"/>
+				<rect x="0" y="330.445" width="20.5209" height="12.3053" class="st4"/>
+				<text x="-0" y="339.67" class="st11" v:langID="2052"><v:paragraph/><v:tabList/>顶层</text>			</g>
+			<g id="shape48-126" v:mID="48" v:groupContext="shape" transform="translate(54.9494,-278.154)">
+				<title>工作表.48</title>
+				<desc>VLA</desc>
+				<v:textBlock v:margins="rect(0,0,0,0)"/>
+				<v:textRect cx="15.3907" cy="336.597" width="30.79" height="12.3053"/>
+				<rect x="0" y="330.445" width="30.7814" height="12.3053" class="st4"/>
+				<text x="0" y="339.67" class="st11" v:langID="2052"><v:paragraph/><v:tabList/>VLA</text>			</g>
+			<g id="shape49-129" v:mID="49" v:groupContext="shape" transform="translate(73.4362,-278.154)">
+				<title>工作表.49</title>
+				<desc>/</desc>
+				<v:textBlock v:margins="rect(0,0,0,0)"/>
+				<v:textRect cx="5.13024" cy="336.597" width="10.27" height="12.3053"/>
+				<rect x="0" y="330.445" width="10.2605" height="12.3053" class="st4"/>
+				<text x="0" y="339.67" class="st11" v:langID="2052"><v:paragraph/><v:tabList/>/</text>			</g>
+			<g id="shape50-132" v:mID="50" v:groupContext="shape" transform="translate(77.6797,-278.154)">
+				<title>工作表.50</title>
+				<desc>VLM</desc>
+				<v:textBlock v:margins="rect(0,0,0,0)"/>
+				<v:textRect cx="15.3907" cy="336.597" width="30.79" height="12.3053"/>
+				<rect x="0" y="330.445" width="30.7814" height="12.3053" class="st4"/>
+				<text x="0" y="339.67" class="st11" v:langID="2052"><v:paragraph/><v:tabList/>VLM</text>			</g>
+			<g id="shape51-135" v:mID="51" v:groupContext="shape" transform="translate(32.2401,-71.9044)">
+				<title>工作表.51</title>
+				<desc>底层控制器</desc>
+				<v:textBlock v:margins="rect(0,0,0,0)"/>
+				<v:textRect cx="25.6512" cy="336.597" width="51.31" height="12.3053"/>
+				<rect x="0" y="330.445" width="51.3024" height="12.3053" class="st4"/>
+				<text x="0" y="339.67" class="st11" v:langID="2052"><v:paragraph/><v:tabList/>底层控制器</text>			</g>
+			<g id="shape52-138" v:mID="52" v:groupContext="shape" transform="translate(26.8575,-123.347)">
+				<title>工作表.52</title>
+				<path d="M0 266.78 L122.84 266.78 L122.84 342.75 L0 342.75 L0 266.78 Z" class="st12"/>
+			</g>
+			<g id="shape53-140" v:mID="53" v:groupContext="shape" transform="translate(66.0757,-136.938)">
+				<title>工作表.53</title>
+				<path d="M0 304.43 L67.52 304.43 L67.52 342.75 L0 342.75 L0 304.43 Z" class="st3"/>
+			</g>
+			<g id="shape54-142" v:mID="54" v:groupContext="shape" transform="translate(71.5724,-156.033)">
+				<title>工作表.54</title>
+				<desc>接收</desc>
+				<v:textBlock v:margins="rect(0,0,0,0)"/>
+				<v:textRect cx="7.32896" cy="338.355" width="14.66" height="8.78956"/>
+				<rect x="0" y="333.96" width="14.6579" height="8.78956" class="st4"/>
+				<text x="0" y="340.55" class="st5" v:langID="2052"><v:paragraph/><v:tabList/>接收</text>			</g>
+			<g id="shape55-145" v:mID="55" v:groupContext="shape" transform="translate(86.2304,-156.033)">
+				<title>工作表.55</title>
+				<desc>VLA</desc>
+				<v:textBlock v:margins="rect(0,0,0,0)"/>
+				<v:textRect cx="10.9934" cy="338.355" width="21.99" height="8.78956"/>
+				<rect x="0" y="333.96" width="21.9869" height="8.78956" class="st4"/>
+				<text x="-0" y="340.55" class="st5" v:langID="2052"><v:paragraph/><v:tabList/>VLA</text>			</g>
+			<g id="shape56-148" v:mID="56" v:groupContext="shape" transform="translate(98.7839,-156.033)">
+				<title>工作表.56</title>
+				<desc>指令进行</desc>
+				<v:textBlock v:margins="rect(0,0,0,0)"/>
+				<v:textRect cx="14.6579" cy="338.355" width="29.32" height="8.78956"/>
+				<rect x="0" y="333.96" width="29.3159" height="8.78956" class="st4"/>
+				<text x="0" y="340.55" class="st5" v:langID="2052"><v:paragraph/><v:tabList/>指令进行</text>			</g>
+			<g id="shape57-151" v:mID="57" v:groupContext="shape" transform="translate(85.1752,-147.033)">
+				<title>工作表.57</title>
+				<desc>相关操作</desc>
+				<v:textBlock v:margins="rect(0,0,0,0)"/>
+				<v:textRect cx="14.6579" cy="338.355" width="29.32" height="8.78956"/>
+				<rect x="0" y="333.96" width="29.3159" height="8.78956" class="st4"/>
+				<text x="0" y="340.55" class="st5" v:langID="2052"><v:paragraph/><v:tabList/>相关操作</text>			</g>
+			<g id="shape58-154" v:mID="58" v:groupContext="shape" transform="translate(31.6758,-182.904)">
+				<title>工作表.58</title>
+				<desc>中层</desc>
+				<v:textBlock v:margins="rect(0,0,0,0)"/>
+				<v:textRect cx="10.2605" cy="336.597" width="20.53" height="12.3053"/>
+				<rect x="0" y="330.445" width="20.5209" height="12.3053" class="st4"/>
+				<text x="0" y="339.67" class="st11" v:langID="2052"><v:paragraph/><v:tabList/>中层</text>			</g>
+			<g id="shape60-157" v:mID="60" v:groupContext="shape" transform="translate(63.5842,-182.904)">
+				<title>工作表.60</title>
+				<desc>控制</desc>
+				<v:textBlock v:margins="rect(0,0,0,0)"/>
+				<v:textRect cx="10.2605" cy="336.597" width="20.53" height="12.3053"/>
+				<rect x="0" y="330.445" width="20.5209" height="12.3053" class="st4"/>
+				<text x="0" y="339.67" class="st11" v:langID="2052"><v:paragraph/><v:tabList/>控制</text>			</g>
+			<g id="shape61-160" v:mID="61" v:groupContext="shape" transform="translate(99.8379,-69.5192)">
+				<title>工作表.61</title>
+				<path d="M0 275.33 L0 342.75 L0 275.33 Z" class="st6"/>
+				<path d="M0 275.33 L0 342.75" class="st7"/>
+			</g>
+			<g id="shape62-163" v:mID="62" v:groupContext="shape" transform="translate(-240.332,278.388) rotate(-90)">
+				<title>工作表.62</title>
+				<path d="M5.16 342.75 L0 340.17 L5.16 337.59 L5.16 342.75 Z" class="st8"/>
+			</g>
+			<g id="shape63-165" v:mID="63" v:groupContext="shape" transform="translate(14.6579,-45.2087)">
+				<title>工作表.63</title>
+				<path d="M0 271 L0 342.75 L46.26 342.75 L0 271 Z" class="st6"/>
+				<path d="M0 271 L0 342.75 L46.26 342.75" class="st7"/>
+			</g>
+			<g id="shape64-168" v:mID="64" v:groupContext="shape" transform="translate(66.0779,637.713) rotate(180)">
+				<title>工作表.64</title>
+				<path d="M5.16 342.75 L0 340.17 L5.16 337.59 L5.16 342.75 Z" class="st8"/>
+			</g>
+			<g id="shape65-170" v:mID="65" v:groupContext="shape" transform="translate(0.000132001,-60.4637)">
+				<title>工作表.65</title>
+				<rect x="0" y="334.949" width="29.3157" height="7.80075" class="st9"/>
+			</g>
+			<g id="shape66-172" v:mID="66" v:groupContext="shape" transform="translate(0,-60.4728)">
+				<title>工作表.66</title>
+				<desc>判定临界值</desc>
+				<v:textBlock v:margins="rect(0,0,0,0)"/>
+				<v:textRect cx="14.6579" cy="339.234" width="29.32" height="7.03162"/>
+				<rect x="0" y="335.718" width="29.3157" height="7.03162" class="st4"/>
+				<text x="0" y="340.99" class="st13" v:langID="2052"><v:paragraph/><v:tabList/>判定临界值</text>			</g>
+			<g id="shape67-175" v:mID="67" v:groupContext="shape" transform="translate(173.841,-230.466)">
+				<title>工作表.67</title>
+				<path d="M0 304.43 L60.25 304.43 L60.25 342.75 L0 342.75 L0 304.43 Z" class="st3"/>
+			</g>
+			<g id="shape68-177" v:mID="68" v:groupContext="shape" transform="translate(178.312,-249.783)">
+				<title>工作表.68</title>
+				<desc>人类给出操作指</desc>
+				<v:textBlock v:margins="rect(0,0,0,0)"/>
+				<v:textRect cx="25.6514" cy="338.355" width="51.31" height="8.78956"/>
+				<rect x="0" y="333.96" width="51.3027" height="8.78956" class="st4"/>
+				<text x="0" y="340.55" class="st5" v:langID="2052"><v:paragraph/><v:tabList/>人类给出操作指</text>			</g>
+			<g id="shape69-180" v:mID="69" v:groupContext="shape" transform="translate(200.299,-240.783)">
+				<title>工作表.69</title>
+				<desc>令</desc>
+				<v:textBlock v:margins="rect(0,0,0,0)"/>
+				<v:textRect cx="3.66448" cy="338.355" width="7.33" height="8.78956"/>
+				<rect x="0" y="333.96" width="7.32896" height="8.78956" class="st4"/>
+				<text x="0" y="340.55" class="st5" v:langID="2052"><v:paragraph/><v:tabList/>令</text>			</g>
+			<g id="shape70-183" v:mID="70" v:groupContext="shape" transform="translate(106.678,-249.624)">
+				<title>工作表.70</title>
+				<path d="M67.16 342.75 L0 342.75 L67.16 342.75 Z" class="st6"/>
+				<path d="M67.16 342.75 L0 342.75" class="st7"/>
+			</g>
+			<g id="shape71-186" v:mID="71" v:groupContext="shape" transform="translate(101.518,-247.046)">
+				<title>工作表.71</title>
+				<path d="M5.16 342.75 L0 340.17 L5.16 337.59 L5.16 342.75 Z" class="st8"/>
+			</g>
+			<g id="shape72-188" v:mID="72" v:groupContext="shape" transform="translate(71.3969,-180.414)">
+				<title>工作表.72</title>
+				<path d="M0 292.7 L0 314.5 L28.44 314.5 L28.44 342.75 L0 292.7 Z" class="st6"/>
+				<path d="M0 292.7 L0 314.5 L28.44 314.5 L28.44 342.75" class="st7"/>
+			</g>
+			<g id="shape73-191" v:mID="73" v:groupContext="shape" transform="translate(-240.337,167.493) rotate(-90)">
+				<title>工作表.73</title>
+				<path d="M5.16 342.75 L0 340.17 L5.16 337.59 L5.16 342.75 Z" class="st8"/>
+			</g>
+			<g id="shape74-193" v:mID="74" v:groupContext="shape" transform="translate(73.8349,-203.985)">
+				<title>工作表.74</title>
+				<rect x="0" y="334.949" width="23.4526" height="7.80075" class="st9"/>
+			</g>
+			<g id="shape75-195" v:mID="75" v:groupContext="shape" transform="translate(73.8374,-204.473)">
+				<title>工作表.75</title>
+				<desc>动作指令</desc>
+				<v:textBlock v:margins="rect(0,0,0,0)"/>
+				<v:textRect cx="11.7263" cy="339.234" width="23.46" height="7.03162"/>
+				<rect x="0" y="335.718" width="23.4526" height="7.03162" class="st4"/>
+				<text x="0" y="340.99" class="st13" v:langID="2052"><v:paragraph/><v:tabList/>动作指令</text>			</g>
+			<g id="shape76-198" v:mID="76" v:groupContext="shape" transform="translate(327.324,-64.3615)">
+				<title>工作表.76</title>
+				<path d="M0 342.75 L0 181.8 L0 342.75 Z" class="st6"/>
+				<path d="M0 342.75 L0 181.8" class="st7"/>
+			</g>
+			<g id="shape77-201" v:mID="77" v:groupContext="shape" transform="translate(667.494,112.28) rotate(90)">
+				<title>工作表.77</title>
+				<path d="M5.16 342.75 L0 340.17 L5.16 337.59 L5.16 342.75 Z" class="st8"/>
+			</g>
+			<g id="shape78-203" v:mID="78" v:groupContext="shape" transform="translate(308.694,-119.015)">
+				<title>工作表.78</title>
+				<rect x="0" y="334.949" width="35.1789" height="7.80075" class="st9"/>
+			</g>
+			<g id="shape79-205" v:mID="79" v:groupContext="shape" transform="translate(308.694,-118.973)">
+				<title>工作表.79</title>
+				<desc>残差控制微调</desc>
+				<v:textBlock v:margins="rect(0,0,0,0)"/>
+				<v:textRect cx="17.5894" cy="339.234" width="35.18" height="7.03162"/>
+				<rect x="0" y="335.718" width="35.1789" height="7.03162" class="st4"/>
+				<text x="-0" y="340.99" class="st13" v:langID="2052"><v:paragraph/><v:tabList/>残差控制微调</text>			</g>
+			<g id="shape80-208" v:mID="80" v:groupContext="shape" transform="translate(133.594,-156.093)">
+				<title>工作表.80</title>
+				<path d="M0 342.75 L193.73 342.75 L193.73 273.53 L0 342.75 Z" class="st6"/>
+				<path d="M0 342.75 L193.73 342.75 L193.73 273.53" class="st7"/>
+			</g>
+			<g id="shape81-211" v:mID="81" v:groupContext="shape" transform="translate(667.491,112.282) rotate(90)">
+				<title>工作表.81</title>
+				<path d="M5.16 342.75 L0 340.17 L5.16 337.59 L5.16 342.75 Z" class="st8"/>
+			</g>
+			<g id="shape82-213" v:mID="82" v:groupContext="shape" transform="translate(212.41,-150.782)">
+				<title>工作表.82</title>
+				<rect x="0" y="334.949" width="40.77" height="7.80075" class="st9"/>
+			</g>
+			<g id="shape83-215" v:mID="83" v:groupContext="shape" transform="translate(213.62,-151.106)">
+				<title>工作表.83</title>
+				<desc>IL</desc>
+				<v:textBlock v:margins="rect(0,0,0,0)"/>
+				<v:textRect cx="5.86315" cy="339.234" width="11.73" height="7.03162"/>
+				<rect x="0" y="335.718" width="11.7263" height="7.03162" class="st4"/>
+				<text x="0" y="341.03" class="st14" v:langID="2052"><v:paragraph/><v:tabList/>IL</text>			</g>
+			<g id="shape84-218" v:mID="84" v:groupContext="shape" transform="translate(218.002,-151.223)">
+				<title>工作表.84</title>
+				<desc>模型直接输出</desc>
+				<v:textBlock v:margins="rect(0,0,0,0)"/>
+				<v:textRect cx="17.5894" cy="339.234" width="35.18" height="7.03162"/>
+				<rect x="0" y="335.718" width="35.1789" height="7.03162" class="st4"/>
+				<text x="0" y="340.99" class="st13" v:langID="2052"><v:paragraph/><v:tabList/>模型直接输出</text>			</g>
+			<g id="shape85-221" v:mID="85" v:groupContext="shape" transform="translate(239.248,-249.624)">
+				<title>工作表.85</title>
+				<path d="M57.95 342.75 L0 342.75 L57.95 342.75 Z" class="st6"/>
+				<path d="M57.95 342.75 L0 342.75" class="st7"/>
+			</g>
+			<g id="shape86-224" v:mID="86" v:groupContext="shape" transform="translate(234.088,-247.046)">
+				<title>工作表.86</title>
+				<path d="M5.16 342.75 L0 340.17 L5.16 337.59 L5.16 342.75 Z" class="st8"/>
+			</g>
+		</g>
+		<g id="shape87-226" v:mID="87" v:groupContext="shape" transform="translate(74.25,-196.425)">
+			<title>工作表.87</title>
+			<desc>IL</desc>
+			<v:textBlock v:margins="rect(4,4,4,4)"/>
+			<v:textRect cx="11.25" cy="331.5" width="22.51" height="22.5"/>
+			<rect x="0" y="320.25" width="22.5" height="22.5" class="st15"/>
+			<text x="7.15" y="334.65" class="st16" v:langID="2052"><v:paragraph v:horizAlign="1"/><v:tabList/>IL</text>		</g>
+	</g>
+</svg>

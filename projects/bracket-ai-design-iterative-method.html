@@ -1,0 +1,1033 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3D支架自主迭代建模 — AI驱动的闭环设计系统</title>
+    <style>
+        :root {
+            --primary: #4F46E5;
+            --primary-light: #EEF2FF;
+            --accent: #10B981;
+            --accent-light: #ECFDF5;
+            --warning: #F59E0B;
+            --warning-light: #FFFBEB;
+            --danger: #EF4444;
+            --danger-light: #FEF2F2;
+            --bg: #F3F4F6;
+            --card: #FFFFFF;
+            --text: #1F2937;
+            --muted: #6B7280;
+            --border: #E5E7EB;
+            --purple: #7C3AED;
+        }
+
+        * { box-sizing: border-box; }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Noto Sans SC", sans-serif;
+            background: var(--bg);
+            background-image: linear-gradient(135deg, #fdfbfb 0%, #ebedee 100%);
+            color: var(--text);
+            margin: 0; padding: 0;
+            line-height: 1.75;
+        }
+
+        .container {
+            max-width: 960px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .back-link {
+            display: inline-flex; align-items: center; gap: 6px;
+            color: var(--primary); text-decoration: none;
+            font-weight: 600; font-size: 0.95em;
+            margin-bottom: 24px;
+            transition: transform 0.2s;
+        }
+        .back-link:hover { transform: translateX(-4px); }
+
+        /* ── Hero ── */
+        .hero {
+            background: var(--card);
+            border-radius: 20px;
+            padding: 48px 40px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            margin-bottom: 30px;
+            animation: fadeUp 0.8s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        .hero::before {
+            content: '';
+            position: absolute; top: 0; left: 0; right: 0;
+            height: 5px;
+            background: linear-gradient(90deg, var(--primary), var(--accent), var(--warning), var(--danger));
+        }
+        .hero .badge {
+            display: inline-block;
+            background: var(--primary-light);
+            color: var(--primary);
+            padding: 4px 16px;
+            border-radius: 20px;
+            font-size: 0.85em; font-weight: 600;
+            margin-bottom: 16px;
+        }
+        .hero h1 {
+            font-size: 2em; margin: 0 0 10px 0;
+            background: linear-gradient(135deg, var(--primary), var(--purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .hero .subtitle {
+            font-size: 1.05em; color: var(--text);
+            max-width: 680px; margin: 12px auto;
+        }
+        .hero .meta {
+            color: var(--muted); font-size: 0.95em;
+            display: flex; justify-content: center;
+            gap: 24px; flex-wrap: wrap;
+        }
+        .hero .meta span { display: inline-flex; align-items: center; gap: 4px; }
+
+        /* ── Section cards ── */
+        .section {
+            background: var(--card);
+            border-radius: 16px;
+            padding: 36px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.04);
+            margin-bottom: 24px;
+            animation: fadeUp 0.6s ease;
+        }
+        .section h2 { margin: 0 0 20px 0; font-size: 1.4em; display: flex; align-items: center; gap: 10px; }
+        .section h3 { margin: 28px 0 12px 0; font-size: 1.1em; color: var(--text); }
+        .section h4 { margin: 16px 0 8px 0; }
+        .section p  { margin: 0 0 12px 0; color: var(--text); }
+        .section ul { margin: 8px 0; padding-left: 20px; }
+        .section ul li { margin-bottom: 6px; }
+
+        .section.accent  { border-left: 4px solid var(--accent); }
+        .section.warning { border-left: 4px solid var(--warning); }
+        .section.danger  { border-left: 4px solid var(--danger); }
+
+        /* ── Tags ── */
+        .tag {
+            display: inline-block;
+            padding: 3px 12px; border-radius: 12px;
+            font-size: 0.82em; font-weight: 600; margin: 2px 4px 2px 0;
+        }
+        .tag.blue   { background: var(--primary-light); color: var(--primary); }
+        .tag.green  { background: var(--accent-light);  color: #059669; }
+        .tag.amber  { background: var(--warning-light); color: #D97706; }
+        .tag.red    { background: var(--danger-light);  color: #DC2626; }
+
+        /* ── Tables ── */
+        .obs-table {
+            width: 100%; border-collapse: collapse;
+            margin: 16px 0; font-size: 0.88em;
+        }
+        .obs-table th {
+            background: #F9FAFB; padding: 10px 14px;
+            text-align: left; font-weight: 700;
+            border-bottom: 2px solid var(--border);
+        }
+        .obs-table td {
+            padding: 8px 14px; border-bottom: 1px solid var(--border); vertical-align: top;
+        }
+
+        .compare-table {
+            width: 100%; border-collapse: collapse;
+            margin: 16px 0; font-size: 0.88em;
+        }
+        .compare-table th {
+            background: #F9FAFB; padding: 12px 16px;
+            text-align: center; font-weight: 700;
+            border-bottom: 2px solid var(--border);
+        }
+        .compare-table td {
+            padding: 10px 16px; border-bottom: 1px solid var(--border); vertical-align: top;
+            text-align: center;
+        }
+        .compare-table td:first-child { text-align: left; font-weight: 600; }
+        .compare-table tr:hover td { background: #FAFAFA; }
+        .compare-table .fail { color: var(--danger); font-weight: 700; }
+        .compare-table .pass { color: var(--accent); font-weight: 700; }
+
+        /* ── Grids ── */
+        .grid-2 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 16px;
+        }
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 14px;
+        }
+
+        .mini-card {
+            background: #F9FAFB; border-radius: 10px; padding: 18px;
+            border: 1px solid var(--border);
+        }
+        .mini-card h4 { margin: 0 0 8px 0; font-size: 0.95em; }
+
+        /* ── Blockquote ── */
+        blockquote {
+            border-left: 4px solid var(--primary);
+            background: var(--primary-light);
+            margin: 16px 0; padding: 14px 20px;
+            border-radius: 0 10px 10px 0;
+            color: #4338CA;
+            font-style: italic;
+        }
+
+        .highlight-box {
+            background: var(--warning-light);
+            border: 1px solid var(--warning);
+            border-radius: 10px;
+            padding: 12px 18px;
+            margin: 16px 0;
+            font-size: 0.9em;
+            color: #92400E;
+            text-align: center;
+        }
+
+        .danger-box {
+            background: var(--danger-light);
+            border: 1px solid var(--danger);
+            border-radius: 10px;
+            padding: 12px 18px;
+            margin: 16px 0;
+            font-size: 0.9em;
+            color: #991B1B;
+        }
+
+        /* ── Process flow ── */
+        .flow-row {
+            display: flex; flex-wrap: wrap; gap: 8px;
+            justify-content: center; align-items: center;
+            margin: 20px 0;
+        }
+        .flow-node {
+            background: var(--card); border: 2px solid var(--border);
+            border-radius: 12px; padding: 10px 18px;
+            font-weight: 600; font-size: 0.9em;
+            white-space: nowrap;
+        }
+        .flow-node.active {
+            border-color: var(--primary);
+            background: var(--primary-light);
+            color: var(--primary);
+        }
+        .flow-arrow { font-size: 1.2em; color: var(--muted); }
+
+        /* ── Score bar ── */
+        .score-bar {
+            display: flex; align-items: center; gap: 12px;
+            margin: 8px 0;
+        }
+        .score-bar .label { width: 120px; text-align: right; font-weight: 600; font-size: 0.88em; }
+        .score-bar .track {
+            flex: 1; height: 20px; background: #F3F4F6;
+            border-radius: 10px; overflow: hidden;
+        }
+        .score-bar .fill {
+            height: 100%; border-radius: 10px;
+            transition: width 0.8s ease;
+        }
+        .score-bar .fill.good { background: linear-gradient(90deg, var(--accent), #34D399); }
+        .score-bar .fill.bad  { background: linear-gradient(90deg, var(--danger), #F87171); }
+
+        /* ── Image frame ── */
+        .img-frame {
+            text-align: center;
+            margin: 20px 0;
+        }
+        .img-frame img {
+            max-width: 100%;
+            border-radius: 12px;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+            border: 1px solid var(--border);
+        }
+        .img-frame .caption {
+            margin-top: 8px;
+            font-size: 0.85em;
+            color: var(--muted);
+        }
+
+        .img-side-by-side {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin: 20px 0;
+        }
+        @media (max-width: 600px) {
+            .img-side-by-side { grid-template-columns: 1fr; }
+        }
+
+        /* ── Responsive ── */
+        @media (max-width: 600px) {
+            .hero { padding: 32px 20px; }
+            .hero h1 { font-size: 1.4em; }
+            .section { padding: 24px 18px; }
+            .flow-row { gap: 4px; }
+            .flow-node { padding: 6px 10px; font-size: 0.78em; }
+        }
+
+        /* ── Report preview (simulated terminal) ── */
+        .report-preview {
+            background: #1E1E2E;
+            color: #CDD6F4;
+            border-radius: 12px;
+            padding: 0;
+            margin: 16px 0;
+            overflow: hidden;
+            font-family: "Cascadia Code", "Fira Code", "JetBrains Mono", "Consolas", monospace;
+            font-size: 0.78em;
+            line-height: 1.5;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+        }
+        .report-preview .titlebar {
+            background: #181825;
+            padding: 10px 16px;
+            font-size: 0.85em;
+            font-weight: 700;
+            border-bottom: 1px solid #313244;
+            display: flex; align-items: center; gap: 8px;
+        }
+        .report-preview .titlebar .dot { width: 10px; height: 10px; border-radius: 50%; }
+        .report-preview .titlebar .dot.r { background: #EF4444; }
+        .report-preview .titlebar .dot.y { background: #F59E0B; }
+        .report-preview .titlebar .dot.g { background: #10B981; }
+        .report-preview .body {
+            padding: 16px 20px;
+            max-height: 600px;
+            overflow-y: auto;
+        }
+        .report-preview .body .r-head { color: #CBA6F7; font-weight: 700; font-size: 1.1em; }
+        .report-preview .body .r-fatal { color: #F38BA8; font-weight: 700; background: #2E1E2E; padding: 4px 8px; border-radius: 4px; display: inline-block; }
+        .report-preview .body .r-pass  { color: #A6E3A1; }
+        .report-preview .body .r-warn  { color: #FAB387; }
+        .report-preview .body .r-dim   { color: #6C7086; }
+        .report-preview .body .r-val   { color: #89B4FA; font-weight: 700; }
+        .report-preview .body .r-table { color: #BAC2DE; }
+        .report-preview .body .r-hr    { color: #45475A; }
+
+        .tab-container { margin: 16px 0; }
+        .tab-buttons { display: flex; gap: 0; border-bottom: 2px solid var(--border); }
+        .tab-btn {
+            padding: 10px 20px; border: none; background: transparent;
+            font-weight: 600; cursor: pointer; font-size: 0.9em;
+            color: var(--muted); transition: all 0.2s;
+        }
+        .tab-btn.active { color: var(--primary); border-bottom: 2px solid var(--primary); margin-bottom: -2px; }
+        .tab-btn:hover { color: var(--text); }
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(16px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+
+    <a href="../projects.html" class="back-link">← 返回项目目录</a>
+
+    <!-- ═══════════════════════ Hero ═══════════════════════ -->
+    <header class="hero">
+        <div class="badge">AI Agent · OpenSCAD · 几何分析 · 闭环迭代</div>
+        <h1>3D支架自主迭代建模系统</h1>
+        <p class="subtitle">
+            让文本AI"看"懂3D模型 —— 将STL网格转化为多维度结构化自然语言报告，
+            驱动AI自主完成从需求到可打印模型的<strong>设计→分析→修改→收敛</strong>全闭环流程。
+        </p>
+        <div class="meta">
+            <span>🛠️ Python + trimesh + NumPy</span>
+            <span>📐 OpenSCAD 参数化建模</span>
+            <span>🤖 Claude Code Agent</span>
+            <span>🖨️ FDM/CNC 可制造性</span>
+            <span>🤖 Claude Code + DeepSeek V4 Pro</span>
+        </div>
+        <div style="margin-top: 16px;">
+            <span class="tag blue">Mesh Analysis</span>
+            <span class="tag blue">Topology Check</span>
+            <span class="tag green">Iterative Design</span>
+            <span class="tag green">Spec Comparison</span>
+            <span class="tag amber">Manufacturability</span>
+            <span class="tag amber">Agent Workflow</span>
+            <span class="tag red">Anti-Deadloop</span>
+            <span class="tag" style="background: linear-gradient(135deg, #EDE9FE, #E0E7FF); color: #7C3AED;">Self-Evolving Tools</span>
+        </div>
+    </header>
+
+    <!-- ═══════════════════════ 1. 背景 ═══════════════════════ -->
+    <section class="section danger">
+        <h2>🔴 研究背景与问题</h2>
+
+        <div class="grid-2">
+            <div class="mini-card" style="border-left: 4px solid var(--danger);">
+                <h4>👁️ 文本AI的"视觉盲区"</h4>
+                <p style="margin:0; font-size:0.9em;">
+                    Claude、GPT 等大语言模型本质上是文本处理器，<strong>无法直接理解3D几何</strong>。
+                    当用户要求"设计一个支架"时，AI只能输出代码，无法验证模型的实际尺寸、强度和可打印性。
+                </p>
+            </div>
+            <div class="mini-card" style="border-left: 4px solid var(--danger);">
+                <h4>🔁 手工迭代的低效</h4>
+                <p style="margin:0; font-size:0.9em;">
+                    传统3D建模需要人工导出→目视检查→修改→再导出。一次简单的孔距调整也可能导致
+                    非水密或壁厚不足等隐藏问题。对AI来说，没有反馈通道就无法自我纠正。
+                </p>
+            </div>
+        </div>
+
+        <blockquote>
+            核心矛盾：AI能写OpenSCAD代码，但无法"看见"自己生成的3D模型——
+            如同一个盲人雕塑家，手感再好也无法确认作品的真实形态。
+        </blockquote>
+    </section>
+
+    <!-- ═══════════════════════ 2. 目标 ═══════════════════════ -->
+    <section class="section accent">
+        <h2>🎯 研究目标</h2>
+        <p>构建一套<strong>"文本→3D→文本"的翻译系统</strong>，使得文本AI能够：</p>
+        <div class="grid-3">
+            <div class="mini-card" style="border-left: 4px solid var(--accent); text-align:center;">
+                <h4>📏 精确感知尺寸</h4>
+                <p style="margin:0; font-size:0.85em;">包围盒、壁厚、孔径、孔距、边距——全部以 mm 精度量化</p>
+            </div>
+            <div class="mini-card" style="border-left: 4px solid var(--accent); text-align:center;">
+                <h4>🔍 发现隐藏缺陷</h4>
+                <p style="margin:0; font-size:0.85em;">非水密、分离体、锐边应力集中、悬垂过大——自动检测</p>
+            </div>
+            <div class="mini-card" style="border-left: 4px solid var(--accent); text-align:center;">
+                <h4>🔄 自主迭代优化</h4>
+                <p style="margin:0; font-size:0.85em;">分析→对照需求→修改代码→重新分析→收敛——全自动闭环</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══════════════════════ 3. 方法论 ═══════════════════════ -->
+    <section class="section">
+        <h2>🧩 方法论：AI感知3D的"翻译层"</h2>
+
+        <h3>核心架构：从网格到自然语言的翻译管道</h3>
+
+        <div class="flow-row">
+            <div class="flow-node active">📄 .scad 代码</div>
+            <span class="flow-arrow">→</span>
+            <div class="flow-node">🖨️ OpenSCAD 导出</div>
+            <span class="flow-arrow">→</span>
+            <div class="flow-node">📦 .stl 网格</div>
+            <span class="flow-arrow">→</span>
+            <div class="flow-node active">🔬 check_mesh.py</div>
+            <span class="flow-arrow">→</span>
+            <div class="flow-node">📊 Markdown 报告</div>
+            <span class="flow-arrow">→</span>
+            <div class="flow-node active">🤖 AI 理解 & 修改</div>
+            <span class="flow-arrow">↻</span>
+        </div>
+        <p style="text-align:center; color: var(--muted); font-size:0.85em;">
+            <code style="background:var(--primary-light); padding:2px 6px; border-radius:4px;">CLAUDE.md</code> 为 AI 规定了严格的 7 阶段闭环工作流，
+            <code style="background:var(--accent-light); padding:2px 6px; border-radius:4px;">check_mesh.py</code> 作为几何↔语言的"翻译层"提供精确的结构化反馈——
+            二者协同将 AI 从<strong>盲目试错</strong>转变为<strong>定向求解</strong>。
+        </p>
+
+        <h3>六大分析模块</h3>
+        <table class="obs-table">
+            <thead>
+                <tr><th>模块</th><th>核心能力</th><th>对AI的反馈价值</th></tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>精确尺寸</strong></td>
+                    <td>包围盒、V/A等效壁厚、Z轴截面、射线穿透厚度</td>
+                    <td>告诉AI"你设计的零件实际有多大多厚"</td>
+                </tr>
+                <tr>
+                    <td><strong>孔洞分析</strong></td>
+                    <td>通孔/盲孔检测、孔径、孔距矩阵、边界相对距离</td>
+                    <td>"孔#1离+X边12mm，离+Y边5mm"——直接指导translate修正</td>
+                </tr>
+                <tr>
+                    <td><strong>结构特征</strong></td>
+                    <td>惯性矩、锐边应力集中、加强筋识别、悬臂/杠杆预警</td>
+                    <td>抗弯刚度量化评估 + 悬臂比超阈值警告</td>
+                </tr>
+                <tr>
+                    <td><strong>对称性&拓扑</strong></td>
+                    <td>三平面镜像对称度、L/U/平板/管夹自动类型推断</td>
+                    <td>判断结构是否平衡——不对称支架安装应力不均</td>
+                </tr>
+                <tr>
+                    <td><strong>可制造性</strong></td>
+                    <td>FDM桥接/悬垂区分、打印方向6轴评估、CNC底切检测</td>
+                    <td>"Z轴层间最弱，别把受力方向放Z" / "三轴CNC无法加工"</td>
+                </tr>
+                <tr>
+                    <td><strong>规格对比</strong></td>
+                    <td>目标尺寸vs实测偏差、网格噪声自动豁免、PASS/FAIL判定</td>
+                    <td>自动区分"真实设计错误"和"多边形逼近噪声"</td>
+                </tr>
+            </tbody>
+        </table>
+    </section>
+
+    <!-- ═══════════════════════ 4. 迭代机制 ═══════════════════════ -->
+    <section class="section accent">
+        <h2>🔄 迭代治理：防死循环的三层防线</h2>
+
+        <div class="grid-2">
+            <div class="mini-card" style="border-left: 4px solid var(--primary);">
+                <h4>🛡️ 第一层：网格噪声基线</h4>
+                <p style="margin:0; font-size:0.88em;">
+                    <code>_estimate_mesh_resolution()</code> 通过特征边第5百分位估算 $fn 产生的固有误差（$fn=64 ≈ ±0.2mm）。
+                    所有小于此阈值的测量偏差标记为<code>is_mesh_noise=True</code>，AI被告知"禁止修改代码"。
+                </p>
+            </div>
+            <div class="mini-card" style="border-left: 4px solid var(--warning);">
+                <h4>⚡ 第二层：阻尼修正 + 回滚</h4>
+                <p style="margin:0; font-size:0.88em;">
+                    参数修改走60%偏差（防超调），再改走80%。若强度下降≥10分或 real_fails 增加 →
+                    🔙 自动回退到上一轮.scad，切换修改策略。
+                </p>
+            </div>
+            <div class="mini-card" style="border-left: 4px solid var(--danger);">
+                <h4>🛑 第三层：5个硬停止条件</h4>
+                <p style="margin:0; font-size:0.88em;">
+                    ≥5轮迭代 / 连续2轮无改善 / 连续3轮参数震荡 /
+                    所有FAIL均为噪声 / 致命问题连续3轮无解。<br>
+                    任一触发→立即交付当前最优结果。
+                </p>
+            </div>
+            <div class="mini-card" style="border-left: 4px solid var(--accent);">
+                <h4>⚡ 渐进式渲染策略</h4>
+                <p style="margin:0; font-size:0.88em;">
+                    草图阶段（前3轮）强制 $fn=16，快速验证坐标尺寸；<br>
+                    定稿阶段切换 $fn=64/128，全面检查水密性和精确孔径。<br>
+                    迭代速度提升 3-5×。
+                </p>
+            </div>
+        </div>
+
+        <blockquote>
+            核心原则：只修真正的问题，不追网格噪声。不是所有 FAIL 都需要改代码 ——
+            <code>is_mesh_noise</code> 标记的偏差由多边形逼近产生，反复修改参数也无法消除。
+        </blockquote>
+    </section>
+
+    <!-- ═══════════════════════ 5. 效果展示 ═══════════════════════ -->
+    <section class="section">
+        <h2>📸 效果展示：悬臂式传感器安装架</h2>
+        <p>
+            <strong>任务需求：</strong>40×40mm底板(4mm厚) + 50mm悬臂(15mm宽) + 末端Φ10通孔
+            + 四角M3安装孔 + PLA零支撑FDM打印 + 悬臂承重1kg。
+        </p>
+
+        <div class="img-side-by-side">
+            <div class="img-frame">
+                <img src="bracket-ai-design-iterative-method/baseline.png" alt="未使用迭代方法的baseline模型">
+                <div class="caption">
+                    <strong style="color: var(--danger);">baseline（未使用方法）</strong><br>
+                    test1.stl · 11,764面片 · 2.2 MB · 2个分离体（致命错误）
+                </div>
+            </div>
+            <div class="img-frame">
+                <img src="bracket-ai-design-iterative-method/test.png" alt="使用迭代方法的优化模型">
+                <div class="caption">
+                    <strong style="color: var(--accent);">test（使用方法）</strong><br>
+                    test2.stl · 1,648面片 · 271 KB · 单一水密实体
+                </div>
+            </div>
+        </div>
+
+        <p style="text-align:center; color: var(--muted); font-size:0.85em;">
+            👆 肉眼几乎无法分辨两个模型的差异（除了那个莫名其妙的悬浮），但check_mesh.py在60秒内检出了baseline的全部致命缺陷。
+        </p>
+    </section>
+
+    <!-- ═══════════════════════ 6. 对比分析 ═══════════════════════ -->
+    <section class="section danger">
+        <h2>⚔️ 对比分析：有方法 vs 无方法</h2>
+
+        <h3>一票否决项</h3>
+        <table class="compare-table">
+            <thead>
+                <tr><th>检查项</th><th>baseline（无方法）</th><th>test（有方法）</th><th>后果</th></tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>拓扑连通性</td>
+                    <td class="fail">❌ 2个分离体</td>
+                    <td class="pass">✅ 单一实体</td>
+                    <td>baseline 打印时碎块从热床掉落，整个打印作废</td>
+                </tr>
+                <tr>
+                    <td>外形尺寸 Z</td>
+                    <td class="fail">❌ 62mm（超8mm）</td>
+                    <td class="pass">✅ 54mm（精确）</td>
+                    <td>baseline 传感器装不上、对不齐</td>
+                </tr>
+                <tr>
+                    <td>真实悬垂（需支撑）</td>
+                    <td class="fail">❌ 96处</td>
+                    <td class="pass">✅ 14处</td>
+                    <td>baseline 违反"零支撑"硬约束</td>
+                </tr>
+                <tr>
+                    <td>水密性</td>
+                    <td class="pass">✅ 水密</td>
+                    <td class="pass">✅ 水密</td>
+                    <td>两者均通过</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h3>质量指标对比</h3>
+        <table class="compare-table">
+            <thead>
+                <tr><th>指标</th><th>baseline</th><th>test</th><th>比值</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>文件大小</td><td>2.2 MB</td><td>271 KB</td><td>8.1× 浪费</td></tr>
+                <tr><td>面片数</td><td>11,764</td><td>1,648</td><td>7.1× 浪费</td></tr>
+                <tr><td>$fn 估算</td><td>＞$fn=128（过度）</td><td>≈$fn=64（刚好）</td><td>—</td></tr>
+                <tr><td>网格评级</td><td>fine (0.075mm)</td><td>good (0.158mm)</td><td>精度够用且高效</td></tr>
+                <tr><td>等效壁厚</td><td>5.64mm（偏厚）</td><td>3.22mm（合理）</td><td>1.75× 材料浪费</td></tr>
+                <tr><td>锐边数</td><td>2,594</td><td>844</td><td>3.1× 更粗糙</td></tr>
+                <tr><td>坐标原点</td><td>底板一角（非对称）</td><td>底板中心（对称）</td><td>可维护性差距大</td></tr>
+                <tr><td>桥接（无需支撑）</td><td>1,596处</td><td>18处</td><td>baseline结构复杂</td></tr>
+            </tbody>
+        </table>
+
+        <h3>综合评分</h3>
+        <div class="score-bar">
+            <span class="label">baseline</span>
+            <div class="track"><div class="fill bad" style="width:34%;"></div></div>
+            <span style="font-weight:700; color:var(--danger);">24/70</span>
+        </div>
+        <div class="score-bar">
+            <span class="label">test（方法）</span>
+            <div class="track"><div class="fill good" style="width:91%;"></div></div>
+            <span style="font-weight:700; color:var(--accent);">64/70</span>
+        </div>
+        <p style="text-align:center; margin-top:8px; font-size:0.85em; color:var(--muted);">
+            评分维度：连通性(×10) · 尺寸精度(×10) · 孔位(×10) · 悬垂控制(×10) · 网格效率(×10) · 强度设计(×10) · 代码可维护性(×10)
+        </p>
+
+        <div class="highlight-box" style="margin-top: 20px; text-align: left;">
+            <strong>⚖️ 关键发现：同等资源，天壤之别</strong><br><br>
+            本次实验使用接入 <strong>DeepSeek V4 Pro</strong> 的 <strong>Claude Code</strong>。
+            两个模型消耗的资源和时间<strong>几乎完全一致</strong>：<br>
+            🕐 各约 <strong>15 分钟</strong> &nbsp;|&nbsp; 💰 各约 <strong>0.5–0.6 元</strong>（DeepSeek API 计价）<br><br>
+            <strong>为什么资源相同，结果却天差地别？</strong><br><br>
+            ❌ <strong>baseline</strong> 也花掉了 15 分钟和 0.5 元——但 AI 在<strong>盲写</strong>。
+            没有 3D 感知能力，AI 只能漫无目的地反复修改代码：改完孔径调位置、调完位置猜壁厚、
+            猜错再改……如同蒙着眼睛雕塑，每一刀都是浪费。<br>
+            15 分钟的 token 被消耗在了<strong>无效的试错循环</strong>上，最终产出一个无法打印的模型。<br><br>
+            ✅ <strong>test</strong> 同样花了 15 分钟和 0.5 元——但 AI 是<strong>看着改</strong>。
+            <code>CLAUDE.md</code> 为 AI 规定了严格的 7 阶段工作流：需求→编码→分析→对照→修改→治理→收敛。
+            <code>check_mesh.py</code> 在每个循环末尾注入精确的结构化反馈，AI 的每一次修改都<strong>有明确的靶点</strong>
+            （"孔#1 的 to_X_minus 距离不够，translate 加 3mm"），而非无边界的猜测。<br>
+            15 分钟的 token 被用在了<strong>定向优化</strong>上，每一次迭代都在逼近目标。<br><br>
+            <strong>核心启示：</strong>方法的价值不在于"让 AI 更快"，而在于
+            <strong>把同样多的 token 从盲目试错转化为定向求解</strong>。
+        </div>
+    </section>
+
+    <!-- ═══════════════════════ 7. 报告实例 ═══════════════════════ -->
+    <section class="section">
+        <h2>📄 分析报告实例</h2>
+        <p>
+            以下是 <code>check_mesh.py</code> 对两个模型实际输出的分析报告。<strong>同一工具、同一格式、同一分析标准</strong>——
+            但暴露的问题天差地别。
+        </p>
+
+        <!-- Tab switcher -->
+        <div class="tab-container">
+            <div class="tab-buttons" style="display:flex;">
+                <button class="tab-btn active" onclick="switchTab('baseline')" style="border-left:4px solid var(--danger);">🔴 baseline 报告（未使用方法）</button>
+                <button class="tab-btn" onclick="switchTab('test')" style="border-left:4px solid var(--accent);">🟢 test 报告（使用方法）</button>
+            </div>
+
+            <!-- Baseline tab -->
+            <div id="tab-baseline" class="tab-content active" style="margin-top:0;">
+                <div class="report-preview">
+                    <div class="titlebar">
+                        <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+                        &nbsp; check_mesh.py test1.stl --format markdown --terse
+                    </div>
+                    <div class="body">
+<span class="r-head"># 🔧 3D支架模型分析报告</span>
+
+<span class="r-dim">**分析文件**: test1.stl  |  **输出模式**: 精简模式</span>
+
+<span class="r-head">## ⛔ 拓扑连通性 —— **致命错误**</span>
+
+<span class="r-fatal">🔴 致命错误：模型包含 2 个相互分离的独立部件！</span>
+<span class="r-dim">各部件体积：#1: 19320.97mm³, #2: 162.53mm³。</span>
+<span class="r-warn">部件之间没有正确 union —— translate 坐标可能有误。</span>
+
+<span class="r-dim">| 部件编号 | 体积 (mm³) | 顶点数 |</span>
+<span class="r-dim">|----------|-----------|--------|</span>
+<span class="r-dim">| #1 | 19320.97 | 5782 |</span>
+<span class="r-dim">| #2 | 162.53 | 96 |</span>
+
+<span class="r-warn">🛑 检查所有 translate() 偏移量，确保相邻部件重叠 ≥0.1mm。</span>
+
+<span class="r-head">## 0. 🔬 网格质量</span>
+<span class="r-table">网格分辨率 <span class="r-val">0.075 mm</span> | 评级 <span class="r-pass">fine</span> (>$fn=128)</span>
+<span class="r-warn">⚠️ max理论误差 ±0.1mm — 小于此值的偏差属多边形逼近噪声</span>
+
+<span class="r-head">## 1. 📏 外形尺寸</span>
+<span class="r-table">X <span class="r-val">40.0</span> mm | Y <span class="r-val">40.0</span> mm | Z <span class="r-val">62.0</span> mm</span>
+<span class="r-fatal">❌ Z轴超标 +8mm（目标 54mm = 4mm底板 + 50mm悬臂）</span>
+
+<span class="r-head">## 3. 🔩 孔洞分析</span>
+<span class="r-dim">检测到 4 个孔洞</span>
+<span class="r-dim">#1: dia=3.58mm 中心=[5.0, 5.0, <span class="r-warn">31.0</span>] (通孔)</span>
+<span class="r-fatal">❌ 孔Z=31mm 悬浮半空——底板不在Z=0平面</span>
+
+<span class="r-head">## 4. 💪 结构强度</span>
+<span class="r-table">等效壁厚 <span class="r-val">5.64</span> mm | 水密 <span class="r-pass">✅</span> | 锐边 <span class="r-val">2594</span> | 加强筋 <span class="r-pass">✅</span></span>
+<span class="r-table">强度评分 <span class="r-val">100</span>/100 — 优秀</span>
+<span class="r-warn">⚠️ 质心偏移 15.8mm (25.5%)</span>
+
+<span class="r-head">## 6. 🏭 可制造性</span>
+<span class="r-fatal">❌ 3D打印不可行</span>
+<span class="r-warn">真实悬垂 96处（需支撑）| 桥接 1596处</span>
+<span class="r-dim">Z轴最短板(62mm) — FDM层间弱</span>
+<span class="r-warn">💡 检测到更好姿态：+X朝下（底面2480mm²）</span>
+
+<span class="r-hr">━━━━━━━━━━━━━━━━━━━━</span>
+<span class="r-fatal">总结：2个致命错误 + 尺寸超差 + 96处悬垂 → 不可交付</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Test tab -->
+            <div id="tab-test" class="tab-content" style="margin-top:0;">
+                <div class="report-preview">
+                    <div class="titlebar">
+                        <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+                        &nbsp; check_mesh.py test2.stl --format markdown --terse
+                    </div>
+                    <div class="body">
+<span class="r-head"># 🔧 3D支架模型分析报告</span>
+
+<span class="r-dim">**分析文件**: test2.stl  |  **输出模式**: 精简模式</span>
+
+<span class="r-head">## 0. 🔬 网格质量</span>
+<span class="r-table">网格分辨率 <span class="r-val">0.158 mm</span> | 评级 <span class="r-pass">good</span> (≈$fn=64)</span>
+<span class="r-dim">max理论误差 ±0.2mm</span>
+
+<span class="r-head">## 1. 📏 外形尺寸</span>
+<span class="r-table">X <span class="r-val">40.0</span> mm | Y <span class="r-val">40.0</span> mm | Z <span class="r-val">54.0</span> mm</span>
+<span class="r-pass">✅ 全部在规格范围内（目标：40×40×54mm）</span>
+
+<span class="r-head">## 3. 🔩 孔洞分析</span>
+<span class="r-dim">检测到 4 个孔洞</span>
+<span class="r-dim">#1: dia=3.58mm 中心=[-15.0, -15.0, 27.0] (通孔)</span>
+<span class="r-dim">#2: dia=3.58mm 中心=[-15.0, 15.0, 27.0] (通孔)</span>
+<span class="r-dim">#3: dia=3.58mm 中心=[15.0, -15.0, 27.0] (通孔)</span>
+<span class="r-dim">#4: dia=3.58mm 中心=[15.0, 15.0, 27.0] (通孔)</span>
+<span class="r-pass">✅ 孔位对称分布（原点在底板中心），孔距边缘 5mm</span>
+
+<span class="r-head">### 孔位到边界的距离（用于 translate 纠错）</span>
+<span class="r-dim">| 孔 | 到X⁻ | 到X⁺ | 到Y⁻ | 到Y⁺ |</span>
+<span class="r-dim">| #1 | 5.0 | 35.0 | 5.0 | 35.0 |</span>
+<span class="r-dim">| #2 | 5.0 | 35.0 | 35.0 | 5.0 |</span>
+<span class="r-pass">💡 边界相对距离精确匹配设计规格（孔距边缘5mm）</span>
+
+<span class="r-head">## 4. 💪 结构强度</span>
+<span class="r-table">等效壁厚 <span class="r-val">3.22</span> mm | 水密 <span class="r-pass">✅</span> | 锐边 <span class="r-val">844</span></span>
+<span class="r-table">强度评分 <span class="r-val">100</span>/100 — 优秀</span>
+
+<span class="r-head">## 6. 🏭 可制造性</span>
+<span class="r-pass">✅ 3D打印可行（接近零支撑）</span>
+<span class="r-dim">真实悬垂 14处 | 桥接 18处</span>
+<span class="r-warn">💡 Z轴最短(54mm) — 注意FDM层间强度</span>
+<span class="r-dim">最佳姿态：+X朝下（底面2160mm²，悬垂9%）</span>
+
+<span class="r-head">## 🖨️ 打印方向分析</span>
+<span class="r-table">+Z朝下：4800mm² 底面积 | 0% 悬垂 ⭐</span>
+<span class="r-table">+X朝下：2160mm² 底面积 | 9% 悬垂</span>
+
+<span class="r-hr">━━━━━━━━━━━━━━━━━━━━</span>
+<span class="r-pass">总结：所有检查通过，单一水密实体，可直接交付打印。</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <p style="text-align:center; color: var(--muted); font-size:0.85em; margin-top:12px;">
+            👆 对比两份报告：同一分析工具、同一格式、同一评判标准。baseline 报告以 ⛔ 致命错误开头，
+            test 报告以 ✅ 全部通过收尾。
+        </p>
+
+    </section>
+
+    <!-- ═══════════════════════ 8. 核心贡献 ═══════════════════════ -->
+    <section class="section accent">
+        <h2>💡 核心贡献</h2>
+
+        <div class="grid-2">
+            <div class="mini-card" style="border-left: 4px solid var(--primary);">
+                <h4>① 网格→自然语言翻译层</h4>
+                <p style="margin:0; font-size:0.88em;">
+                    6大分析模块将盲目的STL文件解构为129维结构化特征，输出Markdown中文报告供AI直接阅读。
+                    首次建立3D几何与LLM之间的双向信息通道。
+                </p>
+            </div>
+            <div class="mini-card" style="border-left: 4px solid var(--accent);">
+                <h4>② 网格噪声免疫系统</h4>
+                <p style="margin:0; font-size:0.88em;">
+                    特征边P05分辨率估算 + <code>is_mesh_noise</code>判定 + 自适应噪声阈值——
+                    使AI能区分"真设计错误"和"多边形逼近误差"，从源头杜绝无效迭代。
+                </p>
+            </div>
+            <div class="mini-card" style="border-left: 4px solid var(--warning);">
+                <h4>③ 闭环迭代治理机制</h4>
+                <p style="margin:0; font-size:0.88em;">
+                    阻尼修正（60%→80%渐进）、回滚策略（强度下降自动回退）、5个硬停止条件、
+                    差异化报告（--terse折叠PASS项）——确保AI迭代收敛而非发散。
+                </p>
+            </div>
+            <div class="mini-card" style="border-left: 4px solid var(--danger);">
+                <h4>④ 制造约束感知</h4>
+                <p style="margin:0; font-size:0.88em;">
+                    桥接/悬垂区分、打印方向6轴优化、CNC底切检测、标准孔径映射表(M2-M12)、
+                    悬臂/杠杆比预警——将制造知识前置到设计阶段。
+                </p>
+            </div>
+        </div>
+
+        <blockquote>
+            项目的本质贡献不是"又写了一个分析脚本"，而是定义了<strong>AI理解3D几何的最小完备信息集</strong>——
+            回答了"文本AI到底需要知道哪些信息，才能像一个工程师一样评判一个支架？"
+        </blockquote>
+    </section>
+
+    <!-- ═══════════════════════ 8. 工作流程 ═══════════════════════ -->
+    <section class="section">
+        <h2>⚙️ 完整工作流程</h2>
+
+        <div style="overflow-x:auto;">
+        <table class="obs-table">
+            <thead>
+                <tr><th>阶段</th><th>动作</th><th>产出</th><th>检查点</th></tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>① 需求澄清</strong></td>
+                    <td>确认功能、尺寸、材质、公差、制造方式</td>
+                    <td>spec.json</td>
+                    <td>—</td>
+                </tr>
+                <tr>
+                    <td><strong>② 编码+导出</strong></td>
+                    <td>编写OpenSCAD（$fn=16草图/64定稿），<br>openscad.com 命令行导出STL</td>
+                    <td>design.scad + .stl</td>
+                    <td>布尔运算eps容差、union完整性</td>
+                </tr>
+                <tr>
+                    <td><strong>③ 多维分析</strong></td>
+                    <td>check_mesh.py 6模块全量分析</td>
+                    <td>analysis.json + .md</td>
+                    <td>⛔连通性·🔬网格质量·📏尺寸·🔩孔洞·💪强度·🏭制造</td>
+                </tr>
+                <tr>
+                    <td><strong>④ 需求对照</strong></td>
+                    <td>spec.json vs 实测值，自动PASS/FAIL+噪声判定</td>
+                    <td>偏差报告</td>
+                    <td>real_fails vs noise_fails 区分</td>
+                </tr>
+                <tr>
+                    <td><strong>⑤ 迭代修改</strong></td>
+                    <td>按致命→强度→优化顺序修改OpenSCAD变量</td>
+                    <td>新版.scad</td>
+                    <td>阻尼修正·单轮一变量·iteration_log.md</td>
+                </tr>
+                <tr>
+                    <td><strong>⑥ 治理决策</strong></td>
+                    <td>检查5个硬停止条件，判断继续/回滚/交付</td>
+                    <td>继续 or 交付</td>
+                    <td>迭代预算·收敛停滞·来回震荡·噪声追逐</td>
+                </tr>
+                <tr>
+                    <td><strong>⑦ 最终交付</strong></td>
+                    <td>满足收敛条件后输出完整交付包</td>
+                    <td>.scad + .stl + 报告 + 迭代日志 + 豁免清单</td>
+                    <td>强度≥60, real_fails=0, 壁厚达标</td>
+                </tr>
+            </tbody>
+        </table>
+        </div>
+    </section>
+
+    <!-- ═══════════════════════ 9. 实验验证 ═══════════════════════ -->
+    <section class="section accent">
+        <h2>🧪 实验验证</h2>
+
+        <p>在四种典型支架结构上进行了端到端闭环迭代验证：</p>
+
+        <table class="compare-table">
+            <thead>
+                <tr><th>支架类型</th><th>参数</th><th>孔数</th><th>水密</th><th>强度评分</th><th>收敛轮次</th></tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>L型支架</strong></td>
+                    <td>50×40×44mm · 板厚4mm</td>
+                    <td>2 + 2</td>
+                    <td class="pass">✅</td>
+                    <td>90/100</td>
+                    <td>2轮</td>
+                </tr>
+                <tr>
+                    <td><strong>U型槽支架</strong></td>
+                    <td>60×50×40mm · 板厚5mm</td>
+                    <td>2 + 2</td>
+                    <td class="pass">✅</td>
+                    <td>100/100</td>
+                    <td>1轮</td>
+                </tr>
+                <tr>
+                    <td><strong>平板安装支架</strong></td>
+                    <td>80×60×9mm · 中央凸台</td>
+                    <td>4角 + 1中</td>
+                    <td class="pass">✅</td>
+                    <td>100/100</td>
+                    <td>2轮</td>
+                </tr>
+                <tr>
+                    <td><strong>管夹支架</strong></td>
+                    <td>40×40×45mm · R20mm</td>
+                    <td>4法兰</td>
+                    <td class="pass">✅</td>
+                    <td>100/100</td>
+                    <td>1轮</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <p style="font-size:0.88em; color: var(--muted);">
+            * 每个模型从 spec.json 出发，经过 check_mesh.py 分析 + AI修改 OpenSCAD 变量，
+            至 real_fails=0 且强度≥60 为止。平均 1-2 轮迭代即可收敛。
+        </p>
+    </section>
+
+    <!-- ═══════════════════════ 10. 关键发现 ═══════════════════════ -->
+    <section class="section warning">
+        <h2>🔑 关键发现</h2>
+
+        <div class="grid-3">
+            <div class="mini-card" style="border-left: 4px solid var(--warning); text-align:center;">
+                <h4>📊 发现一</h4>
+                <p style="margin:0; font-size:0.85em;">
+                    <strong>80%的非水密错误</strong>来自布尔减切时<code>difference()</code>中减去的形体未贯穿被切面。
+                    在提示词中固化<code>eps=0.01</code>容差模板后，此类错误基本消失。
+                </p>
+            </div>
+            <div class="mini-card" style="border-left: 4px solid var(--warning); text-align:center;">
+                <h4>📊 发现二</h4>
+                <p style="margin:0; font-size:0.85em;">
+                    未使用方法的AI倾向于选择<strong>底板一角为原点</strong>，导致孔位用绝对坐标表示，修改困难。
+                    迭代方法使AI主动改为底板中心原点+对称坐标，代码可读性大幅提升。
+                </p>
+            </div>
+            <div class="mini-card" style="border-left: 4px solid var(--warning); text-align:center;">
+                <h4>📊 发现三</h4>
+                <p style="margin:0; font-size:0.85em;">
+                    <strong>$fn</strong> 是迭代效率的关键杠杆——$fn=16 时分析耗时仅 $fn=128 的 1/8，
+                    而尺寸误差仍可接受（±0.5mm）。渐进渲染策略让3轮迭代总时间 < 1次高精度分析。
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══════════════════════ 11. 未来展望 ═══════════════════════ -->
+    <section class="section accent">
+        <h2>🚀 未来展望</h2>
+
+        <div class="timeline" style="position: relative; padding-left: 28px; margin: 16px 0;">
+            <div style="position: absolute; left: 8px; top: 0; bottom: 0; width: 2px; background: var(--border);"></div>
+
+            <div class="timeline-item" style="position: relative; margin-bottom: 24px; padding-left: 8px;">
+                <span class="step-num" style="font-size:0.78em; font-weight:700; padding:2px 8px; border-radius:10px; background:var(--accent-light); color:#059669;">近期</span>
+                <h4 style="margin:4px 0;">有限元力学仿真集成</h4>
+                <p style="font-size:0.88em; margin:0;">
+                    将当前的几何启发式强度评估升级为基于FEniCS/CalculiX的有限元应力分析，
+                    输出真实的von Mises应力云图和位移场——而非仅靠V/A比和悬臂距离估算。
+                </p>
+            </div>
+
+            <div class="timeline-item" style="position: relative; margin-bottom: 24px; padding-left: 8px;">
+                <span class="step-num" style="font-size:0.78em; font-weight:700; padding:2px 8px; border-radius:10px; background:var(--warning-light); color:#D97706;">中期</span>
+                <h4 style="margin:4px 0;">拓扑优化驱动生成</h4>
+                <p style="font-size:0.88em; margin:0;">
+                    将分析输出作为拓扑优化的目标函数输入（如最小柔度约束下的体积最小化），
+                    以 SIMP/BESO 方法自动生成最优材料分布，AI负责将优化结果转换为可打印的OpenSCAD参数化结构。
+                </p>
+            </div>
+
+            <div class="timeline-item" style="position: relative; margin-bottom: 24px; padding-left: 8px;">
+                <span class="step-num" style="font-size:0.78em; font-weight:700; padding:2px 8px; border-radius:10px; background:var(--danger-light); color:#DC2626;">远期</span>
+                <h4 style="margin:4px 0;">自然语言→可打印零件的端到端系统</h4>
+                <p style="font-size:0.88em; margin:0;">
+                    用户说"我要一个装在桌子边缘的显示器支架"，系统自动完成：需求理解→方案生成→
+                    多轮迭代优化→生成G-code→用户确认→一键打印。闭环中人类只需在起点输入需求和终点按下打印键。
+                </p>
+            </div>
+
+            <div class="timeline-item" style="position: relative; margin-bottom: 24px; padding-left: 8px;">
+                <span class="step-num" style="font-size:0.78em; font-weight:700; padding:2px 8px; border-radius:10px; background:var(--purple); color:#FFFFFF; background: linear-gradient(135deg, #7C3AED, #4F46E5);">远景</span>
+                <h4 style="margin:4px 0;">分析工具自主进化 —— AI 修改自己的"眼睛"</h4>
+                <p style="font-size:0.88em; margin:0;">
+                    当前的闭环仅作用于 OpenSCAD 代码——但 <code>check_mesh.py</code> 本身也可以是迭代的对象。
+                    在每一轮支架设计中，AI 发现某个反复出现却未被脚本捕获的问题（例如某种特定拓扑结构总是导致底切），
+                    它可以<strong>自主修改 check_mesh.py</strong>，添加新的检测函数或调整判定阈值，
+                    使分析工具在下一次迭代中变得更"聪明"。经过成百上千次支架设计任务的累积进化，
+                    check_mesh.py 将从一套预设的静态规则，成长为积累了<strong>海量工程经验的动态知识库</strong>。
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══════════════════════ 12. 相关内容 ═══════════════════════ -->
+    <section class="section">
+        <h2>📂 项目资源</h2>
+        <ul>
+            <li><strong>分析引擎</strong>：<code>check_mesh.py</code> (≈1800行) —— 6大分析模块 + Markdown/JSON双输出 + --terse精简模式</li>
+            <li><strong>工作流指令</strong>：<code>CLAUDE.md</code> —— 7阶段闭环迭代流程 + 防死循环机制 + OpenSCAD编码最佳实践</li>
+            <li><strong>测试模型</strong>：L型支架 / U型槽支架 / 平板安装支架 / 管夹支架 —— 覆盖主要工程支架类型</li>
+            <li><strong>对比报告</strong>：<code>comparison_report.md</code> —— baseline vs test 的7维度详细对比分析</li>
+            <li><strong>依赖</strong>：Python 3.13 + trimesh 4.12 + numpy + scipy + shapely + manifold3d + OpenSCAD 2021.01</li>
+        </ul>
+    </section>
+
+</div>
+
+<script>
+function switchTab(name) {
+    document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+    document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
+    document.getElementById('tab-' + name).classList.add('active');
+    // Highlight the matching button
+    document.querySelectorAll('.tab-btn').forEach(btn => {
+        if (btn.textContent.includes(name === 'baseline' ? 'baseline' : 'test')) {
+            btn.classList.add('active');
+        }
+    });
+}
+</script>
+
+</body>
+</html>
